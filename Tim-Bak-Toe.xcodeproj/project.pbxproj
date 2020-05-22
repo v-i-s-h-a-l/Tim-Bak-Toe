@@ -13,6 +13,11 @@
 		DC1283F32477741000B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F22477741000B1317E /* Assets.xcassets */; };
 		DC1283F62477741000B1317E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F52477741000B1317E /* Preview Assets.xcassets */; };
 		DC1283F92477741000B1317E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F72477741000B1317E /* LaunchScreen.storyboard */; };
+		DC12840B247780A100B1317E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12840A247780A100B1317E /* AppDelegate.swift */; };
+		DC12840D247780A100B1317E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12840C247780A100B1317E /* ContentView.swift */; };
+		DC12840F247780A400B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC12840E247780A400B1317E /* Assets.xcassets */; };
+		DC128412247780A400B1317E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC128411247780A400B1317E /* Preview Assets.xcassets */; };
+		DC128415247780A400B1317E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC128413247780A400B1317E /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +29,25 @@
 		DC1283F52477741000B1317E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC1283F82477741000B1317E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC1283FA2477741000B1317E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC128408247780A100B1317E /* Tim-Bak-Toe-Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tim-Bak-Toe-Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC12840A247780A100B1317E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC12840C247780A100B1317E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DC12840E247780A400B1317E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC128411247780A400B1317E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DC128414247780A400B1317E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DC128416247780A400B1317E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC128417247780A400B1317E /* Tim_Bak_Toe_Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tim_Bak_Toe_Mac.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DC1283E62477740900B1317E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC128405247780A100B1317E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				DC1283EB2477740900B1317E /* Tim-Bak-Toe */,
+				DC128409247780A100B1317E /* Tim-Bak-Toe-Mac */,
 				DC1283EA2477740900B1317E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				DC1283E92477740900B1317E /* Tim-Bak-Toe.app */,
+				DC128408247780A100B1317E /* Tim-Bak-Toe-Mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,6 +129,52 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		DC128409247780A100B1317E /* Tim-Bak-Toe-Mac */ = {
+			isa = PBXGroup;
+			children = (
+				DC12841D2477812D00B1317E /* ViewModels */,
+				DC12841C2477812400B1317E /* Views */,
+				DC12841B2477810800B1317E /* Supporting Files */,
+				DC12840C247780A100B1317E /* ContentView.swift */,
+				DC128410247780A400B1317E /* Preview Content */,
+			);
+			path = "Tim-Bak-Toe-Mac";
+			sourceTree = "<group>";
+		};
+		DC128410247780A400B1317E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DC128411247780A400B1317E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DC12841B2477810800B1317E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC12840A247780A100B1317E /* AppDelegate.swift */,
+				DC12840E247780A400B1317E /* Assets.xcassets */,
+				DC128413247780A400B1317E /* Main.storyboard */,
+				DC128416247780A400B1317E /* Info.plist */,
+				DC128417247780A400B1317E /* Tim_Bak_Toe_Mac.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC12841C2477812400B1317E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC12841D2477812D00B1317E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -127,6 +195,23 @@
 			productReference = DC1283E92477740900B1317E /* Tim-Bak-Toe.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DC128407247780A100B1317E /* Tim-Bak-Toe-Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC128418247780A500B1317E /* Build configuration list for PBXNativeTarget "Tim-Bak-Toe-Mac" */;
+			buildPhases = (
+				DC128404247780A100B1317E /* Sources */,
+				DC128405247780A100B1317E /* Frameworks */,
+				DC128406247780A100B1317E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Tim-Bak-Toe-Mac";
+			productName = "Tim-Bak-Toe-Mac";
+			productReference = DC128408247780A100B1317E /* Tim-Bak-Toe-Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -138,6 +223,9 @@
 				ORGANIZATIONNAME = "v-i-s-h-a-l";
 				TargetAttributes = {
 					DC1283E82477740900B1317E = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					DC128407247780A100B1317E = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
@@ -156,6 +244,7 @@
 			projectRoot = "";
 			targets = (
 				DC1283E82477740900B1317E /* Tim-Bak-Toe */,
+				DC128407247780A100B1317E /* Tim-Bak-Toe-Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -168,6 +257,16 @@
 				DC1283F92477741000B1317E /* LaunchScreen.storyboard in Resources */,
 				DC1283F62477741000B1317E /* Preview Assets.xcassets in Resources */,
 				DC1283F32477741000B1317E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC128406247780A100B1317E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC128415247780A400B1317E /* Main.storyboard in Resources */,
+				DC128412247780A400B1317E /* Preview Assets.xcassets in Resources */,
+				DC12840F247780A400B1317E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +283,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC128404247780A100B1317E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC12840D247780A100B1317E /* ContentView.swift in Sources */,
+				DC12840B247780A100B1317E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -193,6 +301,14 @@
 				DC1283F82477741000B1317E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		DC128413247780A400B1317E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC128414247780A400B1317E /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -352,6 +468,54 @@
 			};
 			name = Release;
 		};
+		DC128419247780A500B1317E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Tim-Bak-Toe-Mac/Tim_Bak_Toe_Mac.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe-Mac/Preview Content\"";
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Tim-Bak-Toe-Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.Tim-Bak-Toe-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DC12841A247780A500B1317E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Tim-Bak-Toe-Mac/Tim_Bak_Toe_Mac.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe-Mac/Preview Content\"";
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Tim-Bak-Toe-Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.Tim-Bak-Toe-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -369,6 +533,15 @@
 			buildConfigurations = (
 				DC1283FE2477741000B1317E /* Debug */,
 				DC1283FF2477741000B1317E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC128418247780A500B1317E /* Build configuration list for PBXNativeTarget "Tim-Bak-Toe-Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC128419247780A500B1317E /* Debug */,
+				DC12841A247780A500B1317E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

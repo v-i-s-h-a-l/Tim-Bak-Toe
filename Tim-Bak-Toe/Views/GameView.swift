@@ -8,16 +8,15 @@
 
 import SwiftUI
 
-class PieceViewModel: ObservableObject {
-    
-}
-
-
-
 struct GameView: View {
     var body: some View {
         ZStack {
             Color.gray.opacity(0.8)
+            VStack {
+                Spacer()
+                PieceView()
+                Spacer()
+            }
         }
         .edgesIgnoringSafeArea([.all])
         .navigationBarBackButtonHidden(true)

@@ -78,10 +78,10 @@
 		DC1283EB2477740900B1317E /* Tim-Bak-Toe */ = {
 			isa = PBXGroup;
 			children = (
-				DC1284032477753600B1317E /* ViewModels */,
-				DC1284022477752900B1317E /* Supporting Files */,
-				DC1284012477751400B1317E /* Views */,
 				DC1284002477750800B1317E /* Models */,
+				DC1284032477753600B1317E /* ViewModels */,
+				DC1284012477751400B1317E /* Views */,
+				DC1284022477752900B1317E /* Supporting Files */,
 				DC1283F42477741000B1317E /* Preview Content */,
 			);
 			path = "Tim-Bak-Toe";
@@ -135,7 +135,6 @@
 				DC12841D2477812D00B1317E /* ViewModels */,
 				DC12841C2477812400B1317E /* Views */,
 				DC12841B2477810800B1317E /* Supporting Files */,
-				DC12840C247780A100B1317E /* ContentView.swift */,
 				DC128410247780A400B1317E /* Preview Content */,
 			);
 			path = "Tim-Bak-Toe-Mac";
@@ -164,6 +163,7 @@
 		DC12841C2477812400B1317E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC12840C247780A100B1317E /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

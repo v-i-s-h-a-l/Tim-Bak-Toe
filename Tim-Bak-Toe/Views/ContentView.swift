@@ -9,8 +9,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            NavigationLink(destination: GameView(), label: { Text("Play").font(.largeTitle) })
+        }
     }
 }
 

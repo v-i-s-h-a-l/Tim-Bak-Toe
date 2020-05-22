@@ -13,6 +13,17 @@
 		DC1283F32477741000B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F22477741000B1317E /* Assets.xcassets */; };
 		DC1283F62477741000B1317E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F52477741000B1317E /* Preview Assets.xcassets */; };
 		DC1283F92477741000B1317E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F72477741000B1317E /* LaunchScreen.storyboard */; };
+		DC12840B247780A100B1317E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12840A247780A100B1317E /* AppDelegate.swift */; };
+		DC12840D247780A100B1317E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12840C247780A100B1317E /* ContentView.swift */; };
+		DC12840F247780A400B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC12840E247780A400B1317E /* Assets.xcassets */; };
+		DC128412247780A400B1317E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC128411247780A400B1317E /* Preview Assets.xcassets */; };
+		DC128415247780A400B1317E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC128413247780A400B1317E /* Main.storyboard */; };
+		DC12841F24778FAE00B1317E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12841E24778FAE00B1317E /* GameView.swift */; };
+		DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1284202477938B00B1317E /* PieceViewModel.swift */; };
+		DC128423247793A600B1317E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128422247793A600B1317E /* GameViewModel.swift */; };
+		DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128424247793C300B1317E /* BoardCellViewModel.swift */; };
+		DC128427247793E000B1317E /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128426247793E000B1317E /* PieceView.swift */; };
+		DC128429247793EF00B1317E /* BoardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128428247793EF00B1317E /* BoardCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +35,31 @@
 		DC1283F52477741000B1317E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC1283F82477741000B1317E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC1283FA2477741000B1317E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC128408247780A100B1317E /* Tim-Bak-Toe-Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tim-Bak-Toe-Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC12840A247780A100B1317E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC12840C247780A100B1317E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DC12840E247780A400B1317E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC128411247780A400B1317E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DC128414247780A400B1317E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DC128416247780A400B1317E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC128417247780A400B1317E /* Tim_Bak_Toe_Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tim_Bak_Toe_Mac.entitlements; sourceTree = "<group>"; };
+		DC12841E24778FAE00B1317E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		DC1284202477938B00B1317E /* PieceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceViewModel.swift; sourceTree = "<group>"; };
+		DC128422247793A600B1317E /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		DC128424247793C300B1317E /* BoardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCellViewModel.swift; sourceTree = "<group>"; };
+		DC128426247793E000B1317E /* PieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
+		DC128428247793EF00B1317E /* BoardCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DC1283E62477740900B1317E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC128405247780A100B1317E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				DC1283EB2477740900B1317E /* Tim-Bak-Toe */,
+				DC128409247780A100B1317E /* Tim-Bak-Toe-Mac */,
 				DC1283EA2477740900B1317E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				DC1283E92477740900B1317E /* Tim-Bak-Toe.app */,
+				DC128408247780A100B1317E /* Tim-Bak-Toe-Mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,12 +90,10 @@
 		DC1283EB2477740900B1317E /* Tim-Bak-Toe */ = {
 			isa = PBXGroup;
 			children = (
-				DC1283EC2477740900B1317E /* AppDelegate.swift */,
-				DC1283EE2477740900B1317E /* SceneDelegate.swift */,
-				DC1283F02477740900B1317E /* ContentView.swift */,
-				DC1283F22477741000B1317E /* Assets.xcassets */,
-				DC1283F72477741000B1317E /* LaunchScreen.storyboard */,
-				DC1283FA2477741000B1317E /* Info.plist */,
+				DC1284002477750800B1317E /* Models */,
+				DC1284032477753600B1317E /* ViewModels */,
+				DC1284012477751400B1317E /* Views */,
+				DC1284022477752900B1317E /* Supporting Files */,
 				DC1283F42477741000B1317E /* Preview Content */,
 			);
 			path = "Tim-Bak-Toe";
@@ -73,6 +105,92 @@
 				DC1283F52477741000B1317E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DC1284002477750800B1317E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DC1284012477751400B1317E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC128428247793EF00B1317E /* BoardCellView.swift */,
+				DC1283F02477740900B1317E /* ContentView.swift */,
+				DC12841E24778FAE00B1317E /* GameView.swift */,
+				DC128426247793E000B1317E /* PieceView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC1284022477752900B1317E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC1283EC2477740900B1317E /* AppDelegate.swift */,
+				DC1283EE2477740900B1317E /* SceneDelegate.swift */,
+				DC1283F22477741000B1317E /* Assets.xcassets */,
+				DC1283F72477741000B1317E /* LaunchScreen.storyboard */,
+				DC1283FA2477741000B1317E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC1284032477753600B1317E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DC128424247793C300B1317E /* BoardCellViewModel.swift */,
+				DC128422247793A600B1317E /* GameViewModel.swift */,
+				DC1284202477938B00B1317E /* PieceViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		DC128409247780A100B1317E /* Tim-Bak-Toe-Mac */ = {
+			isa = PBXGroup;
+			children = (
+				DC12841D2477812D00B1317E /* ViewModels */,
+				DC12841C2477812400B1317E /* Views */,
+				DC12841B2477810800B1317E /* Supporting Files */,
+				DC128410247780A400B1317E /* Preview Content */,
+			);
+			path = "Tim-Bak-Toe-Mac";
+			sourceTree = "<group>";
+		};
+		DC128410247780A400B1317E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DC128411247780A400B1317E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DC12841B2477810800B1317E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC12840A247780A100B1317E /* AppDelegate.swift */,
+				DC12840E247780A400B1317E /* Assets.xcassets */,
+				DC128413247780A400B1317E /* Main.storyboard */,
+				DC128416247780A400B1317E /* Info.plist */,
+				DC128417247780A400B1317E /* Tim_Bak_Toe_Mac.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC12841C2477812400B1317E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC12840C247780A100B1317E /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC12841D2477812D00B1317E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +213,23 @@
 			productReference = DC1283E92477740900B1317E /* Tim-Bak-Toe.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DC128407247780A100B1317E /* Tim-Bak-Toe-Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC128418247780A500B1317E /* Build configuration list for PBXNativeTarget "Tim-Bak-Toe-Mac" */;
+			buildPhases = (
+				DC128404247780A100B1317E /* Sources */,
+				DC128405247780A100B1317E /* Frameworks */,
+				DC128406247780A100B1317E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Tim-Bak-Toe-Mac";
+			productName = "Tim-Bak-Toe-Mac";
+			productReference = DC128408247780A100B1317E /* Tim-Bak-Toe-Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -106,6 +241,9 @@
 				ORGANIZATIONNAME = "v-i-s-h-a-l";
 				TargetAttributes = {
 					DC1283E82477740900B1317E = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					DC128407247780A100B1317E = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
@@ -124,6 +262,7 @@
 			projectRoot = "";
 			targets = (
 				DC1283E82477740900B1317E /* Tim-Bak-Toe */,
+				DC128407247780A100B1317E /* Tim-Bak-Toe-Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -139,6 +278,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC128406247780A100B1317E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC128415247780A400B1317E /* Main.storyboard in Resources */,
+				DC128412247780A400B1317E /* Preview Assets.xcassets in Resources */,
+				DC12840F247780A400B1317E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -146,9 +295,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC128429247793EF00B1317E /* BoardCellView.swift in Sources */,
+				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,
 				DC1283ED2477740900B1317E /* AppDelegate.swift in Sources */,
 				DC1283EF2477740900B1317E /* SceneDelegate.swift in Sources */,
+				DC128427247793E000B1317E /* PieceView.swift in Sources */,
+				DC12841F24778FAE00B1317E /* GameView.swift in Sources */,
+				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
+				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
 				DC1283F12477740900B1317E /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC128404247780A100B1317E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC12840D247780A100B1317E /* ContentView.swift in Sources */,
+				DC12840B247780A100B1317E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +325,14 @@
 				DC1283F82477741000B1317E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		DC128413247780A400B1317E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC128414247780A400B1317E /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -320,6 +492,54 @@
 			};
 			name = Release;
 		};
+		DC128419247780A500B1317E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Tim-Bak-Toe-Mac/Tim_Bak_Toe_Mac.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe-Mac/Preview Content\"";
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Tim-Bak-Toe-Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.Tim-Bak-Toe-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DC12841A247780A500B1317E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Tim-Bak-Toe-Mac/Tim_Bak_Toe_Mac.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe-Mac/Preview Content\"";
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Tim-Bak-Toe-Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.Tim-Bak-Toe-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -337,6 +557,15 @@
 			buildConfigurations = (
 				DC1283FE2477741000B1317E /* Debug */,
 				DC1283FF2477741000B1317E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC128418247780A500B1317E /* Build configuration list for PBXNativeTarget "Tim-Bak-Toe-Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC128419247780A500B1317E /* Debug */,
+				DC12841A247780A500B1317E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

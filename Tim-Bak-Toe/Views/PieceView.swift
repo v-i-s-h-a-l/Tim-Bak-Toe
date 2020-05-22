@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  PieceView.swift
 //  Tim-Bak-Toe
 //
 //  Created by Vishal Singh on 22/05/20.
@@ -8,14 +8,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct PieceView: View {
     var body: some View {
-        Text("Hello, World!")
+        Circle()
+            .overlay(Color.red)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct PieceView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        PieceView()
     }
 }

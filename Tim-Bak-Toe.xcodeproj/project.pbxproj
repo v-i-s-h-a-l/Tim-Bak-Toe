@@ -19,6 +19,11 @@
 		DC128412247780A400B1317E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC128411247780A400B1317E /* Preview Assets.xcassets */; };
 		DC128415247780A400B1317E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC128413247780A400B1317E /* Main.storyboard */; };
 		DC12841F24778FAE00B1317E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12841E24778FAE00B1317E /* GameView.swift */; };
+		DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1284202477938B00B1317E /* PieceViewModel.swift */; };
+		DC128423247793A600B1317E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128422247793A600B1317E /* GameViewModel.swift */; };
+		DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128424247793C300B1317E /* BoardCellViewModel.swift */; };
+		DC128427247793E000B1317E /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128426247793E000B1317E /* PieceView.swift */; };
+		DC128429247793EF00B1317E /* BoardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128428247793EF00B1317E /* BoardCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +44,11 @@
 		DC128416247780A400B1317E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC128417247780A400B1317E /* Tim_Bak_Toe_Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tim_Bak_Toe_Mac.entitlements; sourceTree = "<group>"; };
 		DC12841E24778FAE00B1317E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		DC1284202477938B00B1317E /* PieceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceViewModel.swift; sourceTree = "<group>"; };
+		DC128422247793A600B1317E /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		DC128424247793C300B1317E /* BoardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCellViewModel.swift; sourceTree = "<group>"; };
+		DC128426247793E000B1317E /* PieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
+		DC128428247793EF00B1317E /* BoardCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +117,10 @@
 		DC1284012477751400B1317E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC128428247793EF00B1317E /* BoardCellView.swift */,
 				DC1283F02477740900B1317E /* ContentView.swift */,
 				DC12841E24778FAE00B1317E /* GameView.swift */,
+				DC128426247793E000B1317E /* PieceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +140,9 @@
 		DC1284032477753600B1317E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DC128424247793C300B1317E /* BoardCellViewModel.swift */,
+				DC128422247793A600B1317E /* GameViewModel.swift */,
+				DC1284202477938B00B1317E /* PieceViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -280,9 +295,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC128429247793EF00B1317E /* BoardCellView.swift in Sources */,
+				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,
 				DC1283ED2477740900B1317E /* AppDelegate.swift in Sources */,
 				DC1283EF2477740900B1317E /* SceneDelegate.swift in Sources */,
+				DC128427247793E000B1317E /* PieceView.swift in Sources */,
 				DC12841F24778FAE00B1317E /* GameView.swift in Sources */,
+				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
+				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
 				DC1283F12477740900B1317E /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

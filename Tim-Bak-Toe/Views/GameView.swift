@@ -8,6 +8,12 @@
 
 import SwiftUI
 
+class PieceViewModel: ObservableObject {
+    
+}
+
+
+
 struct GameView: View {
     var body: some View {
         ZStack {

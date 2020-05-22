@@ -56,12 +56,10 @@
 		DC1283EB2477740900B1317E /* Tim-Bak-Toe */ = {
 			isa = PBXGroup;
 			children = (
-				DC1283EC2477740900B1317E /* AppDelegate.swift */,
-				DC1283EE2477740900B1317E /* SceneDelegate.swift */,
-				DC1283F02477740900B1317E /* ContentView.swift */,
-				DC1283F22477741000B1317E /* Assets.xcassets */,
-				DC1283F72477741000B1317E /* LaunchScreen.storyboard */,
-				DC1283FA2477741000B1317E /* Info.plist */,
+				DC1284032477753600B1317E /* ViewModels */,
+				DC1284022477752900B1317E /* Supporting Files */,
+				DC1284012477751400B1317E /* Views */,
+				DC1284002477750800B1317E /* Models */,
 				DC1283F42477741000B1317E /* Preview Content */,
 			);
 			path = "Tim-Bak-Toe";
@@ -73,6 +71,40 @@
 				DC1283F52477741000B1317E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DC1284002477750800B1317E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DC1284012477751400B1317E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC1283F02477740900B1317E /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC1284022477752900B1317E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC1283EC2477740900B1317E /* AppDelegate.swift */,
+				DC1283EE2477740900B1317E /* SceneDelegate.swift */,
+				DC1283F22477741000B1317E /* Assets.xcassets */,
+				DC1283F72477741000B1317E /* LaunchScreen.storyboard */,
+				DC1283FA2477741000B1317E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC1284032477753600B1317E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

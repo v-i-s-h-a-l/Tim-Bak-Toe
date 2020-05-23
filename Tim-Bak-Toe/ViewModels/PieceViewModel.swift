@@ -18,11 +18,14 @@ class PieceViewModel: ObservableObject, Identifiable {
     var draggedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
     var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
 
+    var dragStartByFellowPieceCancellable: AnyCancellable?
+    var dragEndedByFellowPieceCancellable: AnyCancellable?
+
     @Published var dragAmount: CGSize = .zero
+    @Published var disabled: Bool = false
     //    @State private var dragState: DragState = .unknown
     
     private var isDragStarted: Bool = false
-
 
     // MARK: - functions called by view -
     
@@ -41,8 +44,25 @@ class PieceViewModel: ObservableObject, Identifiable {
     
     func onDragEnded(_ drag: DragGesture.Value) {
         isDragStarted = false
-        dragAmount = .zero
         draggedEndedPublisher
             .send((drag.location, id, occupiedCellID))
+    }
+    
+    // MARK: - functions called by game vm to provide publishers -
+
+    func subscribeToDragStart(_ publisher: PassthroughSubject<UUID, Never>) {
+        dragStartByFellowPieceCancellable = publisher.sink { uuid in
+            self.disabled = self.id != uuid
+            print("Drag started for: \(uuid)\nself uuid: \(self.id)")
+        }
+    }
+
+    func subscribeToDragEnd(_ publisher: PassthroughSubject<UUID, Never>) {
+        dragEndedByFellowPieceCancellable = publisher.sink { uuid in
+            withAnimation {
+                self.disabled = false
+//                self.dragAmount = .zero
+            }
+        }
     }
 }

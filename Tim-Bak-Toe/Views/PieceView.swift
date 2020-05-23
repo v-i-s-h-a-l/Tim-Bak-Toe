@@ -11,18 +11,19 @@ import SwiftUI
 struct PieceView: View {
     
     @ObservedObject var viewModel = PieceViewModel()
-    var size: CGSize = CGSize(width: 100, height: 100)
+    var size: CGSize = CGSize(width: 50, height: 50)
     
     var body: some View {
         Circle()
             .frame(width: size.width, height: size.height)
             .offset(viewModel.dragAmount)
-            .foregroundColor(.red)
-            .animation(Animation.linear(duration: 0.1))
+            .foregroundColor(viewModel.disabled ? Color.red.opacity(0.7) : Color.red)
+//            .animation(Animation.linear(duration: 0.1))
             .gesture(DragGesture()
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded)
         )
+            .disabled(viewModel.disabled)
     }
 
 }

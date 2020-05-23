@@ -61,7 +61,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         dragEndedByFellowPieceCancellable = publisher.sink { uuid in
             withAnimation {
                 self.disabled = false
-//                self.dragAmount = .zero
+                self.dragAmount = .zero
             }
         }
     }

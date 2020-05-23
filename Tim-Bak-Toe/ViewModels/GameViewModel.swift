@@ -6,8 +6,9 @@
 //  Copyright © 2020 v-i-s-h-a-l. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
+import SwiftUI
 
 class GameViewModel: ObservableObject {
     
@@ -15,7 +16,7 @@ class GameViewModel: ObservableObject {
     let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
 
     let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
-    let pieceDragEndToCellsPublisher = PassthroughSubject<UUID?, Never>()
+    let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
@@ -54,7 +55,7 @@ class GameViewModel: ObservableObject {
         pieces.forEach { pieceModel in
             cancellables.append(pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
                 self.pieceDragEndToFellowPiecesPublisher.send(pieceID)
-                self.pieceDragEndToCellsPublisher.send(cellId)
+                self.pieceDragEndToCellsPublisher.send((location, cellId))
             })
         }
     }
@@ -76,10 +77,20 @@ class GameViewModel: ObservableObject {
             }
             generatedBoardCellViewModels.append(rowCells)
         }
+
+        subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: generatedBoardCellViewModels)
+        
         return generatedBoardCellViewModels
     }
 
-    private func setupConnenctionsBetweenCellReadables() {
-        
+    private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [[BoardCellViewModel]]) {
+        let flattened = generatedCellViewModels.flatMap {
+            $0.flatMap { $0 }
+        }
+        flattened.forEach {
+            $0.subscribeToDragStart(self.pieceDragStartToCellsPublisher)
+//            $0.subscribeToDragChanged(self.)
+            $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
+        }
     }
 }

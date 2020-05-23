@@ -29,7 +29,7 @@ enum BoardCellState {
     var shadowRadius: CGFloat {
         switch self {
         case .none: return 0
-        case .occupied, .origin, .welcome: return 5
+        case .occupied, .origin, .welcome: return 2
         }
     }
 }

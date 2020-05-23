@@ -14,7 +14,7 @@ enum Theme {
         static var piece = Color.red
 
         static var gameBackground = Color.gray.opacity(0.7)
-        static var boardCell = Color.secondary
+        static var boardCell = Color.black
 
         enum Shadow {
             enum BoardCell {

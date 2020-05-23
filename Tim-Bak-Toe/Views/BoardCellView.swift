@@ -14,7 +14,6 @@ struct BoardCellView: View {
     
     var body: some View {
         Theme.Col.boardCell
-            .opacity(0.8)
             .shadow(color: viewModel.cellState.shadowColor,
                     radius: viewModel.cellState.shadowRadius)
             .overlay(

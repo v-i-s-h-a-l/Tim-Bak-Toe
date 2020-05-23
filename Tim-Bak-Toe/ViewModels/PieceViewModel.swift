@@ -13,6 +13,11 @@ import SwiftUI
 class PieceViewModel: ObservableObject, Identifiable {
     let id = UUID()
     private var occupiedCellID: UUID?
+    let style: PieceStyle
+
+    init(with style: PieceStyle) {
+        self.style = style
+    }
 
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false

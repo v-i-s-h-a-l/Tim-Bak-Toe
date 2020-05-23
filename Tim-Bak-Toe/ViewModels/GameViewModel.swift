@@ -29,7 +29,7 @@ class GameViewModel: ObservableObject {
     // MARK: - Host pieces -
 
     private func generatePiecesForHost() -> [PieceViewModel] {
-        let generatedHostPieces = [PieceViewModel(), PieceViewModel(), PieceViewModel()]
+        let generatedHostPieces = [PieceViewModel(with: .circle1), PieceViewModel(with: .circle1), PieceViewModel(with: .circle1)]
         
         setupConnnectionsForDragStart(for: generatedHostPieces)
         setupConnnectionsForDragEnd(for: generatedHostPieces)

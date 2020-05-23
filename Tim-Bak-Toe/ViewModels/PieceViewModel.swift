@@ -23,6 +23,7 @@ class PieceViewModel: ObservableObject, Identifiable {
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
     //    @State private var dragState: DragState = .unknown
+    private var timer: Timer!
     
     private var dragAmount: CGSize = .zero
     private var currentOffset: CGSize = .zero
@@ -81,6 +82,20 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>) {
         publisher
+            .map({ x -> (CGPoint, UUID, UUID, UUID?) in
+                self.timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
+                    withAnimation {
+                        if !self.disabled {
+                            self.disabled = true
+                        } else {
+                            self.disabled = false
+                            self.timer.invalidate()
+                        }
+                    }
+                }
+                self.timer.fire()
+                return x
+            })
             .filter { (_, pieceId, _, _) in
                 pieceId == self.id
             }

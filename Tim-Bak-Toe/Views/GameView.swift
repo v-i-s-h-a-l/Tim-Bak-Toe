@@ -15,7 +15,7 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
-            Color.gray.opacity(0.8)
+            Theme.Col.gameBackground
             VStack {
                 Spacer()
                 GridStack(rows: 3, columns: 3, content: cell)

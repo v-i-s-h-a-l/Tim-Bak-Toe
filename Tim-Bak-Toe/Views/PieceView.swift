@@ -17,7 +17,7 @@ struct PieceView: View {
         Circle()
             .frame(width: size.width, height: size.height)
             .offset(viewModel.dragAmount)
-            .foregroundColor(viewModel.disabled ? Color.red.opacity(0.7) : Color.red)
+            .foregroundColor(viewModel.disabled ? Theme.Col.piece.opacity(0.7) : Theme.Col.piece)
 //            .animation(Animation.linear(duration: 0.1))
             .gesture(DragGesture()
                 .onChanged(viewModel.onDragChanged)

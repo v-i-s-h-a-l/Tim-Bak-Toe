@@ -13,7 +13,7 @@ struct BoardCellView: View {
     @ObservedObject var viewModel = BoardCellViewModel()
     
     var body: some View {
-        Color.orange
+        Theme.Col.boardCell
             .opacity(0.8)
             .shadow(color: viewModel.cellState.shadowColor,
                     radius: viewModel.cellState.shadowRadius)

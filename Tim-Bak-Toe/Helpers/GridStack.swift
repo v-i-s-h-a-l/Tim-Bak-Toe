@@ -19,6 +19,12 @@ struct GridStack<Content: View>: View {
                 HStack {
                     ForEach(0..<self.columns, id: \.self) { column in
                         self.content(row, column)
+                            .overlay(GeometryReader { proxy in
+                                Color.clear
+                                    .onAppear {
+                                        print(proxy.frame(in: .global))
+                                }
+                            })
                     }
                 }
             }

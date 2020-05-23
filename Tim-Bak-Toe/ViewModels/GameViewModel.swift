@@ -16,7 +16,9 @@ class GameViewModel: ObservableObject {
     let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
 
     let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
-    let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID?), Never>()
+    let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+
+    let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
@@ -50,13 +52,16 @@ class GameViewModel: ObservableObject {
 
     private func setupConnnectionsForDragEnd(for pieces: [PieceViewModel]) {
         // Receive information from specific piece
-        pieces.forEach { $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher) }
+        pieces.forEach {
+            $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
+            $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
+        }
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
             pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
                 self.pieceDragEndToFellowPiecesPublisher.send(pieceID)
-                self.pieceDragEndToCellsPublisher.send((location, cellId))
+                self.pieceDragEndToCellsPublisher.send((location, pieceID, cellId))
             }
             .store(in: &cancellables)
         }
@@ -80,19 +85,31 @@ class GameViewModel: ObservableObject {
             generatedBoardCellViewModels.append(rowCells)
         }
 
-        subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: generatedBoardCellViewModels)
-        
+        let flattened = generatedBoardCellViewModels.flatMap {
+            $0.flatMap { $0 }
+        }
+
+        subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: flattened)
+        subscribeToCellPublishers(generatedCellViewModels: flattened)
+
         return generatedBoardCellViewModels
     }
 
-    private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [[BoardCellViewModel]]) {
-        let flattened = generatedCellViewModels.flatMap {
-            $0.flatMap { $0 }
-        }
-        flattened.forEach {
+    private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [BoardCellViewModel]) {
+        generatedCellViewModels.forEach {
             $0.subscribeToDragStart(self.pieceDragStartToCellsPublisher)
 //            $0.subscribeToDragChanged(self.)
             $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
+        }
+    }
+
+    private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
+        generatedCellViewModels.forEach { cellViewModel in
+            cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
+                // .. do somethinf
+                self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId, previousCellId))
+            }
+            .store(in: &cancellables)
         }
     }
 }

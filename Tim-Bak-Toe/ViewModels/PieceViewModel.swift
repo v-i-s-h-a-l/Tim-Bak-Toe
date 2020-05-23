@@ -18,14 +18,24 @@ class PieceViewModel: ObservableObject, Identifiable {
     var draggedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
     var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
 
-    var dragStartByFellowPieceCancellable: AnyCancellable?
-    var dragEndedByFellowPieceCancellable: AnyCancellable?
+    var cancellables: Set<AnyCancellable> = []
 
-    @Published var dragAmount: CGSize = .zero
+    @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
     //    @State private var dragState: DragState = .unknown
     
+    private var dragAmount: CGSize = .zero
+    private var currentOffset: CGSize = .zero
+
     private var isDragStarted: Bool = false
+    private var frameGlobal: CGRect = .zero
+    private var centerGlobal: CGPoint {
+        frameGlobal.center
+    }
+
+    func onAppear(_ proxy: GeometryProxy) {
+        self.frameGlobal = proxy.frame(in: .global)
+    }
 
     // MARK: - functions called by view -
     
@@ -36,6 +46,7 @@ class PieceViewModel: ObservableObject, Identifiable {
                 .send((id, occupiedCellID))
         }
         self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
+        self.relativeOffset = dragAmount + currentOffset
         
         self.draggedPublisher
             .send((drag.location, id, occupiedCellID))
@@ -51,17 +62,35 @@ class PieceViewModel: ObservableObject, Identifiable {
     // MARK: - functions called by game vm to provide publishers -
 
     func subscribeToDragStart(_ publisher: PassthroughSubject<UUID, Never>) {
-        dragStartByFellowPieceCancellable = publisher.sink { uuid in
+        publisher.sink { uuid in
             self.disabled = self.id != uuid
         }
+        .store(in: &cancellables)
     }
 
     func subscribeToDragEnd(_ publisher: PassthroughSubject<UUID, Never>) {
-        dragEndedByFellowPieceCancellable = publisher.sink { uuid in
+        publisher.sink { uuid in
             withAnimation {
                 self.disabled = false
                 self.dragAmount = .zero
+                self.relativeOffset = self.currentOffset
             }
         }
+        .store(in: &cancellables)
+    }
+
+    func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>) {
+        publisher
+            .filter { (_, pieceId, _, _) in
+                pieceId == self.id
+            }
+        .sink { (newCellCenter, _, newCellId, _) in
+            self.currentOffset = CGSize(width: newCellCenter.x - self.centerGlobal.x, height: newCellCenter.y - self.centerGlobal.y)
+            self.occupiedCellID = newCellId
+            withAnimation {
+                self.relativeOffset = self.currentOffset + self.dragAmount
+            }
+        }
+        .store(in: &cancellables)
     }
 }

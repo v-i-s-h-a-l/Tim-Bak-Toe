@@ -16,15 +16,21 @@ struct PieceView: View {
     var body: some View {
         Circle()
             .frame(width: size.width, height: size.height)
-            .offset(viewModel.dragAmount)
+            .offset(viewModel.relativeOffset)
             .foregroundColor(Theme.Col.piece)
             .opacity(viewModel.disabled ? 0.7 : 1)
-//            .animation(Animation.linear(duration: 0.1))
             .gesture(DragGesture(coordinateSpace: .global)
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded)
         )
-            .disabled(viewModel.disabled)
+            .allowsHitTesting(viewModel.disabled)
+        .overlay(
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear(perform: {
+                        self.viewModel.onAppear(proxy)
+                    })
+        })
     }
 
 }

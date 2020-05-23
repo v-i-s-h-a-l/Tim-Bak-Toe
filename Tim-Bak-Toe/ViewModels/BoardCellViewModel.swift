@@ -20,7 +20,7 @@ enum BoardCellState {
         typealias TC = Theme.Col.Shadow.BoardCell
         switch self {
         case .none: return TC.none
-            case .occupied: return TC.occupied
+        case .occupied: return TC.occupied
             case .origin: return TC.origin
             case .welcome: return TC.welcome
         }
@@ -29,7 +29,7 @@ enum BoardCellState {
     var shadowRadius: CGFloat {
         switch self {
         case .none: return 0
-        case .occupied, .origin, .welcome: return 2
+        case .occupied, .origin, .welcome: return 10
         }
     }
 }
@@ -40,18 +40,26 @@ class BoardCellViewModel: ObservableObject, Identifiable {
     var pieceId: UUID?
 
     @Published var cellState: BoardCellState = .none
-    private var frameGlobal: CGRect!
+    
+//    var dragStartedPublisher = PassthroughSubject<(UUID, UUID?), Never>()
+//    var draggedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+//    var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+    
+    var newOccupancyPublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
 
-    private var dragStartSubscription: AnyCancellable?
-    private var dragChangeSubscription: AnyCancellable?
-    private var dragEndedSubscription: AnyCancellable?
+    private var frameGlobal: CGRect!
+    private var centerGlobal: CGPoint {
+        frameGlobal.center
+    }
+
+    private var cancellables: Set<AnyCancellable> = []
 
     func onAppear(_ proxy: GeometryProxy) {
         self.frameGlobal = proxy.frame(in: .global)
     }
 
     func subscribeToDragStart(_ publisher: PassthroughSubject<UUID?, Never>) {
-        dragStartSubscription = publisher.sink(receiveValue: { cellId in
+        publisher.sink(receiveValue: { cellId in
                 if self.id == cellId {
                     self.cellState = .origin
                 } else {
@@ -63,10 +71,11 @@ class BoardCellViewModel: ObservableObject, Identifiable {
                 }
             }
         )
+        .store(in: &cancellables)
     }
 
     func subscribeToDragChanged(_ publisher: PassthroughSubject<(CGPoint, UUID?), Never>) {
-        dragChangeSubscription = publisher.sink(receiveValue: { point, cellId in
+        publisher.sink(receiveValue: { point, cellId in
             if self.frameGlobal.contains(point) {
                 if self.id == cellId {
                     self.cellState = .origin
@@ -81,15 +90,25 @@ class BoardCellViewModel: ObservableObject, Identifiable {
                 }
             }
         })
+        .store(in: &cancellables)
     }
 
-    func subscribeToDragEnded(_ publisher: PassthroughSubject<(CGPoint, UUID?), Never>) {
-        dragEndedSubscription = publisher.sink(receiveValue: { point, cellId in
-            if self.frameGlobal.contains(point) {
-                // some publishing and animation
+    func subscribeToDragEnded(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID?), Never>) {
+        publisher.sink(receiveValue: { point, pieceId, previousCellId in
+            if self.pieceId != nil {
+                // already occupied
+            } else if self.frameGlobal.contains(point) {
+                if self.pieceId == pieceId {
+                    // self was origin
+                } else {
+                    // new occupancy
+                    self.pieceId = pieceId
+                    self.newOccupancyPublisher.send((self.centerGlobal, pieceId, self.id, previousCellId))
+                }
             } else {
-                self.cellState = .none
+                // self has not changed
             }
         })
+        .store(in: &cancellables)
     }
 }

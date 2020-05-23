@@ -77,11 +77,6 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     func subscribeToDragEnd(_ publisher: PassthroughSubject<UUID, Never>) {
         publisher
-            // enable dragging momentarily for all
-            .filter({ pieceId in
-                self.disabled = false
-                return true
-            })
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
@@ -92,17 +87,28 @@ class PieceViewModel: ObservableObject, Identifiable {
             }
         }
         .store(in: &cancellables)
+        
+        publisher
+            .sink { _ in
+                self.disabled = false
+        }
+        .store(in: &cancellables)
     }
     
     func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID), Never>) {
         publisher
             .filter { (_, pieceId, _) in
-                self.pauseDrag()
                 return pieceId == self.id
             }
         .sink { (newCellCenter, _, newCellId) in
             self.occupiedCellID = newCellId
             self.currentOffset = newCellCenter - self.centerGlobal
+        }
+        .store(in: &cancellables)
+
+        publisher
+            .sink { (_, _, _) in
+                self.pauseDrag()
         }
         .store(in: &cancellables)
     }

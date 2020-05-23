@@ -24,13 +24,13 @@ struct PieceView: View {
                 .onEnded(viewModel.onDragEnded)
         )
             .allowsHitTesting(!viewModel.disabled)
-        .overlay(
-            GeometryReader { proxy in
-                Color.clear
-                    .onAppear(perform: {
-                        self.viewModel.onAppear(proxy)
-                    })
-        })
+            .overlay(
+                GeometryReader { proxy in
+                    Color.clear
+                        .onAppear(perform: {
+                            self.viewModel.onAppear(proxy)
+                        })
+            })
     }
 
 }

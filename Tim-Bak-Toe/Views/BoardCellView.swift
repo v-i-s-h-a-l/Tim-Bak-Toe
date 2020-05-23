@@ -13,7 +13,8 @@ struct BoardCellView: View {
     @ObservedObject var viewModel = BoardCellViewModel()
     
     var body: some View {
-        Theme.Col.boardCell
+        RoundedRectangle(cornerRadius: 5)
+            .foregroundColor(Theme.Col.boardCell)
             .shadow(color: viewModel.cellState.shadowColor,
                     radius: viewModel.cellState.shadowRadius)
             .overlay(

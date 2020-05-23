@@ -16,7 +16,7 @@ struct PieceView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(Theme.Col.piece)
+                .fill(RadialGradient(gradient: Gradient(colors: [.yellow, .orange, .red, .red]), center: .center, startRadius: 0, endRadius: size.height * 0.8))
             
             Circle()
                 .stroke(Theme.Col.pieceBorder, lineWidth: 4)

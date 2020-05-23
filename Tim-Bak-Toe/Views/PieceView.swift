@@ -18,12 +18,12 @@ struct PieceView: View {
             .frame(width: size.width, height: size.height)
             .offset(viewModel.relativeOffset)
             .foregroundColor(Theme.Col.piece)
-            .opacity(viewModel.disabled ? 0.7 : 1)
+            .opacity(viewModel.disabled ? 0.5 : 1)
             .gesture(DragGesture(coordinateSpace: .global)
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded)
         )
-            .allowsHitTesting(viewModel.disabled)
+            .allowsHitTesting(!viewModel.disabled)
         .overlay(
             GeometryReader { proxy in
                 Color.clear

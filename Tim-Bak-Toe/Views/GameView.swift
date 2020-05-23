@@ -12,6 +12,14 @@ struct GameView: View {
     
     @ObservedObject var viewModel = GameViewModel()
     @State private var size: CGSize = .zero
+
+    private var boardSize: CGSize {
+        CGSize(width: size.width * 0.8, height: size.width * 0.8)
+    }
+    
+    private var pieceSize: CGSize {
+        CGSize(width: size.width * 0.8 / (3 * 1.4), height: size.width * 0.8 / (3 * 1.4))
+    }
     
     var body: some View {
         ZStack {
@@ -26,7 +34,7 @@ struct GameView: View {
                 Spacer()
                 HStack {
                     ForEach(viewModel.hostPieces) {
-                        PieceView(viewModel: $0)
+                        PieceView(viewModel: $0, size: self.pieceSize)
                     }
                     .padding([.bottom])
                     .padding([.bottom])

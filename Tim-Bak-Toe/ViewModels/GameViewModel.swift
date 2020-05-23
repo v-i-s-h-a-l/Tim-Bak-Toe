@@ -18,7 +18,7 @@ class GameViewModel: ObservableObject {
     let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
     let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
 
-    let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
+    let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID), Never>()
     let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
@@ -108,7 +108,7 @@ class GameViewModel: ObservableObject {
         generatedCellViewModels.forEach { cellViewModel in
             cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
                 self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
-                self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId, previousCellId))
+                self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId))
             }
             .store(in: &cancellables)
         }

@@ -70,25 +70,6 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
 
-//    func subscribeToDragChanged(_ publisher: PassthroughSubject<(CGPoint, UUID?), Never>) {
-//        publisher.sink(receiveValue: { point, cellId in
-//            if self.frameGlobal.contains(point) {
-//                if self.id == cellId {
-//                    self.animateToState(.origin)
-//                } else {
-//                    self.animateToState(.welcome)
-//                }
-//            } else {
-//                if self.pieceId != nil {
-//                    self.animateToState(.occupied)
-//                } else {
-//                    self.animateToState(.welcome)
-//                }
-//            }
-//        })
-//        .store(in: &cancellables)
-//    }
-
     func subscribeToDragEnded(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID?), Never>) {
         // calculates only successful drops
         // rest will be handled in

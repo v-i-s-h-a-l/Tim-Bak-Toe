@@ -12,33 +12,27 @@ import SwiftUI
 
 class PieceViewModel: ObservableObject, Identifiable {
     let id = UUID()
-    var occupiedCellID: UUID?
-
-    var dragStartedPublisher = PassthroughSubject<(UUID, UUID?), Never>()
-    var draggedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
-    var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
-
-    var cancellables: Set<AnyCancellable> = []
+    private var occupiedCellID: UUID?
 
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
-    //    @State private var dragState: DragState = .unknown
-    private var timer: Timer!
     
+    var dragStartedPublisher = PassthroughSubject<(UUID, UUID?), Never>()
+    var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+
+    private var cancellables: Set<AnyCancellable> = []
+
     private var dragAmount: CGSize = .zero
     private var currentOffset: CGSize = .zero
 
     private var isDragStarted: Bool = false
-    private var frameGlobal: CGRect = .zero
-    private var centerGlobal: CGPoint {
-        frameGlobal.center
-    }
+    private var centerGlobal: CGPoint = .zero
 
     func onAppear(_ proxy: GeometryProxy) {
-        self.frameGlobal = proxy.frame(in: .global)
+        self.centerGlobal = proxy.frame(in: .global).center
     }
 
-    // MARK: - functions called by view -
+    // MARK: - functions to be called by view -
     
     func onDragChanged(_ drag: DragGesture.Value) {
         if !isDragStarted {
@@ -48,10 +42,6 @@ class PieceViewModel: ObservableObject, Identifiable {
         }
         self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
         self.relativeOffset = dragAmount + currentOffset
-        
-        self.draggedPublisher
-            .send((drag.location, id, occupiedCellID))
-        //        self.dragState = self.onChanged?(drag.location, self.text) ?? .unknown
     }
     
     func onDragEnded(_ drag: DragGesture.Value) {
@@ -59,7 +49,23 @@ class PieceViewModel: ObservableObject, Identifiable {
         draggedEndedPublisher
             .send((drag.location, id, occupiedCellID))
     }
+
+    // MARK: - Internal functionality -
     
+    fileprivate func pauseDrag(for seconds: Int = 3) {
+        withAnimation {
+            self.disabled = true
+        }
+        Just(false)
+            .delay(for: .seconds(seconds), scheduler: RunLoop.current)
+            .sink { value in
+            withAnimation {
+                self.disabled = value
+            }
+        }
+        .store(in: &cancellables)
+    }
+
     // MARK: - functions called by game vm to provide publishers -
 
     func subscribeToDragStart(_ publisher: PassthroughSubject<UUID, Never>) {
@@ -87,36 +93,16 @@ class PieceViewModel: ObservableObject, Identifiable {
         }
         .store(in: &cancellables)
     }
-
-    fileprivate func pauseDrag() {
-        withAnimation {
-            self.disabled = true
-        }
-        Just(false)
-            .delay(for: .seconds(3), scheduler: RunLoop.current)
-            .sink { value in
-            withAnimation {
-                self.disabled = value
-            }
-        }
-        .store(in: &cancellables)
-    }
     
-    func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>) {
+    func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID), Never>) {
         publisher
-            .map { x -> (CGPoint, UUID, UUID, UUID?) in
+            .filter { (_, pieceId, _) in
                 self.pauseDrag()
-                return x
+                return pieceId == self.id
             }
-            .filter { (_, pieceId, _, _) in
-                pieceId == self.id
-            }
-        .sink { (newCellCenter, _, newCellId, _) in
+        .sink { (newCellCenter, _, newCellId) in
             self.occupiedCellID = newCellId
             self.currentOffset = newCellCenter - self.centerGlobal
-//            withAnimation {
-//                self.relativeOffset = self.currentOffset
-//            }
         }
         .store(in: &cancellables)
     }

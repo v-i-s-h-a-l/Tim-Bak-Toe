@@ -28,6 +28,7 @@
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
+		DCF3D75B2479DB390071506A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75A2479DB390071506A /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
+		DCF3D75A2479DB390071506A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				DCF3D7342478F3E80071506A /* Theme.swift */,
 				DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */,
 				DCF3D75824799D130071506A /* CommonExtensions.swift */,
+				DCF3D75A2479DB390071506A /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
 				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
 				DC1283F12477740900B1317E /* ContentView.swift in Sources */,
+				DCF3D75B2479DB390071506A /* Constants.swift in Sources */,
 				DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */,
 				DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */,
 			);

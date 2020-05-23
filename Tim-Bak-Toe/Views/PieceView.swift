@@ -19,26 +19,24 @@ struct PieceView: View {
                 .fill(Theme.Col.piece)
             
             Circle()
-            .stroke(Theme.Col.pieceBorder, lineWidth: 4)
+                .stroke(Theme.Col.pieceBorder, lineWidth: 4)
         }
-            .zIndex(viewModel.isDragStarted ? 3 : 2)
-            .frame(width: size.width, height: size.height)
-            .offset(viewModel.relativeOffset)
-            .opacity(viewModel.disabled ? 0.5 : 1)
-            .gesture(DragGesture(coordinateSpace: .global)
-                .onChanged(viewModel.onDragChanged)
-                .onEnded(viewModel.onDragEnded)
-        )
-            .allowsHitTesting(!viewModel.disabled)
-            .overlay(
-                GeometryReader { proxy in
-                    Color.clear
-                        .onAppear(perform: {
-                            self.viewModel.onAppear(proxy)
-                        })
-            })
+        .zIndex(viewModel.isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced)
+        .frame(width: size.width, height: size.height)
+        .offset(viewModel.relativeOffset)
+        .opacity(viewModel.disabled ? 0.5 : 1)
+        .gesture(DragGesture(coordinateSpace: .global)
+        .onChanged(viewModel.onDragChanged)
+        .onEnded(viewModel.onDragEnded))
+        .allowsHitTesting(!viewModel.disabled)
+        .overlay(GeometryReader { proxy in
+            Color.clear
+                .onAppear(perform: {
+                    self.viewModel.onAppear(proxy)
+                })
+        })
     }
-
+    
 }
 
 struct PieceView_Previews: PreviewProvider {

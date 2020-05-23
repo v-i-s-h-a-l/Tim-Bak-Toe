@@ -21,7 +21,7 @@ class GameViewModel: ObservableObject {
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
 
-    var cancellables = [AnyCancellable?]()
+    var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Host pieces -
 
@@ -40,10 +40,11 @@ class GameViewModel: ObservableObject {
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            cancellables.append(pieceModel.dragStartedPublisher.sink { pieceID, cellId in
+            pieceModel.dragStartedPublisher.sink { pieceID, cellId in
                 self.pieceDragStartToFellowPiecesPublisher.send(pieceID)
                 self.pieceDragStartToCellsPublisher.send(cellId)
-            })
+            }
+            .store(in: &cancellables)
         }
     }
 
@@ -53,10 +54,11 @@ class GameViewModel: ObservableObject {
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            cancellables.append(pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
+            pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
                 self.pieceDragEndToFellowPiecesPublisher.send(pieceID)
                 self.pieceDragEndToCellsPublisher.send((location, cellId))
-            })
+            }
+            .store(in: &cancellables)
         }
     }
         

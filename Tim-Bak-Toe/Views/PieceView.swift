@@ -20,7 +20,7 @@ struct PieceView: View {
             .foregroundColor(Theme.Col.piece)
             .opacity(viewModel.disabled ? 0.7 : 1)
 //            .animation(Animation.linear(duration: 0.1))
-            .gesture(DragGesture()
+            .gesture(DragGesture(coordinateSpace: .global)
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded)
         )

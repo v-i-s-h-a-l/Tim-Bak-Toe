@@ -53,7 +53,6 @@ class PieceViewModel: ObservableObject, Identifiable {
     func subscribeToDragStart(_ publisher: PassthroughSubject<UUID, Never>) {
         dragStartByFellowPieceCancellable = publisher.sink { uuid in
             self.disabled = self.id != uuid
-            print("Drag started for: \(uuid)\nself uuid: \(self.id)")
         }
     }
 

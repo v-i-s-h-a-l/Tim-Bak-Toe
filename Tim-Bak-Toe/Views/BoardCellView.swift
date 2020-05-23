@@ -25,9 +25,3 @@ struct BoardCellView: View {
             })
     }
 }
-
-struct BoardCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        BoardCellView()
-    }
-}

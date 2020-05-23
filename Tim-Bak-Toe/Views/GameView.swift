@@ -11,7 +11,7 @@ import SwiftUI
 struct GameView: View {
     
     @ObservedObject var viewModel = GameViewModel()
-    @State private var size: CGSize = .zero
+    private let size: CGSize = UIScreen.main.bounds.size
 
     private var boardSize: CGSize {
         CGSize(width: size.width * 0.8, height: size.width * 0.8)
@@ -44,12 +44,6 @@ struct GameView: View {
         .edgesIgnoringSafeArea([.all])
         .navigationBarBackButtonHidden(true)
         .statusBar(hidden: true)
-        .overlay(GeometryReader { proxy in
-            Color.clear
-                .onAppear {
-                    self.size = proxy.frame(in: .global).size
-            }
-        })
     }
 
     func cell(atRow row: Int, column: Int) -> some View {

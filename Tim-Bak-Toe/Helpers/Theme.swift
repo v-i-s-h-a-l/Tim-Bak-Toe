@@ -12,8 +12,9 @@ import SwiftUI
 enum Theme {
     enum Col {
         static var piece = Color.red
+        static var pieceBorder = Color.white
 
-        static var gameBackground = Color.gray.opacity(0.7)
+        static var gameBackground = Color.gray//.opacity(0.7)
         static var boardCell = Color.black
 
         enum Shadow {

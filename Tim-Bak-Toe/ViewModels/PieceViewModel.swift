@@ -16,7 +16,8 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
-    
+    @Published var isDragStarted: Bool = false
+
     var dragStartedPublisher = PassthroughSubject<(UUID, UUID?), Never>()
     var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
 
@@ -25,7 +26,6 @@ class PieceViewModel: ObservableObject, Identifiable {
     private var dragAmount: CGSize = .zero
     private var currentOffset: CGSize = .zero
 
-    private var isDragStarted: Bool = false
     private var centerGlobal: CGPoint = .zero
 
     func onAppear(_ proxy: GeometryProxy) {

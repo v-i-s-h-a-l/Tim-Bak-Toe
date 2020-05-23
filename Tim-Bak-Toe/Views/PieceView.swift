@@ -14,10 +14,16 @@ struct PieceView: View {
     var size: CGSize = CGSize(width: 50, height: 50)
     
     var body: some View {
-        Circle()
+        ZStack {
+            Circle()
+                .fill(Theme.Col.piece)
+            
+            Circle()
+            .stroke(Theme.Col.pieceBorder, lineWidth: 4)
+        }
+            .zIndex(viewModel.isDragStarted ? 3 : 2)
             .frame(width: size.width, height: size.height)
             .offset(viewModel.relativeOffset)
-            .foregroundColor(Theme.Col.piece)
             .opacity(viewModel.disabled ? 0.5 : 1)
             .gesture(DragGesture(coordinateSpace: .global)
                 .onChanged(viewModel.onDragChanged)

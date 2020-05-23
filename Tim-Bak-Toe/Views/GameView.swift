@@ -12,13 +12,13 @@ struct GameView: View {
     
     @ObservedObject var viewModel = GameViewModel()
     private let size: CGSize = UIScreen.main.bounds.size
-
+    
     private var boardSize: CGSize {
-        CGSize(width: size.width * 0.8, height: size.width * 0.8)
+        CGSize(width: size.width * 0.9, height: size.width * 0.9)
     }
     
     private var pieceSize: CGSize {
-        CGSize(width: size.width * 0.8 / (3 * 1.4), height: size.width * 0.8 / (3 * 1.4))
+        CGSize(width: boardSize.width / (3 * 1.4), height: boardSize.height / (3 * 1.4))
     }
     
     var body: some View {
@@ -27,7 +27,7 @@ struct GameView: View {
             VStack {
                 Spacer()
                 GridStack(rows: 3, columns: 3, content: cell)
-                    .frame(width: size.width * 0.8, height: size.width * 0.8)
+                    .frame(width: boardSize.width, height: boardSize.height)
                 Spacer()
             }
             VStack {
@@ -35,6 +35,8 @@ struct GameView: View {
                 HStack {
                     ForEach(viewModel.hostPieces) {
                         PieceView(viewModel: $0, size: self.pieceSize)
+                            .zIndex(2)
+                            .padding([.leading, .trailing], -10)
                     }
                     .padding([.bottom])
                     .padding([.bottom])
@@ -45,15 +47,15 @@ struct GameView: View {
         .navigationBarBackButtonHidden(true)
         .statusBar(hidden: true)
     }
-
+    
     func cell(atRow row: Int, column: Int) -> some View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row][column])
-        .padding(2)
+            .padding(5)
     }
 }
 
 struct GameView_Previews: PreviewProvider {
-
+    
     static var previews: some View {
         Group {
             GameView().colorScheme(.dark)

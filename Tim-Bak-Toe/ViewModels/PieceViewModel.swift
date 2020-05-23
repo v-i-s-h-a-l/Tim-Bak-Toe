@@ -70,9 +70,17 @@ class PieceViewModel: ObservableObject, Identifiable {
     }
 
     func subscribeToDragEnd(_ publisher: PassthroughSubject<UUID, Never>) {
-        publisher.sink { uuid in
-            withAnimation {
+        publisher
+            // enable dragging momentarily for all
+            .filter({ pieceId in
                 self.disabled = false
+                return true
+            })
+            // waits for drop success calculations (if any)
+            // if successful drop is there then currentOffset gets updated accordingly
+            .delay(for: .milliseconds(20), scheduler: RunLoop.current)
+            .sink { uuid in
+                withAnimation {
                 self.dragAmount = .zero
                 self.relativeOffset = self.currentOffset
             }
@@ -80,31 +88,35 @@ class PieceViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
 
+    fileprivate func pauseDrag() {
+        withAnimation {
+            self.disabled = true
+        }
+        Just(false)
+            .delay(for: .seconds(3), scheduler: RunLoop.current)
+            .sink { value in
+            withAnimation {
+                self.disabled = value
+            }
+        }
+        .store(in: &cancellables)
+    }
+    
     func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>) {
         publisher
-            .map({ x -> (CGPoint, UUID, UUID, UUID?) in
-                self.timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
-                    withAnimation {
-                        if !self.disabled {
-                            self.disabled = true
-                        } else {
-                            self.disabled = false
-                            self.timer.invalidate()
-                        }
-                    }
-                }
-                self.timer.fire()
+            .map { x -> (CGPoint, UUID, UUID, UUID?) in
+                self.pauseDrag()
                 return x
-            })
+            }
             .filter { (_, pieceId, _, _) in
                 pieceId == self.id
             }
         .sink { (newCellCenter, _, newCellId, _) in
-            self.currentOffset = CGSize(width: newCellCenter.x - self.centerGlobal.x, height: newCellCenter.y - self.centerGlobal.y)
             self.occupiedCellID = newCellId
-            withAnimation {
-                self.relativeOffset = self.currentOffset + self.dragAmount
-            }
+            self.currentOffset = newCellCenter - self.centerGlobal
+//            withAnimation {
+//                self.relativeOffset = self.currentOffset
+//            }
         }
         .store(in: &cancellables)
     }

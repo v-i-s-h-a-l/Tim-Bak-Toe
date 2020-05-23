@@ -19,6 +19,7 @@ class GameViewModel: ObservableObject {
     let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
 
     let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
+    let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
@@ -98,15 +99,15 @@ class GameViewModel: ObservableObject {
     private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach {
             $0.subscribeToDragStart(self.pieceDragStartToCellsPublisher)
-//            $0.subscribeToDragChanged(self.)
             $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
+            $0.subscribeToNewOccupancy(self.newCellOccupiedPublisherForOriginCell)
         }
     }
 
     private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach { cellViewModel in
             cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
-                // .. do somethinf
+                self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
                 self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId, previousCellId))
             }
             .store(in: &cancellables)

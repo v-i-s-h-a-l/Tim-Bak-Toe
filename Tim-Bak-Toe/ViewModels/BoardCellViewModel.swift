@@ -41,10 +41,6 @@ class BoardCellViewModel: ObservableObject, Identifiable {
 
     @Published var cellState: BoardCellState = .none
     
-//    var dragStartedPublisher = PassthroughSubject<(UUID, UUID?), Never>()
-//    var draggedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
-//    var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
-    
     var newOccupancyPublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
 
     private var frameGlobal: CGRect!
@@ -61,12 +57,12 @@ class BoardCellViewModel: ObservableObject, Identifiable {
     func subscribeToDragStart(_ publisher: PassthroughSubject<UUID?, Never>) {
         publisher.sink(receiveValue: { cellId in
                 if self.id == cellId {
-                    self.cellState = .origin
+                    self.animateToState(.origin)
                 } else {
                     if self.pieceId != nil {
-                        self.cellState = .occupied
+                        self.animateToState(.occupied)
                     } else {
-                        self.cellState = .welcome
+                        self.animateToState(.welcome)
                     }
                 }
             }
@@ -74,41 +70,70 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
 
-    func subscribeToDragChanged(_ publisher: PassthroughSubject<(CGPoint, UUID?), Never>) {
-        publisher.sink(receiveValue: { point, cellId in
-            if self.frameGlobal.contains(point) {
-                if self.id == cellId {
-                    self.cellState = .origin
+//    func subscribeToDragChanged(_ publisher: PassthroughSubject<(CGPoint, UUID?), Never>) {
+//        publisher.sink(receiveValue: { point, cellId in
+//            if self.frameGlobal.contains(point) {
+//                if self.id == cellId {
+//                    self.animateToState(.origin)
+//                } else {
+//                    self.animateToState(.welcome)
+//                }
+//            } else {
+//                if self.pieceId != nil {
+//                    self.animateToState(.occupied)
+//                } else {
+//                    self.animateToState(.welcome)
+//                }
+//            }
+//        })
+//        .store(in: &cancellables)
+//    }
+
+    func subscribeToDragEnded(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID?), Never>) {
+        // calculates only successful drops
+        // rest will be handled in
+        publisher
+            .filter({ (point, pieceId, originCellId) in
+                if self.frameGlobal.contains(point) && self.pieceId == nil {
+                    return true
                 } else {
-                    self.cellState = .welcome
+                    self.animateNoChange()
+                    return false
                 }
-            } else {
-                if self.pieceId != nil {
-                    self.cellState = .occupied
-                } else {
-                    self.cellState = .welcome
-                }
+            }).sink(receiveValue: { (_, pieceId, originCellId) in
+                self.pieceId = pieceId
+                self.animateSuccessDestination()
+                self.newOccupancyPublisher.send((self.centerGlobal, pieceId, self.id, originCellId))
+            })
+            .store(in: &cancellables)
+    }
+    
+    func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(UUID, UUID?), Never>) {
+        publisher
+            .filter { $1 != nil }       // freshly occupied
+            .sink { (pieceId, oldCellId) in
+            if self.pieceId == pieceId && self.id == oldCellId {
+                self.pieceId = nil
             }
-        })
+        }
         .store(in: &cancellables)
     }
 
-    func subscribeToDragEnded(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID?), Never>) {
-        publisher.sink(receiveValue: { point, pieceId, previousCellId in
-            if self.pieceId != nil {
-                // already occupied
-            } else if self.frameGlobal.contains(point) {
-                if self.pieceId == pieceId {
-                    // self was origin
-                } else {
-                    // new occupancy
-                    self.pieceId = pieceId
-                    self.newOccupancyPublisher.send((self.centerGlobal, pieceId, self.id, previousCellId))
-                }
-            } else {
-                // self has not changed
-            }
-        })
-        .store(in: &cancellables)
+    private func animateToState(_ updatedState: BoardCellState) {
+        withAnimation(Animation.easeInOut) {
+            self.cellState = updatedState
+        }
+    }
+
+    private func animateSuccessDestination() {
+        withAnimation(Animation.spring()) {
+            self.cellState = .none
+        }
+    }
+
+    private func animateNoChange() {
+        withAnimation {
+            self.cellState = .none
+        }
     }
 }

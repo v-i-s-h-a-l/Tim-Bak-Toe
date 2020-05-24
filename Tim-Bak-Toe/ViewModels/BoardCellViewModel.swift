@@ -44,9 +44,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
     var newOccupancyPublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
 
     private var frameGlobal: CGRect!
-    private var centerGlobal: CGPoint {
-        frameGlobal.center
-    }
+    private lazy var centerGlobal: CGPoint = frameGlobal.center
 
     private var cancellables: Set<AnyCancellable> = []
 

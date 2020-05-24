@@ -10,19 +10,22 @@ import Combine
 import Foundation
 import SwiftUI
 
+let hostId = UUID()
+let peerId = UUID()
+
 class GameViewModel: ObservableObject {
     
-    let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
-    let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
+    private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
+    private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
 
-    let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
-    let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+    private let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
+    private let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
 
-    let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID), Never>()
-    let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
+    private let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID), Never>()
+    private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
-    lazy var guestPieces: [PieceViewModel] = generatePiecesForPeer()
+    lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
 
     private var cancellables: Set<AnyCancellable> = []

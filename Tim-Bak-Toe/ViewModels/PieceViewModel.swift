@@ -14,9 +14,11 @@ class PieceViewModel: ObservableObject, Identifiable {
     let id = UUID()
     private var occupiedCellID: UUID?
     let style: PieceStyle
+    let userId: UUID
 
     init(with style: PieceStyle) {
         self.style = style
+        self.userId = (style == .circle1 ? hostId : peerId)
     }
 
     @Published var relativeOffset: CGSize = .zero

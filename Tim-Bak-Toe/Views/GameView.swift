@@ -32,12 +32,22 @@ struct GameView: View {
             }
             .zIndex(ZIndex.board)
             VStack {
+                HStack {
+                    ForEach(viewModel.peerPieces) {
+                        PieceView(viewModel: $0, size: self.pieceSize)
+                            .padding([.leading, .trailing], -10)
+                    }
+                    .padding([.top])
+                    .padding([.top])
+                    .padding([.top])
+                }
                 Spacer()
                 HStack {
                     ForEach(viewModel.hostPieces) {
                         PieceView(viewModel: $0, size: self.pieceSize)
                             .padding([.leading, .trailing], -10)
                     }
+                    .padding([.bottom])
                     .padding([.bottom])
                     .padding([.bottom])
                 }

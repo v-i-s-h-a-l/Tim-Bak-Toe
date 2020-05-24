@@ -23,7 +23,7 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
-    @Published var isDragStarted: Bool = false
+    @Published var zIndex: Double = ZIndex.playerPiecePlaced
     
     /// publishes team id, piece id and optional occeupied cell id
     var dragStartedPublisher = PassthroughSubject<(UUID, UUID, UUID?), Never>()
@@ -31,6 +31,7 @@ class PieceViewModel: ObservableObject, Identifiable {
     /// publishes team id, drag end location, piece id and optional occeupied cell id
     var draggedEndedPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
+    private var isDragStarted: Bool = false
     private var cancellables: Set<AnyCancellable> = []
 
     private var dragAmount: CGSize = .zero
@@ -51,6 +52,7 @@ class PieceViewModel: ObservableObject, Identifiable {
             self.isDragStarted = true
             self.dragStartedPublisher
                 .send((teamId, id, occupiedCellID))
+            zIndex = ZIndex.playerPieceDragged
         } else {
             self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
 //            withAnimation(Animation.linear(duration: 0.1)) {
@@ -63,6 +65,14 @@ class PieceViewModel: ObservableObject, Identifiable {
         // prevents from dragging multiple items
         guard !self.disabled else { return }
         isDragStarted = false
+
+        Just(false)
+            .delay(for: .seconds(0.5), scheduler: RunLoop.current)
+            .sink { _ in
+                self.zIndex = ZIndex.playerPiecePlaced
+        }
+        .store(in: &cancellables)
+
         draggedEndedPublisher
             .send((teamId, drag.location, id, occupiedCellID))
     }

@@ -9,13 +9,20 @@
 import SwiftUI
 
 struct BoardCellView: View {
+    
+    @ObservedObject var viewModel = BoardCellViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct BoardCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        BoardCellView()
+        RoundedRectangle(cornerRadius: 5)
+            .foregroundColor(Theme.Col.boardCell)
+            .shadow(color: viewModel.cellState.shadowColor,
+                    radius: viewModel.cellState.shadowRadius)
+            .overlay(
+                GeometryReader { proxy in
+                    Color.clear
+                        .onAppear(perform: {
+                            self.viewModel.onAppear(proxy)
+                        })
+            })
     }
 }

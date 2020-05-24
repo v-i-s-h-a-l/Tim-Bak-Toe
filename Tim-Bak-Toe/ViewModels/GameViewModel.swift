@@ -37,10 +37,10 @@ class GameViewModel: ObservableObject {
     private func generatePiecesForHost() -> [PieceViewModel] {
         let generatedHostPieces = [PieceViewModel(with: .circle1), PieceViewModel(with: .circle1), PieceViewModel(with: .circle1)]
 
-        if userID == hostId {
+//        if userID == hostId {
             setupConnnectionsForDragStart(for: generatedHostPieces)
             setupConnnectionsForDragEnd(for: generatedHostPieces)
-        }
+//        }
         
         return generatedHostPieces
     }
@@ -89,10 +89,10 @@ class GameViewModel: ObservableObject {
     private func generatePiecesForPeer() -> [PieceViewModel] {
         let generatedPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
 
-        if userID == peerId {
+//        if userID == peerId {
             setupConnnectionsForDragStart(for: generatedPieces)
             setupConnnectionsForDragEnd(for: generatedPieces)
-        }
+//        }
 
         return generatedPieces
     }

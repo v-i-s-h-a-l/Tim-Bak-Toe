@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct GameView: View {
-    
+
+//    @EnvironmentObject var gameSettings
     @ObservedObject var viewModel = GameViewModel()
     private let size: CGSize = UIScreen.main.bounds.size
     
@@ -29,28 +30,28 @@ struct GameView: View {
                 GridStack(rows: 3, columns: 3, content: cell)
                     .frame(width: boardSize.width, height: boardSize.height)
                 Spacer()
+                Spacer()
             }
             .zIndex(ZIndex.board)
+
             VStack {
-                HStack {
-                    ForEach(viewModel.peerPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.leading, .trailing], -10)
-                    }
-                    .padding([.top])
-                    .padding([.top])
-                    .padding([.top])
-                }
                 Spacer()
                 HStack {
                     ForEach(viewModel.hostPieces) {
                         PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.leading, .trailing], -10)
+                            .padding([.trailing], -self.pieceSize.width)
                     }
-                    .padding([.bottom])
-                    .padding([.bottom])
-                    .padding([.bottom])
+                    .padding([.leading])
+                    Spacer()
+                    ForEach(viewModel.peerPieces) {
+                        PieceView(viewModel: $0, size: self.pieceSize)
+                            .padding([.leading], -self.pieceSize.width)
+                    }
+                    .padding([.trailing])
                 }
+                .padding([.bottom])
+                .padding([.bottom])
+                .padding([.bottom])
             }
         }
         .edgesIgnoringSafeArea([.all])
@@ -69,8 +70,9 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             GameView().colorScheme(.dark)
-                .previewDevice(PreviewDevice.iPadPro_12_9)
-            GameView().colorScheme(.light).previewDevice(PreviewDevice.iPhoneSE)
+                .previewDevice(PreviewDevice.iPhone11ProMax)
+            GameView().colorScheme(.light)
+                .previewDevice(PreviewDevice.iPhoneSE)
         }
     }
 }

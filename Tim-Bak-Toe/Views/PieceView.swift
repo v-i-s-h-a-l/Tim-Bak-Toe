@@ -48,7 +48,7 @@ struct PieceView: View {
         .gesture(DragGesture(coordinateSpace: .global)
         .onChanged(viewModel.onDragChanged)
         .onEnded(viewModel.onDragEnded))
-        .allowsHitTesting(!viewModel.disabled && (viewModel.teamId == userID))
+        .allowsHitTesting(!viewModel.disabled)
         .overlay(GeometryReader { proxy in
             Color.clear
                 .onAppear(perform: {

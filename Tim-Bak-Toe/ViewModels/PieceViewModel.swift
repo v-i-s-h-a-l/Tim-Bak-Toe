@@ -110,7 +110,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         publisher
             .filter { teamId, _ in
                 teamId == self.teamId
-        }
+            }
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
@@ -123,8 +123,11 @@ class PieceViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
         
         publisher
-            .sink { _ in
-                self.disabled = false
+            .filter { teamId, _ in
+                teamId == self.teamId
+        }
+        .sink { _ in
+            self.disabled = false
         }
         .store(in: &cancellables)
     }

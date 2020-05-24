@@ -41,7 +41,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
 
     @Published var cellState: BoardCellState = .none
     
-    var newOccupancyPublisher = PassthroughSubject<(CGPoint, UUID, UUID, UUID?), Never>()
+    var newOccupancyPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID, UUID?), Never>()
 
     private var frameGlobal: CGRect!
     private lazy var centerGlobal: CGPoint = frameGlobal.center
@@ -68,21 +68,21 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
 
-    func subscribeToDragEnded(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID?), Never>) {
+    func subscribeToDragEnded(_ publisher: PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>) {
         // calculates only successful drops
         // rest will be handled in
         publisher
-            .filter({ (point, pieceId, originCellId) in
+            .filter({ (teamId, point, pieceId, originCellId) in
                 if self.frameGlobal.contains(point) && self.pieceId == nil {
                     return true
                 } else {
                     self.animateNoChange()
                     return false
                 }
-            }).sink(receiveValue: { (_, pieceId, originCellId) in
+            }).sink(receiveValue: { (teamId, _, pieceId, originCellId) in
                 self.pieceId = pieceId
                 self.animateSuccessDestination()
-                self.newOccupancyPublisher.send((self.centerGlobal, pieceId, self.id, originCellId))
+                self.newOccupancyPublisher.send((teamId, self.centerGlobal, pieceId, self.id, originCellId))
             })
             .store(in: &cancellables)
     }

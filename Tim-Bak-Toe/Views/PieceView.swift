@@ -31,7 +31,7 @@ enum PieceStyle: String, Codable {
 struct PieceView: View {
     
     @ObservedObject var viewModel: PieceViewModel
-    var size: CGSize = CGSize(width: 50, height: 50)
+    var size: CGSize
 
     var body: some View {
         ZStack {
@@ -48,7 +48,7 @@ struct PieceView: View {
         .gesture(DragGesture(coordinateSpace: .global)
         .onChanged(viewModel.onDragChanged)
         .onEnded(viewModel.onDragEnded))
-        .allowsHitTesting(!viewModel.disabled && (viewModel.userId == hostId))
+        .allowsHitTesting(!viewModel.disabled && (viewModel.teamId == userID))
         .overlay(GeometryReader { proxy in
             Color.clear
                 .onAppear(perform: {

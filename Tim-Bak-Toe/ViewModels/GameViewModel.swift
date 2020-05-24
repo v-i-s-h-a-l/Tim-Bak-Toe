@@ -13,15 +13,17 @@ import SwiftUI
 let hostId = UUID()
 let peerId = UUID()
 
+let userID = hostId
+
 class GameViewModel: ObservableObject {
     
-    private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
-    private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
+    private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
+    private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
 
     private let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
-    private let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+    private let pieceDragEndToCellsPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
-    private let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID), Never>()
+    private let newCellOccupiedByPiecePublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>()
     private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
@@ -34,9 +36,11 @@ class GameViewModel: ObservableObject {
 
     private func generatePiecesForHost() -> [PieceViewModel] {
         let generatedHostPieces = [PieceViewModel(with: .circle1), PieceViewModel(with: .circle1), PieceViewModel(with: .circle1)]
-        
-        setupConnnectionsForDragStart(for: generatedHostPieces)
-        setupConnnectionsForDragEnd(for: generatedHostPieces)
+
+        if userID == hostId {
+            setupConnnectionsForDragStart(for: generatedHostPieces)
+            setupConnnectionsForDragEnd(for: generatedHostPieces)
+        }
         
         return generatedHostPieces
     }
@@ -47,12 +51,12 @@ class GameViewModel: ObservableObject {
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            pieceModel.dragStartedPublisher.sink { pieceID, cellId in
-                self.pieceDragStartToFellowPiecesPublisher.send(pieceID)
+            pieceModel.dragStartedPublisher.sink { teamId, pieceID, cellId in
+                self.pieceDragStartToFellowPiecesPublisher.send((teamId, pieceID))
             }
             .store(in: &cancellables)
 
-            pieceModel.dragStartedPublisher.sink { pieceID, cellId in
+            pieceModel.dragStartedPublisher.sink { _, _, cellId in
                 self.pieceDragStartToCellsPublisher.send(cellId)
             }
             .store(in: &cancellables)
@@ -68,13 +72,13 @@ class GameViewModel: ObservableObject {
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
-                self.pieceDragEndToFellowPiecesPublisher.send(pieceID)
+            pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
+                self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID))
             }
             .store(in: &cancellables)
 
-            pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
-                self.pieceDragEndToCellsPublisher.send((location, pieceID, cellId))
+            pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
+                self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId))
             }
             .store(in: &cancellables)
         }
@@ -83,9 +87,14 @@ class GameViewModel: ObservableObject {
         // MARK: - Peer pieces -
 
     private func generatePiecesForPeer() -> [PieceViewModel] {
-        let generatedHostPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
-                
-        return generatedHostPieces
+        let generatedPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
+
+        if userID == peerId {
+            setupConnnectionsForDragStart(for: generatedPieces)
+            setupConnnectionsForDragEnd(for: generatedPieces)
+        }
+
+        return generatedPieces
     }
 
     // MARK: - Board cells -
@@ -120,13 +129,13 @@ class GameViewModel: ObservableObject {
 
     private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach { cellViewModel in
-            cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
+            cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
                 self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
             }
             .store(in: &cancellables)
 
-            cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
-                self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId))
+            cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
+                self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId))
             }
             .store(in: &cancellables)
         }

@@ -24,8 +24,11 @@ class PieceViewModel: ObservableObject, Identifiable {
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
     @Published var isDragStarted: Bool = false
-
+    
+    /// publishes team id, piece id and optional occeupied cell id
     var dragStartedPublisher = PassthroughSubject<(UUID, UUID, UUID?), Never>()
+
+    /// publishes team id, drag end location, piece id and optional occeupied cell id
     var draggedEndedPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
     private var cancellables: Set<AnyCancellable> = []
@@ -82,23 +85,30 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     // MARK: - functions called by game vm to provide publishers -
 
-    func subscribeToDragStart(_ publisher: PassthroughSubject<UUID, Never>) {
-        publisher.sink { draggedPieceId in
+    func subscribeToDragStart(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
+        publisher
+            .filter { teamId, _ in
+                teamId == self.teamId
+            }
+            .sink { (_, draggedPieceId) in
             self.disabled = self.id != draggedPieceId
         }
         .store(in: &cancellables)
     }
 
-    func subscribeToDragEnd(_ publisher: PassthroughSubject<UUID, Never>) {
+    func subscribeToDragEnd(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
         publisher
+            .filter { teamId, _ in
+                teamId == self.teamId
+        }
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
-            .sink { uuid in
+            .sink { _, pieceId in
                 withAnimation {
-                self.dragAmount = .zero
-                self.relativeOffset = self.currentOffset
-            }
+                    self.dragAmount = .zero
+                    self.relativeOffset = self.currentOffset
+                }
         }
         .store(in: &cancellables)
         
@@ -113,7 +123,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         // updates the dragged piece
         publisher
             .filter { (teamId, _, pieceId, _) in
-                return pieceId == self.id
+                pieceId == self.id
             }
         .sink { (_, newCellCenter, _, newCellId) in
             self.occupiedCellID = newCellId

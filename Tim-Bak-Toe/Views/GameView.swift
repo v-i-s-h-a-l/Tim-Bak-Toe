@@ -59,8 +59,8 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             GameView().colorScheme(.dark)
-                .previewDevice(PreviewDevice(rawValue: PreviewDevice.iPadPro_12_9))
-            GameView().colorScheme(.light).previewDevice(PreviewDevice(rawValue: PreviewDevice.iPhoneSE))
+                .previewDevice(PreviewDevice.iPadPro_12_9)
+            GameView().colorScheme(.light).previewDevice(PreviewDevice.iPhoneSE)
         }
     }
 }

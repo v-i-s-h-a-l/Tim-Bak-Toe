@@ -40,16 +40,21 @@ class PieceViewModel: ObservableObject, Identifiable {
     // MARK: - functions to be called by view -
     
     func onDragChanged(_ drag: DragGesture.Value) {
+        // prevents from dragging multiple items
+        guard !self.disabled else { return }
         if !isDragStarted {
             self.isDragStarted = true
             self.dragStartedPublisher
                 .send((id, occupiedCellID))
+        } else {
+            self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
+            self.relativeOffset = dragAmount + currentOffset
         }
-        self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
-        self.relativeOffset = dragAmount + currentOffset
     }
     
     func onDragEnded(_ drag: DragGesture.Value) {
+        // prevents from dragging multiple items
+        guard !self.disabled else { return }
         isDragStarted = false
         draggedEndedPublisher
             .send((drag.location, id, occupiedCellID))

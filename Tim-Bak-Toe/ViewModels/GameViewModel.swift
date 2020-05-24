@@ -22,9 +22,10 @@ class GameViewModel: ObservableObject {
     let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
+    lazy var guestPieces: [PieceViewModel] = generatePiecesForPeer()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
 
-    var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Host pieces -
 
@@ -45,6 +46,10 @@ class GameViewModel: ObservableObject {
         pieces.forEach { pieceModel in
             pieceModel.dragStartedPublisher.sink { pieceID, cellId in
                 self.pieceDragStartToFellowPiecesPublisher.send(pieceID)
+            }
+            .store(in: &cancellables)
+
+            pieceModel.dragStartedPublisher.sink { pieceID, cellId in
                 self.pieceDragStartToCellsPublisher.send(cellId)
             }
             .store(in: &cancellables)
@@ -62,6 +67,10 @@ class GameViewModel: ObservableObject {
         pieces.forEach { pieceModel in
             pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
                 self.pieceDragEndToFellowPiecesPublisher.send(pieceID)
+            }
+            .store(in: &cancellables)
+
+            pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
                 self.pieceDragEndToCellsPublisher.send((location, pieceID, cellId))
             }
             .store(in: &cancellables)
@@ -71,7 +80,9 @@ class GameViewModel: ObservableObject {
         // MARK: - Peer pieces -
 
     private func generatePiecesForPeer() -> [PieceViewModel] {
-        return []
+        let generatedHostPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
+                
+        return generatedHostPieces
     }
 
     // MARK: - Board cells -
@@ -108,6 +119,10 @@ class GameViewModel: ObservableObject {
         generatedCellViewModels.forEach { cellViewModel in
             cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
                 self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
+            }
+            .store(in: &cancellables)
+
+            cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
                 self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId))
             }
             .store(in: &cancellables)

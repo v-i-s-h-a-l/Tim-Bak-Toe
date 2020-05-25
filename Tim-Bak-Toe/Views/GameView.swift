@@ -66,8 +66,8 @@ struct GameView: View {
                 .padding([.bottom])
                 .padding([.bottom])
                 .padding([.bottom])
-
             }
+            
         }
         .edgesIgnoringSafeArea([.all])
         .navigationBarBackButtonHidden(true)

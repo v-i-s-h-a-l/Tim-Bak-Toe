@@ -134,15 +134,16 @@ class GameViewModel: ObservableObject {
     private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach { cellViewModel in
             cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
-                self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
-            }
-            .store(in: &cancellables)
-
-            cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
                 self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId))
             }
             .store(in: &cancellables)
             
+            cellViewModel.newOccupancyPublisher.sink { (teamId, _, pieceId, _, previousCellId) in
+                self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
+                self.checkWinner(teamId: teamId)
+            }
+            .store(in: &cancellables)
+
             cellViewModel.newOccupancyPublisher.sink { (teamId, _, _, _, _) in
                 self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
             }
@@ -167,7 +168,27 @@ class GameViewModel: ObservableObject {
     // MARK: - Win logic and game reset -
     
     func checkWinner(teamId: UUID) {
-//        var occupiedCellIndexes = boardCellViewModels
+        guard winnerId != nil else { return }
+
+        let occupiedIndexes = boardCellViewModels.filter { $0.teamId == teamId }
+            .map { $0.indexPath }
+        guard occupiedIndexes.count == 3 else { return }
+        
+        let occupiedIndexesSet = Set(occupiedIndexes)
+
+        withAnimation {
+            self.winnerId = possibleWinnerIndexes.contains(occupiedIndexesSet) ? teamId : nil
+        }
     }
     
+    private let possibleWinnerIndexes = Set([
+        Set(["0,0", "0,1", "0,2"]),
+        Set(["0,0", "1,0", "2,0"]),
+        Set(["0,0", "1,1", "2,2"]),
+        Set(["2,0", "1,1", "0,2"]),
+        Set(["1,0", "1,1", "1,2"]),
+        Set(["0,1", "1,1", "2,1"]),
+        Set(["2,0", "2,1", "2,2"]),
+        Set(["0,2", "1,2", "2,2"]),
+    ])
 }

@@ -38,10 +38,11 @@ class BoardCellViewModel: ObservableObject, Identifiable {
 
     let id = UUID()
     var pieceId: UUID?
-    var indexPath: (Int, Int)
+    var teamId: UUID?
+    var indexPath: String
     
     init(with row: Int, column: Int) {
-        self.indexPath = (row, column)
+        self.indexPath = "\(row),\(column)"
     }
 
     @Published var cellState: BoardCellState = .none
@@ -86,6 +87,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
                 }
             }).sink(receiveValue: { (teamId, _, pieceId, originCellId) in
                 self.pieceId = pieceId
+                self.teamId = teamId
                 self.animateSuccessDestination()
                 self.newOccupancyPublisher.send((teamId, self.centerGlobal, pieceId, self.id, originCellId))
             })
@@ -98,6 +100,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
             .sink { (pieceId, oldCellId) in
             if self.pieceId == pieceId && self.id == oldCellId {
                 self.pieceId = nil
+                self.teamId = nil
             }
         }
         .store(in: &cancellables)

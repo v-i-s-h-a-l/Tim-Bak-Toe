@@ -33,8 +33,8 @@ class GameViewModel: ObservableObject {
     lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
     
-    lazy private var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
-    lazy private var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
+    lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
+    lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
 
     private var cancellables: Set<AnyCancellable> = []
     
@@ -156,7 +156,7 @@ class GameViewModel: ObservableObject {
     // MARK: - Host and peer shelves -
     
     private func generateShelfViewModel(with teamId: UUID) -> ShelfViewModel {
-        let generatedViewModel = ShelfViewModel(with: teamId)
+        let generatedViewModel = ShelfViewModel(with: teamId, color: teamId == hostId ? .red : .blue)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         
         generatedViewModel.refillSuccessPublisher.sink { teamId in

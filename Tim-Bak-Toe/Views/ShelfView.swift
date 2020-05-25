@@ -11,16 +11,29 @@ import SwiftUI
 struct ShelfView: View {
     
     @ObservedObject var viewModel: ShelfViewModel
-    
-    private var size: CGSize?
+
+    let isRightEdged: Bool
+
+    @State private var originalSize: CGSize = .zero
     
     var body: some View {
         HStack {
-            Color.green
-//                .frame(width: refillWidth, height: 200)
-//                .animation(.easeOutCubic(duration: duration))
-            Spacer()
+            if isRightEdged {
+                Spacer()
+            }
+            viewModel.color
+                .frame(width: originalSize.width * (viewModel.isEmpty ? 0 : 1))
+            if !isRightEdged {
+                Spacer()
+            }
         }
+        .zIndex(ZIndex.board)
+        .overlay(GeometryReader{ proxy in
+            Color.clear
+                .onAppear {
+                    self.originalSize = proxy.frame(in: .local).size
+            }
+        })
     }
 }
 

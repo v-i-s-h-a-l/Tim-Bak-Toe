@@ -37,21 +37,36 @@ struct GameView: View {
             VStack {
                 Spacer()
                 HStack {
-                    ForEach(viewModel.hostPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.trailing], -self.pieceSize.width)
+                    HStack {
+                        ForEach(viewModel.hostPieces) {
+                            PieceView(viewModel: $0, size: self.pieceSize)
+                                .padding([.trailing], -self.pieceSize.width)
+                        }
+                        .padding()
+                        Spacer()
                     }
-                    .padding([.leading])
+                    .background(
+                        ShelfView(viewModel: viewModel.hostShelfViewModel, isRightEdged: false)
+                    )
+
                     Spacer()
-                    ForEach(viewModel.peerPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.leading], -self.pieceSize.width)
+
+                    HStack {
+                        Spacer()
+                        ForEach(viewModel.peerPieces) {
+                            PieceView(viewModel: $0, size: self.pieceSize)
+                                .padding([.leading], -self.pieceSize.width)
+                        }
+                        .padding()
                     }
-                    .padding([.trailing])
+                    .background(
+                        ShelfView(viewModel: viewModel.peerShelfViewModel, isRightEdged: true)
+                    )
                 }
                 .padding([.bottom])
                 .padding([.bottom])
                 .padding([.bottom])
+
             }
         }
         .edgesIgnoringSafeArea([.all])
@@ -69,10 +84,10 @@ struct GameView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            GameView().colorScheme(.dark)
-                .previewDevice(PreviewDevice.iPhone11ProMax)
+//            GameView().colorScheme(.dark)
+//                .previewDevice(PreviewDevice.iPhone11ProMax)
             GameView().colorScheme(.light)
-                .previewDevice(PreviewDevice.iPhoneSE)
+                .previewDevice(PreviewDevice.iPhoneSE2)
         }
     }
 }

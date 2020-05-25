@@ -77,22 +77,6 @@ class PieceViewModel: ObservableObject, Identifiable {
             .send((teamId, drag.location, id, occupiedCellID))
     }
 
-    // MARK: - Internal functionality -
-    
-    fileprivate func pauseDrag(for seconds: Int = 3) {
-        withAnimation {
-            self.disabled = true
-        }
-        Just(false)
-            .delay(for: .seconds(seconds), scheduler: RunLoop.current)
-            .sink { value in
-            withAnimation {
-                self.disabled = value
-            }
-        }
-        .store(in: &cancellables)
-    }
-
     // MARK: - functions called by game vm to provide publishers -
 
     func subscribeToDragStart(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
@@ -115,8 +99,8 @@ class PieceViewModel: ObservableObject, Identifiable {
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
             .sink { _, pieceId in
+                self.dragAmount = .zero
                 withAnimation {
-                    self.dragAmount = .zero
                     self.relativeOffset = self.currentOffset
                 }
         }
@@ -135,7 +119,7 @@ class PieceViewModel: ObservableObject, Identifiable {
     func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>) {
         // updates the dragged piece
         publisher
-            .filter { (teamId, _, pieceId, _) in
+            .filter { (_, _, pieceId, _) in
                 pieceId == self.id
             }
         .sink { (_, newCellCenter, _, newCellId) in
@@ -150,7 +134,19 @@ class PieceViewModel: ObservableObject, Identifiable {
                 teamId == self.teamId
             }
             .sink { (_, _, _, _) in
-                self.pauseDrag()
+                self.disabled = true
+        }
+        .store(in: &cancellables)
+    }
+
+    func subscribeToSuccessfulRefilling(_ publisher: PassthroughSubject<UUID, Never>) {
+        // enables the pieces of the team id received
+        publisher
+            .filter { teamId in
+                teamId == self.teamId
+            }
+        .sink { _ in
+            self.disabled = false
         }
         .store(in: &cancellables)
     }

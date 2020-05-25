@@ -25,10 +25,16 @@ class GameViewModel: ObservableObject {
 
     private let newCellOccupiedByPiecePublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>()
     private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
+    private let newCellOccupiedByPiecePublisherForShelf = PassthroughSubject<UUID, Never>()
+
+    private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
+    
+    lazy private var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
+    lazy private var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
 
     private var cancellables: Set<AnyCancellable> = []
     
@@ -68,6 +74,7 @@ class GameViewModel: ObservableObject {
         pieces.forEach {
             $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
+            $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
         }
 
         // transmits info to all pieces and board cells
@@ -138,6 +145,25 @@ class GameViewModel: ObservableObject {
                 self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId))
             }
             .store(in: &cancellables)
+            
+            cellViewModel.newOccupancyPublisher.sink { (teamId, _, _, _, _) in
+                self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
+            }
+            .store(in: &cancellables)
         }
+    }
+    
+    // MARK: - Host and peer shelves -
+    
+    private func generateShelfViewModel(with teamId: UUID) -> ShelfViewModel {
+        let generatedViewModel = ShelfViewModel(with: teamId)
+        generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
+        
+        generatedViewModel.refillSuccessPublisher.sink { teamId in
+            self.shelfRefillPublisher.send(teamId)
+        }
+        .store(in: &cancellables)
+        
+        return generatedViewModel
     }
 }

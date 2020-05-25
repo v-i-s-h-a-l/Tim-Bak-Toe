@@ -66,12 +66,17 @@ struct GameView: View {
                 .padding([.bottom])
                 .padding([.bottom])
                 .padding([.bottom])
+
             }
             
+            if viewModel.showWinnerView {
+                WinnerView(message: viewModel.winMessage)
+            }
         }
         .edgesIgnoringSafeArea([.all])
         .navigationBarBackButtonHidden(true)
         .statusBar(hidden: true)
+
     }
     
     func cell(atRow row: Int, column: Int) -> some View {

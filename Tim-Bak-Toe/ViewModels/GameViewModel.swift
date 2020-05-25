@@ -17,15 +17,45 @@ let userID = hostId
 
 class GameViewModel: ObservableObject {
     
-    var hostScore: Int = 0
-    var peerScore: Int = 0
+    @Published var hostScore: Int = 0
+    @Published var peerScore: Int = 0
 
-    lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
-    lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
-    lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
+    @Published var showWinnerView: Bool = false
     
-    lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
-    lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
+    private var winnerId: UUID? {
+        didSet {
+            if winnerId != nil {
+                showWinnerView = true
+                if winnerId == hostId {
+                    hostScore += 1
+                } else {
+                    peerScore += 1
+                }
+            }
+        }
+    }
+    
+    var winMessage: String {
+        let teamName: String
+        if winnerId == hostId {
+            teamName = "RED"
+        } else {
+            teamName = "BLUE"
+        }
+        return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
+    }
+//
+//    @Published var hostPieces: [PieceViewModel] = []
+//    @Published var peerPieces: [PieceViewModel] = []
+//    @Published var boardCellViewModels: [BoardCellViewModel] = []
+//    @Published var hostShelfViewModel: ShelfViewModel
+//    @Published var peerShelfViewModel: ShelfViewModel
+    
+    /* private */ lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
+    /* private */ lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
+    /* private */ lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
+    /* private */ lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
+    /* private */ lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -168,7 +198,7 @@ class GameViewModel: ObservableObject {
     // MARK: - Win logic and game reset -
     
     func checkWinner(teamId: UUID) {
-        guard winnerId != nil else { return }
+        guard winnerId == nil else { return }
 
         let occupiedIndexes = boardCellViewModels.filter { $0.teamId == teamId }
             .map { $0.indexPath }

@@ -31,6 +31,8 @@ class GameViewModel: ObservableObject {
                 } else {
                     peerScore += 1
                 }
+            } else {
+                showWinnerView = false
             }
         }
     }
@@ -71,6 +73,8 @@ class GameViewModel: ObservableObject {
 
     private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
 
+    private let restartPublisher = PassthroughSubject<Void, Never>()
+    
     // MARK: - Host pieces -
 
     private func generatePiecesForHost() -> [PieceViewModel] {
@@ -108,6 +112,7 @@ class GameViewModel: ObservableObject {
             $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
             $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
+            $0.subscribeToRestart(restartPublisher)
         }
 
         // transmits info to all pieces and board cells
@@ -158,6 +163,7 @@ class GameViewModel: ObservableObject {
             $0.subscribeToDragStart(self.pieceDragStartToCellsPublisher)
             $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
             $0.subscribeToNewOccupancy(self.newCellOccupiedPublisherForOriginCell)
+            $0.subscribeToRestart(restartPublisher)
         }
     }
 
@@ -186,7 +192,8 @@ class GameViewModel: ObservableObject {
     private func generateShelfViewModel(with teamId: UUID) -> ShelfViewModel {
         let generatedViewModel = ShelfViewModel(with: teamId, color: teamId == hostId ? .red : .blue)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
-        
+        generatedViewModel.subscribeToRestart(restartPublisher)
+
         generatedViewModel.refillSuccessPublisher.sink { teamId in
             self.shelfRefillPublisher.send(teamId)
         }
@@ -221,4 +228,11 @@ class GameViewModel: ObservableObject {
         Set(["2,0", "2,1", "2,2"]),
         Set(["0,2", "1,2", "2,2"]),
     ])
+    
+    func onRestart() {
+        withAnimation {
+            self.winnerId = nil
+        }
+        restartPublisher.send(())
+    }
 }

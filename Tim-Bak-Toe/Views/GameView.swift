@@ -26,6 +26,28 @@ struct GameView: View {
         ZStack {
             Theme.Col.gameBackground
             VStack {
+                HStack {
+                    Text("\(viewModel.hostScore)")
+                        .font(.title)
+                        .fontWeight(.heavy)
+                        .foregroundColor(Color.red)
+                        .padding([.leading, .trailing])
+                    Text("Scores")
+                        .font(.title)
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                    Text("\(viewModel.peerScore)")
+                        .font(.title)
+                        .fontWeight(.heavy)
+                        .foregroundColor(Color.blue)
+                        .padding([.leading, .trailing])
+                }
+                Spacer()
+            }
+            .padding()
+            .padding()
+
+            VStack {
                 Spacer()
                 GridStack(rows: 3, columns: 3, content: cell)
                     .frame(width: boardSize.width, height: boardSize.height)
@@ -70,7 +92,7 @@ struct GameView: View {
             }
             
             if viewModel.showWinnerView {
-                WinnerView(message: viewModel.winMessage)
+                winnerView()
             }
         }
         .edgesIgnoringSafeArea([.all])
@@ -82,6 +104,13 @@ struct GameView: View {
     func cell(atRow row: Int, column: Int) -> some View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
             .padding(5)
+    }
+
+    func winnerView() -> WinnerView {
+        let winnerView = WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart)
+        
+        
+        return winnerView
     }
 }
 

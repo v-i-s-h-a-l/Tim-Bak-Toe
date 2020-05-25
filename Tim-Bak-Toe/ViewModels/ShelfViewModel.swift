@@ -76,4 +76,15 @@ class ShelfViewModel: ObservableObject {
         }
         .store(in: &cancellables)
     }
+    
+    func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
+        publisher.sink { _ in
+            self.reset()
+        }
+        .store(in: &cancellables)
+    }
+
+    private func reset() {
+        isEmpty = false
+    }
 }

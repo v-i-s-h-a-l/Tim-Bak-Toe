@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct WinnerView: View {
-    
+
     let message: String
+    let onRestart: () -> ()
     
     var body: some View {
         ZStack {
@@ -22,6 +23,7 @@ struct WinnerView: View {
                     .multilineTextAlignment(.center)
                     .padding(50)
                 Button(action: {
+                    self.onRestart()
                 }) {
                     Text("Re🤝start")
                     .font(.largeTitle)
@@ -43,6 +45,6 @@ struct WinnerView_Previews: PreviewProvider {
 //    @State static var some :Bool = false
     
     static var previews: some View {
-        WinnerView(message: "Congratulations!!\n🎉🎊\nTeam Red wins!")
+        WinnerView(message: "Congratulations!!\n🎉🎊\nTeam Red wins!", onRestart: { })
     }
 }

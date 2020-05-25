@@ -150,4 +150,21 @@ class PieceViewModel: ObservableObject, Identifiable {
         }
         .store(in: &cancellables)
     }
+
+    func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
+        publisher.sink { _ in
+            self.reset()
+        }
+        .store(in: &cancellables)
+    }
+
+    private func reset() {
+        self.currentOffset = .zero
+        self.dragAmount = .zero
+        self.disabled = false
+        self.isDragStarted = false
+        self.occupiedCellID = nil
+        self.relativeOffset = .zero
+        self.zIndex = ZIndex.playerPiecePlaced
+    }
 }

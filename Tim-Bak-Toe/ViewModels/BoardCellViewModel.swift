@@ -52,7 +52,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
     private var frameGlobal: CGRect!
     private lazy var centerGlobal: CGPoint = frameGlobal.center
 
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables = Set<AnyCancellable>()
 
     func onAppear(_ proxy: GeometryProxy) {
         self.frameGlobal = proxy.frame(in: .global)
@@ -122,5 +122,18 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         withAnimation {
             self.cellState = .none
         }
+    }
+    
+    func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
+        publisher.sink { _ in
+            self.reset()
+        }
+        .store(in: &cancellables)
+    }
+
+    private func reset() {
+        pieceId = nil
+        teamId = nil
+        cellState = .none
     }
 }

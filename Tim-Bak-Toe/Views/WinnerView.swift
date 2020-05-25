@@ -17,11 +17,14 @@ struct WinnerView: View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.red.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
             VStack {
+                Spacer()
                 Text(message)
                     .font(.largeTitle)
                     .foregroundColor(Color.white)
                     .multilineTextAlignment(.center)
                     .padding(50)
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.5), Color.red.opacity(0.5)]), startPoint: .top, endPoint: .bottom))
+
                 Button(action: {
                     self.onRestart()
                 }) {
@@ -35,6 +38,10 @@ struct WinnerView: View {
                     .cornerRadius(10.0)
                 )
                 .shadow(radius: 10.0)
+                .padding()
+                .padding()
+                .padding()
+                .padding()
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -45,6 +52,6 @@ struct WinnerView_Previews: PreviewProvider {
 //    @State static var some :Bool = false
     
     static var previews: some View {
-        WinnerView(message: "Congratulations!!\n🎉🎊\nTeam Red wins!", onRestart: { })
+        WinnerView(message: "Congratulations!!\n🎉🎊\nTeam Red wins!", onRestart: { }).previewDevice(PreviewDevice.iPhoneSE2)
     }
 }

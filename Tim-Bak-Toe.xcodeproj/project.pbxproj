@@ -29,6 +29,8 @@
 		DC128427247793E000B1317E /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128426247793E000B1317E /* PieceView.swift */; };
 		DC128429247793EF00B1317E /* BoardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128428247793EF00B1317E /* BoardCellView.swift */; };
 		DC12842E2477A7E300B1317E /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12842D2477A7E300B1317E /* GridStack.swift */; };
+		DC475117247B9B2D009FEE54 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475116247B9B2D009FEE54 /* ScoreView.swift */; };
+		DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475118247B9C35009FEE54 /* PiecesContainerView.swift */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
@@ -64,6 +66,8 @@
 		DC128426247793E000B1317E /* PieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
 		DC128428247793EF00B1317E /* BoardCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCellView.swift; sourceTree = "<group>"; };
 		DC12842D2477A7E300B1317E /* GridStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
+		DC475116247B9B2D009FEE54 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
+		DC475118247B9C35009FEE54 /* PiecesContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainerView.swift; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 				DC128426247793E000B1317E /* PieceView.swift */,
 				DC109C94247B00F100EBC286 /* ShelfView.swift */,
 				DC109C9A247B736400EBC286 /* WinnerView.swift */,
+				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
+				DC475118247B9C35009FEE54 /* PiecesContainerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,6 +348,7 @@
 				DC1283EF2477740900B1317E /* SceneDelegate.swift in Sources */,
 				DC109C95247B00F100EBC286 /* ShelfView.swift in Sources */,
 				DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */,
+				DC475117247B9B2D009FEE54 /* ScoreView.swift in Sources */,
 				DC128427247793E000B1317E /* PieceView.swift in Sources */,
 				DC12841F24778FAE00B1317E /* GameView.swift in Sources */,
 				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
@@ -352,6 +359,7 @@
 				DC109C99247B264700EBC286 /* ShelfViewModel.swift in Sources */,
 				DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */,
 				DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */,
+				DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

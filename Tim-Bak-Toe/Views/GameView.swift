@@ -11,7 +11,7 @@ import SwiftUI
 struct GameView: View {
 
 //    @EnvironmentObject var gameSettings
-    @ObservedObject var viewModel = GameViewModel()
+    @EnvironmentObject var viewModel: GameViewModel
     private let size: CGSize = UIScreen.main.bounds.size
     
     private var boardSize: CGSize {
@@ -25,25 +25,9 @@ struct GameView: View {
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
-            VStack {
-                HStack {
-                    Text("\(viewModel.hostScore)")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .foregroundColor(Color.red)
-                        .padding([.leading, .trailing])
-                    Text("Scores")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .foregroundColor(.white)
-                    Text("\(viewModel.peerScore)")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .foregroundColor(Color.blue)
-                        .padding([.leading, .trailing])
-                }
-                Spacer()
-            }
+            ScoreView(hostScore: viewModel.hostScore, peerScore: viewModel.peerScore)
+                .padding([.top])
+            .padding([.top])
             .padding()
             .padding()
 
@@ -56,43 +40,10 @@ struct GameView: View {
             }
             .zIndex(ZIndex.board)
 
-            VStack {
-                Spacer()
-                HStack {
-                    HStack {
-                        ForEach(viewModel.hostPieces) {
-                            PieceView(viewModel: $0, size: self.pieceSize)
-                                .padding([.trailing], -self.pieceSize.width)
-                        }
-                        .padding()
-                        Spacer()
-                    }
-                    .background(
-                        ShelfView(viewModel: viewModel.hostShelfViewModel, isRightEdged: false)
-                    )
-
-                    Spacer()
-
-                    HStack {
-                        Spacer()
-                        ForEach(viewModel.peerPieces) {
-                            PieceView(viewModel: $0, size: self.pieceSize)
-                                .padding([.leading], -self.pieceSize.width)
-                        }
-                        .padding()
-                    }
-                    .background(
-                        ShelfView(viewModel: viewModel.peerShelfViewModel, isRightEdged: true)
-                    )
-                }
-                .padding([.bottom])
-                .padding([.bottom])
-                .padding([.bottom])
-
-            }
+            PiecesContainerView(pieceSize: pieceSize)
             
             if viewModel.showWinnerView {
-                winnerView()
+                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart)
             }
         }
         .edgesIgnoringSafeArea([.all])
@@ -105,21 +56,14 @@ struct GameView: View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
             .padding(5)
     }
-
-    func winnerView() -> WinnerView {
-        let winnerView = WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart)
-        
-        
-        return winnerView
-    }
 }
 
 struct GameView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-//            GameView().colorScheme(.dark)
-//                .previewDevice(PreviewDevice.iPhone11ProMax)
+            GameView().colorScheme(.dark)
+                .previewDevice(PreviewDevice.iPhoneSE2)
             GameView().colorScheme(.light)
                 .previewDevice(PreviewDevice.iPhoneXʀ)
         }

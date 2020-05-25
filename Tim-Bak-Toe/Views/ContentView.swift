@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            NavigationLink(destination: GameView(), label: { Text("Play").font(.largeTitle) })
+            NavigationLink(destination: GameView().environmentObject(GameViewModel()), label: { Text("Play").font(.largeTitle) })
         }
     }
 }

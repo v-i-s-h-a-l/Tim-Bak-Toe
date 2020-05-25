@@ -14,18 +14,24 @@ class PieceViewModel: ObservableObject, Identifiable {
     let id = UUID()
     private var occupiedCellID: UUID?
     let style: PieceStyle
+    let teamId: UUID
 
     init(with style: PieceStyle) {
         self.style = style
+        self.teamId = (style == .circle1 ? hostId : peerId)
     }
 
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
-    @Published var isDragStarted: Bool = false
+    @Published var zIndex: Double = ZIndex.playerPiecePlaced
+    
+    /// publishes team id, piece id and optional occeupied cell id
+    var dragStartedPublisher = PassthroughSubject<(UUID, UUID, UUID?), Never>()
 
-    var dragStartedPublisher = PassthroughSubject<(UUID, UUID?), Never>()
-    var draggedEndedPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+    /// publishes team id, drag end location, piece id and optional occeupied cell id
+    var draggedEndedPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
+    private var isDragStarted: Bool = false
     private var cancellables: Set<AnyCancellable> = []
 
     private var dragAmount: CGSize = .zero
@@ -45,10 +51,13 @@ class PieceViewModel: ObservableObject, Identifiable {
         if !isDragStarted {
             self.isDragStarted = true
             self.dragStartedPublisher
-                .send((id, occupiedCellID))
+                .send((teamId, id, occupiedCellID))
+            zIndex = ZIndex.playerPieceDragged
         } else {
             self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
-            self.relativeOffset = dragAmount + currentOffset
+//            withAnimation(Animation.linear(duration: 0.1)) {
+                self.relativeOffset = dragAmount + currentOffset
+//            }
         }
     }
     
@@ -56,69 +65,88 @@ class PieceViewModel: ObservableObject, Identifiable {
         // prevents from dragging multiple items
         guard !self.disabled else { return }
         isDragStarted = false
-        draggedEndedPublisher
-            .send((drag.location, id, occupiedCellID))
-    }
 
-    // MARK: - Internal functionality -
-    
-    fileprivate func pauseDrag(for seconds: Int = 3) {
-        withAnimation {
-            self.disabled = true
-        }
         Just(false)
-            .delay(for: .seconds(seconds), scheduler: RunLoop.current)
-            .sink { value in
-            withAnimation {
-                self.disabled = value
-            }
+            .delay(for: .seconds(0.5), scheduler: RunLoop.current)
+            .sink { _ in
+                self.zIndex = ZIndex.playerPiecePlaced
         }
         .store(in: &cancellables)
+
+        draggedEndedPublisher
+            .send((teamId, drag.location, id, occupiedCellID))
     }
 
     // MARK: - functions called by game vm to provide publishers -
 
-    func subscribeToDragStart(_ publisher: PassthroughSubject<UUID, Never>) {
-        publisher.sink { uuid in
-            self.disabled = self.id != uuid
+    func subscribeToDragStart(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
+        publisher
+            .filter { teamId, _ in
+                teamId == self.teamId
+            }
+            .sink { (_, draggedPieceId) in
+            self.disabled = self.id != draggedPieceId
         }
         .store(in: &cancellables)
     }
 
-    func subscribeToDragEnd(_ publisher: PassthroughSubject<UUID, Never>) {
+    func subscribeToDragEnd(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
         publisher
+            .filter { teamId, _ in
+                teamId == self.teamId
+            }
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
-            .sink { uuid in
-                withAnimation {
+            .sink { _, pieceId in
                 self.dragAmount = .zero
-                self.relativeOffset = self.currentOffset
-            }
+                withAnimation {
+                    self.relativeOffset = self.currentOffset
+                }
         }
         .store(in: &cancellables)
         
         publisher
-            .sink { _ in
-                self.disabled = false
+            .filter { teamId, _ in
+                teamId == self.teamId
+        }
+        .sink { _ in
+            self.disabled = false
         }
         .store(in: &cancellables)
     }
     
-    func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(CGPoint, UUID, UUID), Never>) {
+    func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>) {
+        // updates the dragged piece
         publisher
-            .filter { (_, pieceId, _) in
-                return pieceId == self.id
+            .filter { (_, _, pieceId, _) in
+                pieceId == self.id
             }
-        .sink { (newCellCenter, _, newCellId) in
+        .sink { (_, newCellCenter, _, newCellId) in
             self.occupiedCellID = newCellId
             self.currentOffset = newCellCenter - self.centerGlobal
         }
         .store(in: &cancellables)
 
+        // pauses drag for pieces in the same team
         publisher
-            .sink { (_, _, _) in
-                self.pauseDrag()
+            .filter { (teamId, _, _, _) in
+                teamId == self.teamId
+            }
+            .sink { (_, _, _, _) in
+                self.disabled = true
+        }
+        .store(in: &cancellables)
+    }
+
+    func subscribeToSuccessfulRefilling(_ publisher: PassthroughSubject<UUID, Never>) {
+        // enables the pieces of the team id received
+        publisher
+            .filter { teamId in
+                teamId == self.teamId
+            }
+        .sink { _ in
+            self.disabled = false
         }
         .store(in: &cancellables)
     }

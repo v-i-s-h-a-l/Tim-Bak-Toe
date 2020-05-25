@@ -31,7 +31,7 @@ enum PieceStyle: String, Codable {
 struct PieceView: View {
     
     @ObservedObject var viewModel: PieceViewModel
-    var size: CGSize = CGSize(width: 50, height: 50)
+    var size: CGSize
 
     var body: some View {
         ZStack {
@@ -41,7 +41,7 @@ struct PieceView: View {
             Circle()
                 .stroke(viewModel.style.borderColor, lineWidth: viewModel.style.borderWidth)
         }
-        .zIndex(viewModel.isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced)
+        .zIndex(viewModel.zIndex)
         .frame(width: size.width, height: size.height)
         .offset(viewModel.relativeOffset)
         .opacity(viewModel.disabled ? 0.5 : 1)

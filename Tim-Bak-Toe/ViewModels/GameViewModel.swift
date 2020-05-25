@@ -10,29 +10,43 @@ import Combine
 import Foundation
 import SwiftUI
 
+let hostId = UUID()
+let peerId = UUID()
+
+let userID = hostId
+
 class GameViewModel: ObservableObject {
     
-    let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
-    let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<UUID, Never>()
+    private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
+    private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
 
-    let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
-    let pieceDragEndToCellsPublisher = PassthroughSubject<(CGPoint, UUID, UUID?), Never>()
+    private let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
+    private let pieceDragEndToCellsPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
-    let newCellOccupiedByPiecePublisher = PassthroughSubject<(CGPoint, UUID, UUID), Never>()
-    let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
+    private let newCellOccupiedByPiecePublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>()
+    private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
+    private let newCellOccupiedByPiecePublisherForShelf = PassthroughSubject<UUID, Never>()
+
+    private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
 
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
+    lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
     lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
+    
+    lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
+    lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
 
-    var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Host pieces -
 
     private func generatePiecesForHost() -> [PieceViewModel] {
         let generatedHostPieces = [PieceViewModel(with: .circle1), PieceViewModel(with: .circle1), PieceViewModel(with: .circle1)]
-        
-        setupConnnectionsForDragStart(for: generatedHostPieces)
-        setupConnnectionsForDragEnd(for: generatedHostPieces)
+
+//        if userID == hostId {
+            setupConnnectionsForDragStart(for: generatedHostPieces)
+            setupConnnectionsForDragEnd(for: generatedHostPieces)
+//        }
         
         return generatedHostPieces
     }
@@ -43,8 +57,12 @@ class GameViewModel: ObservableObject {
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            pieceModel.dragStartedPublisher.sink { pieceID, cellId in
-                self.pieceDragStartToFellowPiecesPublisher.send(pieceID)
+            pieceModel.dragStartedPublisher.sink { teamId, pieceID, cellId in
+                self.pieceDragStartToFellowPiecesPublisher.send((teamId, pieceID))
+            }
+            .store(in: &cancellables)
+
+            pieceModel.dragStartedPublisher.sink { _, _, cellId in
                 self.pieceDragStartToCellsPublisher.send(cellId)
             }
             .store(in: &cancellables)
@@ -56,13 +74,18 @@ class GameViewModel: ObservableObject {
         pieces.forEach {
             $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
+            $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
         }
 
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            pieceModel.draggedEndedPublisher.sink { location, pieceID, cellId in
-                self.pieceDragEndToFellowPiecesPublisher.send(pieceID)
-                self.pieceDragEndToCellsPublisher.send((location, pieceID, cellId))
+            pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
+                self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID))
+            }
+            .store(in: &cancellables)
+
+            pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
+                self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId))
             }
             .store(in: &cancellables)
         }
@@ -71,7 +94,14 @@ class GameViewModel: ObservableObject {
         // MARK: - Peer pieces -
 
     private func generatePiecesForPeer() -> [PieceViewModel] {
-        return []
+        let generatedPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
+
+//        if userID == peerId {
+            setupConnnectionsForDragStart(for: generatedPieces)
+            setupConnnectionsForDragEnd(for: generatedPieces)
+//        }
+
+        return generatedPieces
     }
 
     // MARK: - Board cells -
@@ -106,11 +136,34 @@ class GameViewModel: ObservableObject {
 
     private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach { cellViewModel in
-            cellViewModel.newOccupancyPublisher.sink { (cellCenter, pieceId, cellId, previousCellId) in
+            cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
                 self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
-                self.newCellOccupiedByPiecePublisher.send((cellCenter, pieceId, cellId))
+            }
+            .store(in: &cancellables)
+
+            cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
+                self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId))
+            }
+            .store(in: &cancellables)
+            
+            cellViewModel.newOccupancyPublisher.sink { (teamId, _, _, _, _) in
+                self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
             }
             .store(in: &cancellables)
         }
+    }
+    
+    // MARK: - Host and peer shelves -
+    
+    private func generateShelfViewModel(with teamId: UUID) -> ShelfViewModel {
+        let generatedViewModel = ShelfViewModel(with: teamId, color: teamId == hostId ? .red : .blue)
+        generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
+        
+        generatedViewModel.refillSuccessPublisher.sink { teamId in
+            self.shelfRefillPublisher.send(teamId)
+        }
+        .store(in: &cancellables)
+        
+        return generatedViewModel
     }
 }

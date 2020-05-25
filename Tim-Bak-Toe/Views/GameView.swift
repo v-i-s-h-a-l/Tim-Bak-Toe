@@ -75,7 +75,7 @@ struct GameView: View {
     }
     
     func cell(atRow row: Int, column: Int) -> some View {
-        return BoardCellView(viewModel: viewModel.boardCellViewModels[row][column])
+        return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
             .padding(5)
     }
 }
@@ -87,7 +87,7 @@ struct GameView_Previews: PreviewProvider {
 //            GameView().colorScheme(.dark)
 //                .previewDevice(PreviewDevice.iPhone11ProMax)
             GameView().colorScheme(.light)
-                .previewDevice(PreviewDevice.iPhoneSE2)
+                .previewDevice(PreviewDevice.iPhoneXʀ)
         }
     }
 }

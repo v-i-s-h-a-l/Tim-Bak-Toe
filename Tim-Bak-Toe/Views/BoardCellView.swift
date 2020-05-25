@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BoardCellView: View {
     
-    @ObservedObject var viewModel = BoardCellViewModel()
+    @ObservedObject var viewModel: BoardCellViewModel
     
     var body: some View {
         RoundedRectangle(cornerRadius: 5)

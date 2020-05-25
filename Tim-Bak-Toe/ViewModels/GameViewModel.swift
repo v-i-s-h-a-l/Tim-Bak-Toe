@@ -17,6 +17,18 @@ let userID = hostId
 
 class GameViewModel: ObservableObject {
     
+    var hostScore: Int = 0
+    var peerScore: Int = 0
+
+    lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
+    lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
+    lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
+    
+    lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
+    lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
+
+    private var cancellables = Set<AnyCancellable>()
+
     private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
     private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
 
@@ -29,15 +41,6 @@ class GameViewModel: ObservableObject {
 
     private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
 
-    lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
-    lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
-    lazy var boardCellViewModels: [[BoardCellViewModel]] = generateBoardCellViewModels()
-    
-    lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
-    lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
-
-    private var cancellables: Set<AnyCancellable> = []
-    
     // MARK: - Host pieces -
 
     private func generatePiecesForHost() -> [PieceViewModel] {
@@ -106,22 +109,16 @@ class GameViewModel: ObservableObject {
 
     // MARK: - Board cells -
 
-    private func generateBoardCellViewModels() -> [[BoardCellViewModel]] {
-        var generatedBoardCellViewModels = [[BoardCellViewModel]]()
-        for _ in 0...2 {
-            var rowCells = [BoardCellViewModel]()
-            for _ in 0...2 {
-                rowCells.append(BoardCellViewModel())
+    private func generateBoardCellViewModels() -> [BoardCellViewModel] {
+        var generatedBoardCellViewModels = [BoardCellViewModel]()
+        for row in 0...2 {
+            for column in 0...2 {
+                generatedBoardCellViewModels.append(BoardCellViewModel(with: row, column: column))
             }
-            generatedBoardCellViewModels.append(rowCells)
         }
 
-        let flattened = generatedBoardCellViewModels.flatMap {
-            $0.flatMap { $0 }
-        }
-
-        subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: flattened)
-        subscribeToCellPublishers(generatedCellViewModels: flattened)
+        subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: generatedBoardCellViewModels)
+        subscribeToCellPublishers(generatedCellViewModels: generatedBoardCellViewModels)
 
         return generatedBoardCellViewModels
     }
@@ -166,4 +163,11 @@ class GameViewModel: ObservableObject {
         
         return generatedViewModel
     }
+
+    // MARK: - Win logic and game reset -
+    
+    func checkWinner(teamId: UUID) {
+//        var occupiedCellIndexes = boardCellViewModels
+    }
+    
 }

@@ -38,6 +38,11 @@ class BoardCellViewModel: ObservableObject, Identifiable {
 
     let id = UUID()
     var pieceId: UUID?
+    var indexPath: (Int, Int)
+    
+    init(with row: Int, column: Int) {
+        self.indexPath = (row, column)
+    }
 
     @Published var cellState: BoardCellState = .none
     

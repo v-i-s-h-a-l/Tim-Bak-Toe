@@ -18,18 +18,20 @@ struct ScoreView: View {
             HStack {
                 Text("\(hostScore)")
                     .font(.title)
-                    .fontWeight(.heavy)
+                    .fontWeight(.black)
                     .foregroundColor(Color.red)
                     .padding([.leading, .trailing])
+                    .overlay(Text("   "))
                 Text("Scores")
                     .font(.title)
-                    .fontWeight(.heavy)
+                    .fontWeight(.black)
                     .foregroundColor(.white)
                 Text("\(peerScore)")
                     .font(.title)
-                    .fontWeight(.heavy)
+                    .fontWeight(.black)
                     .foregroundColor(Color.blue)
                     .padding([.leading, .trailing])
+                    .overlay(Text("   "))
             }
             Spacer()
         }

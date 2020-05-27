@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GameView: View {
 
-//    @EnvironmentObject var gameSettings
+    @Binding var showGameScreen: Bool
     @EnvironmentObject var viewModel: GameViewModel
     private let size: CGSize = UIScreen.main.bounds.size
     
@@ -25,47 +25,41 @@ struct GameView: View {
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
+            .edgesIgnoringSafeArea([.all])
+
             ScoreView(hostScore: viewModel.hostScore, peerScore: viewModel.peerScore)
                 .padding([.top])
-            .padding([.top])
-            .padding()
-            .padding()
+                .padding([.top])
 
-            VStack {
-                Spacer()
-                GridStack(rows: 3, columns: 3, content: cell)
-                    .frame(width: boardSize.width, height: boardSize.height)
-                Spacer()
-                Spacer()
-            }
-            .zIndex(ZIndex.board)
+            BoardView(boardSize: boardSize)
 
             PiecesContainerView(pieceSize: pieceSize)
             
             if viewModel.showWinnerView {
-                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart)
+                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart, showGameScreen: $showGameScreen)
             }
         }
-        .edgesIgnoringSafeArea([.all])
-        .navigationBarBackButtonHidden(true)
-        .statusBar(hidden: true)
-
-    }
-    
-    func cell(atRow row: Int, column: Int) -> some View {
-        return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
-            .padding(5)
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     
+    @State static private var showGameScreen: Bool = true
+    
     static var previews: some View {
         Group {
-            GameView().colorScheme(.dark)
-                .previewDevice(PreviewDevice.iPhoneSE2)
-            GameView().colorScheme(.light)
-                .previewDevice(PreviewDevice.iPhoneXʀ)
+            NavigationView {
+                GameView(showGameScreen: $showGameScreen).colorScheme(.dark)
+                    .previewDevice(PreviewDevice.iPhoneSE2)
+                    .environmentObject(GameViewModel())
+            }
+            NavigationView {
+                GameView(showGameScreen: $showGameScreen).colorScheme(.light)
+                    .previewDevice(PreviewDevice.iPhoneXʀ)
+                    .environmentObject(GameViewModel())
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ class ShelfViewModel: ObservableObject {
         Just(1)
             .delay(for: .seconds(emptyingDuration), scheduler: RunLoop.current)
             .sink { _ in
-                withAnimation(Animation.easeInQuint(duration: self.fillingDuration)) {
+                withAnimation(Animation.linear(duration: self.fillingDuration)) {
                     self.isEmpty = false
                 }
         }

@@ -38,6 +38,12 @@ class BoardCellViewModel: ObservableObject, Identifiable {
 
     let id = UUID()
     var pieceId: UUID?
+    var teamId: UUID?
+    var indexPath: String
+    
+    init(with row: Int, column: Int) {
+        self.indexPath = "\(row),\(column)"
+    }
 
     @Published var cellState: BoardCellState = .none
     
@@ -46,7 +52,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
     private var frameGlobal: CGRect!
     private lazy var centerGlobal: CGPoint = frameGlobal.center
 
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables = Set<AnyCancellable>()
 
     func onAppear(_ proxy: GeometryProxy) {
         self.frameGlobal = proxy.frame(in: .global)
@@ -81,6 +87,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
                 }
             }).sink(receiveValue: { (teamId, _, pieceId, originCellId) in
                 self.pieceId = pieceId
+                self.teamId = teamId
                 self.animateSuccessDestination()
                 self.newOccupancyPublisher.send((teamId, self.centerGlobal, pieceId, self.id, originCellId))
             })
@@ -93,6 +100,7 @@ class BoardCellViewModel: ObservableObject, Identifiable {
             .sink { (pieceId, oldCellId) in
             if self.pieceId == pieceId && self.id == oldCellId {
                 self.pieceId = nil
+                self.teamId = nil
             }
         }
         .store(in: &cancellables)
@@ -114,5 +122,18 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         withAnimation {
             self.cellState = .none
         }
+    }
+    
+    func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
+        publisher.sink { _ in
+            self.reset()
+        }
+        .store(in: &cancellables)
+    }
+
+    private func reset() {
+        pieceId = nil
+        teamId = nil
+        cellState = .none
     }
 }

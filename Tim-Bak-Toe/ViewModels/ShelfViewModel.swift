@@ -47,7 +47,7 @@ class ShelfViewModel: ObservableObject {
         Just(1)
             .delay(for: .seconds(emptyingDuration), scheduler: RunLoop.current)
             .sink { _ in
-                withAnimation(Animation.easeInQuint(duration: self.fillingDuration)) {
+                withAnimation(Animation.linear(duration: self.fillingDuration)) {
                     self.isEmpty = false
                 }
         }
@@ -75,5 +75,16 @@ class ShelfViewModel: ObservableObject {
                 self.invokeRefilling()
         }
         .store(in: &cancellables)
+    }
+    
+    func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
+        publisher.sink { _ in
+            self.reset()
+        }
+        .store(in: &cancellables)
+    }
+
+    private func reset() {
+        isEmpty = false
     }
 }

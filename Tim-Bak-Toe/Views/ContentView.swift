@@ -10,9 +10,34 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State var showGameScreen: Bool = false
+    
     var body: some View {
         NavigationView {
-            NavigationLink(destination: GameView(), label: { Text("Play").font(.largeTitle) })
+            TabView {
+                NavigationLink(destination: GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel()), isActive: $showGameScreen) {
+                    StartGameView(showGameScreen: $showGameScreen)
+                }
+                .tabItem() {
+                    Image(systemName: "play.rectangle.fill")
+                }
+                    
+                WinnerView(message: "Message", onRestart: {}, showGameScreen:  $showGameScreen)
+                    .tabItem {
+                        Image(systemName: "slider.horizontal.3")
+                }
+            }
+            .navigationBarHidden(true)
+        }
+    }
+}
+    
+struct ContentView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        Group {
+            ContentView()
+                .previewDevice(PreviewDevice.iPhoneSE2)
         }
     }
 }

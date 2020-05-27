@@ -10,8 +10,8 @@ import SwiftUI
 
 struct GameView: View {
 
-//    @EnvironmentObject var gameSettings
-    @ObservedObject var viewModel = GameViewModel()
+    @Binding var showGameScreen: Bool
+    @EnvironmentObject var viewModel: GameViewModel
     private let size: CGSize = UIScreen.main.bounds.size
     
     private var boardSize: CGSize {
@@ -25,69 +25,41 @@ struct GameView: View {
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
-            VStack {
-                Spacer()
-                GridStack(rows: 3, columns: 3, content: cell)
-                    .frame(width: boardSize.width, height: boardSize.height)
-                Spacer()
-                Spacer()
-            }
-            .zIndex(ZIndex.board)
+            .edgesIgnoringSafeArea([.all])
 
-            VStack {
-                Spacer()
-                HStack {
-                    HStack {
-                        ForEach(viewModel.hostPieces) {
-                            PieceView(viewModel: $0, size: self.pieceSize)
-                                .padding([.trailing], -self.pieceSize.width)
-                        }
-                        .padding()
-                        Spacer()
-                    }
-                    .background(
-                        ShelfView(viewModel: viewModel.hostShelfViewModel, isRightEdged: false)
-                    )
+            ScoreView(hostScore: viewModel.hostScore, peerScore: viewModel.peerScore)
+                .padding([.top])
+                .padding([.top])
 
-                    Spacer()
+            BoardView(boardSize: boardSize)
 
-                    HStack {
-                        Spacer()
-                        ForEach(viewModel.peerPieces) {
-                            PieceView(viewModel: $0, size: self.pieceSize)
-                                .padding([.leading], -self.pieceSize.width)
-                        }
-                        .padding()
-                    }
-                    .background(
-                        ShelfView(viewModel: viewModel.peerShelfViewModel, isRightEdged: true)
-                    )
-                }
-                .padding([.bottom])
-                .padding([.bottom])
-                .padding([.bottom])
-
+            PiecesContainerView(pieceSize: pieceSize)
+            
+            if viewModel.showWinnerView {
+                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart, showGameScreen: $showGameScreen)
             }
         }
-        .edgesIgnoringSafeArea([.all])
-        .navigationBarBackButtonHidden(true)
-        .statusBar(hidden: true)
-    }
-    
-    func cell(atRow row: Int, column: Int) -> some View {
-        return BoardCellView(viewModel: viewModel.boardCellViewModels[row][column])
-            .padding(5)
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     
+    @State static private var showGameScreen: Bool = true
+    
     static var previews: some View {
         Group {
-//            GameView().colorScheme(.dark)
-//                .previewDevice(PreviewDevice.iPhone11ProMax)
-            GameView().colorScheme(.light)
-                .previewDevice(PreviewDevice.iPhoneSE2)
+            NavigationView {
+                GameView(showGameScreen: $showGameScreen).colorScheme(.dark)
+                    .previewDevice(PreviewDevice.iPhoneSE2)
+                    .environmentObject(GameViewModel())
+            }
+            NavigationView {
+                GameView(showGameScreen: $showGameScreen).colorScheme(.light)
+                    .previewDevice(PreviewDevice.iPhoneXʀ)
+                    .environmentObject(GameViewModel())
+            }
         }
     }
 }

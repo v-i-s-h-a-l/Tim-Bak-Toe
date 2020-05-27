@@ -127,22 +127,3 @@ extension PreviewDevice {
 
 // Example Usage:
 
-struct ContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        Group {
-            ContentView()
-                .previewDevice(PreviewDevice.mac)
-            ContentView()
-                .previewDevice(PreviewDevice.iPhoneSE2)
-            ContentView()
-                .colorScheme(.dark)
-                .previewDevice(PreviewDevice.iPhone8)
-            ContentView()
-                .previewDevice(PreviewDevice.appleTV)
-                .previewDisplayName(PreviewDevice.appleTV.rawValue)
-            ContentView()
-                .previewDevice(PreviewDevice.appleWatch5_44)
-        }
-    }
-}

@@ -33,6 +33,7 @@
 		DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475118247B9C35009FEE54 /* PiecesContainerView.swift */; };
 		DC47511B247BA639009FEE54 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511A247BA639009FEE54 /* BoardView.swift */; };
 		DC47511D247C62B8009FEE54 /* StartGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511C247C62B8009FEE54 /* StartGameView.swift */; };
+		DC9D8077247DF6CC00752B36 /* MultipeerConnectionAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9D8076247DF6CC00752B36 /* MultipeerConnectionAgent.swift */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
@@ -72,6 +73,7 @@
 		DC475118247B9C35009FEE54 /* PiecesContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainerView.swift; sourceTree = "<group>"; };
 		DC47511A247BA639009FEE54 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		DC47511C247C62B8009FEE54 /* StartGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameView.swift; sourceTree = "<group>"; };
+		DC9D8076247DF6CC00752B36 /* MultipeerConnectionAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerConnectionAgent.swift; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				DCF3D75824799D130071506A /* CommonExtensions.swift */,
 				DCF3D75A2479DB390071506A /* Constants.swift */,
 				DC109C96247B066700EBC286 /* Animation+timingCurve.swift */,
+				DC9D8076247DF6CC00752B36 /* MultipeerConnectionAgent.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */,
 				DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */,
 				DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */,
+				DC9D8077247DF6CC00752B36 /* MultipeerConnectionAgent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

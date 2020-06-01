@@ -22,6 +22,8 @@ struct GameView: View {
         CGSize(width: boardSize.width / (3 * 1.4), height: boardSize.height / (3 * 1.4))
     }
     
+    lazy var agent = MCAgent(sourceView: UIHostingController(rootView: self))
+    
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
@@ -41,6 +43,7 @@ struct GameView: View {
         }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarHidden(true)
+    .alert
     }
 }
 

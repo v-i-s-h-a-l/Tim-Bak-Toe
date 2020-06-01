@@ -32,11 +32,7 @@ import Foundation
 //    }
 //}
 //
-//class GameSettings: ObservableObject {
-//    
-//    let hostId = UUID()
-//    let peerId = UUID()
-//
-//    let difficulty: GameDifficulty
-//}
-//
+class GameSettings: ObservableObject {
+    
+}
+

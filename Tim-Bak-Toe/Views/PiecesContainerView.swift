@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PiecesContainerView: View {
-
+    
     let pieceSize: CGSize
     @EnvironmentObject var viewModel: GameViewModel
     
@@ -21,17 +21,27 @@ struct PiecesContainerView: View {
                         .padding([.trailing])
                 }
             }
-            .padding([.top])
+            .padding([.top, .bottom])
+            .zIndex(1)
+            
+            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: true)
+                .frame(height: 10)
+                .padding([.leading, .trailing])
             
             Spacer()
+            
+            TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: false)
+                .frame(height: 10)
+                .padding([.leading, .trailing])
             
             HStack(spacing: 5) {
                 ForEach(viewModel.peerPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
-                    .padding([.leading])
+                        .padding([.leading])
                 }
             }
-            .padding([.bottom])
+            .padding([.top, .bottom])
+            .zIndex(1)
         }
     }
 }

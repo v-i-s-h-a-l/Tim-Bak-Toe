@@ -59,14 +59,27 @@ struct XGradientShape: View {
 enum PieceStyle: String, Codable {
     case X
     case O
-
-    var gradient: LinearGradient {
+    
+    var colorStart: Color {
         switch self {
-        case .X:
-            return LinearGradient(Theme.Col.redStart, Theme.Col.redEnd, startPoint: .top, endPoint: .bottom)
-        case .O:
-            return LinearGradient(Theme.Col.blueStart, Theme.Col.blueEnd, startPoint: .top, endPoint: .bottom)
+        case .X: return Theme.Col.redStart
+        case .O: return Theme.Col.blueStart
         }
+    }
+
+    var colorEnd: Color {
+        switch self {
+        case .X: return Theme.Col.redEnd
+        case .O: return Theme.Col.blueEnd
+        }
+    }
+
+    var pieceGradient: LinearGradient {
+        LinearGradient(colorStart, colorEnd, startPoint: .top, endPoint: .bottom)
+    }
+
+    var timerGradient: LinearGradient {
+        LinearGradient(colorStart, colorEnd, startPoint: .leading, endPoint: .trailing)
     }
 }
 
@@ -90,10 +103,10 @@ struct PieceView: View {
             if viewModel.style == .O {
                 Circle()
                     .inset(by: 25)
-                    .stroke(viewModel.style.gradient, lineWidth: 10)
+                    .stroke(viewModel.style.pieceGradient, lineWidth: 10)
                     .opacity(viewModel.disabled ? 0.5 : 1)
             } else {
-                XGradientShape(gradient: viewModel.style.gradient, lineWidth: 10)
+                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: 10)
                 .opacity(viewModel.disabled ? 0.5 : 1)
             }
         }

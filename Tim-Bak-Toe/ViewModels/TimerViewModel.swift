@@ -29,10 +29,10 @@ class TimerViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     private var emptyingDuration: Double {
-        0.05 * refillingDuration
+        refillingDuration
     }
     private var fillingDuration: Double {
-        0.95 * refillingDuration
+        refillingDuration
     }
     
     // MARK: - Functionality -

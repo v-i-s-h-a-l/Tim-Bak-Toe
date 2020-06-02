@@ -6,6 +6,7 @@
 //  Copyright © 2020 v-i-s-h-a-l. All rights reserved.
 //
 
+import CoreGraphics
 import Foundation
 
 enum ZIndex {
@@ -15,4 +16,9 @@ enum ZIndex {
 
     static let playerPiecePlaced = 0.3
     static let playerPieceDragged = 0.4
+}
+
+enum Points {
+    static let boardWidthMultiplier: CGFloat = 0.9
+    static let cellPadding: CGFloat = 10
 }

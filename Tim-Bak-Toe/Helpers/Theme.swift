@@ -11,19 +11,27 @@ import SwiftUI
 
 enum Theme {
     enum Col {
-        static var piece = Color.red
-        static var pieceBorder = Color.white
+        static let piece = Color(UIColor(named: "piece")!)
 
-        static var gameBackground = Color.gray//.opacity(0.7)
-        static var boardCell = Color.black
+        static let gameBackground = Color(UIColor(named: "background")!)
+        static let boardCell = Color(UIColor(named: "boardCell")!)
+
+        static let lightSource = Color(UIColor(named: "lightSource")!)
+        static let shadowCasted = Color(UIColor(named: "shadowCasted")!)
 
         enum Shadow {
             enum BoardCell {
-                static var none = Color.clear
-                static var occupied = Color.red
-                static var origin = Color.blue
-                static var welcome = Color.yellow
-            }
+                static let none = Color.clear
+                static let occupied = Color.red
+                static let origin = Color.blue
+                static let welcome = Color.yellow
+            }            
         }
+    }
+}
+
+extension LinearGradient {
+    init(_ colors: Color..., startPoint: UnitPoint = .topLeading, endPoint: UnitPoint = .bottomTrailing) {
+        self.init(gradient: Gradient(colors: colors), startPoint: startPoint, endPoint: endPoint)
     }
 }

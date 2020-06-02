@@ -9,23 +9,23 @@
 import SwiftUI
 
 enum PieceStyle: String, Codable {
-    case circle1
-    case circle2
+    case X
+    case O
 
     var gradientColors: [Color] {
         switch self {
-        case .circle1: return [.yellow, .orange, .red, .red]
-        case .circle2: return [.blue, .purple, .purple]
+        case .X: return [.yellow, .orange, .red, .red]
+        case .O: return [.blue, .purple, .purple]
         }
     }
-
-    var borderColor: Color {
-        return Color.white
-    }
-
-    var borderWidth: CGFloat {
-        return 5
-    }
+    //    }
+//
+//    var borderColor: Color {
+//        return Color.white
+//    }
+//
+//    var borderWidth: CGFloat {
+//        return 5
 }
 
 struct PieceView: View {
@@ -36,15 +36,18 @@ struct PieceView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(RadialGradient(gradient: Gradient(colors: viewModel.style.gradientColors), center: .center, startRadius: 0, endRadius: size.height * 0.8))
-            
+                .fill(Theme.Col.piece)
+                .shadow(color: Theme.Col.lightSource, radius: 2, x: -2, y: -2)
+                .shadow(color: Theme.Col.shadowCasted, radius: 2, x: 2, y: 2)
+                .blur(radius: 1)
             Circle()
-                .stroke(viewModel.style.borderColor, lineWidth: viewModel.style.borderWidth)
+                .fill(Theme.Col.piece)
+            Text("\(viewModel.style.rawValue.uppercased())")
         }
         .zIndex(viewModel.zIndex)
         .frame(width: size.width, height: size.height)
         .offset(viewModel.relativeOffset)
-        .opacity(viewModel.disabled ? 0.5 : 1)
+//        .opacity(viewModel.disabled ? 0.5 : 1)
         .gesture(DragGesture(coordinateSpace: .global)
         .onChanged(viewModel.onDragChanged)
         .onEnded(viewModel.onDragEnded))

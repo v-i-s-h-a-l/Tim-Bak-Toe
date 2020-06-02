@@ -13,16 +13,17 @@ struct BoardCellView: View {
     @ObservedObject var viewModel: BoardCellViewModel
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .foregroundColor(Theme.Col.boardCell)
-            .shadow(color: viewModel.cellState.shadowColor,
-                    radius: viewModel.cellState.shadowRadius)
+        Circle()
+            .fill(Theme.Col.boardCell)
             .overlay(
-                GeometryReader { proxy in
-                    Color.clear
-                        .onAppear(perform: {
-                            self.viewModel.onAppear(proxy)
-                        })
+                Circle()
+                    .stroke(LinearGradient(Theme.Col.shadowCasted, Theme.Col.lightSource), lineWidth: 2)
+                    .blur(radius: 1))
+            .overlay(GeometryReader { proxy in
+                Color.clear
+                    .onAppear(perform: {
+                        self.viewModel.onAppear(proxy)
+                    })
             })
     }
 }

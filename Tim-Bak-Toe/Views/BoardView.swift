@@ -26,7 +26,7 @@ struct BoardView: View {
     
     func cell(atRow row: Int, column: Int) -> some View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
-            .padding(5)
+            .padding(10)
     }
 }
 

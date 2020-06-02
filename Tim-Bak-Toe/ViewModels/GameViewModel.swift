@@ -78,7 +78,7 @@ class GameViewModel: ObservableObject {
     // MARK: - Host pieces -
 
     private func generatePiecesForHost() -> [PieceViewModel] {
-        let generatedHostPieces = [PieceViewModel(with: .circle1), PieceViewModel(with: .circle1), PieceViewModel(with: .circle1)]
+        let generatedHostPieces = [PieceViewModel(with: .X), PieceViewModel(with: .X), PieceViewModel(with: .X)]
 
 //        if userID == hostId {
             setupConnnectionsForDragStart(for: generatedHostPieces)
@@ -132,7 +132,7 @@ class GameViewModel: ObservableObject {
         // MARK: - Peer pieces -
 
     private func generatePiecesForPeer() -> [PieceViewModel] {
-        let generatedPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
+        let generatedPieces = [PieceViewModel(with: .O), PieceViewModel(with: .O), PieceViewModel(with: .O)]
 
 //        if userID == peerId {
             setupConnnectionsForDragStart(for: generatedPieces)

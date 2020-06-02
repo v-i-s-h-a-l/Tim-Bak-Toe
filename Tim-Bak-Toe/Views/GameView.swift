@@ -15,11 +15,11 @@ struct GameView: View {
     private let size: CGSize = UIScreen.main.bounds.size
     
     private var boardSize: CGSize {
-        CGSize(width: size.width * 0.9, height: size.width * 0.9)
+        CGSize(width: size.width * Points.boardWidthMultiplier, height: size.width * Points.boardWidthMultiplier)
     }
     
     private var pieceSize: CGSize {
-        CGSize(width: boardSize.width / (3 * 1.4), height: boardSize.height / (3 * 1.4))
+        CGSize(width: boardSize.width / 3 - (2 * Points.cellPadding), height: boardSize.height / 3 - (2 * Points.cellPadding))
     }
     
     var body: some View {

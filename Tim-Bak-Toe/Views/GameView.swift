@@ -27,10 +27,6 @@ struct GameView: View {
             Theme.Col.gameBackground
             .edgesIgnoringSafeArea([.all])
 
-            ScoreView(hostScore: viewModel.hostScore, peerScore: viewModel.peerScore)
-                .padding([.top])
-                .padding([.top])
-
             BoardView(boardSize: boardSize)
 
             PiecesContainerView(pieceSize: pieceSize)

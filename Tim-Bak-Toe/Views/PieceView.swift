@@ -42,6 +42,9 @@ struct PieceView: View {
                 .blur(radius: 1)
             Circle()
                 .fill(Theme.Col.piece)
+            Circle()
+                .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: 1)
+                .blur(radius: 1)
             Text("\(viewModel.style.rawValue.uppercased())")
         }
         .zIndex(viewModel.zIndex)

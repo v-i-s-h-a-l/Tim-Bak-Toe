@@ -15,38 +15,23 @@ struct PiecesContainerView: View {
     
     var body: some View {
         VStack {
+            HStack(spacing: 5) {
+                ForEach(viewModel.hostPieces) {
+                    PieceView(viewModel: $0, size: self.pieceSize)
+                        .padding([.trailing])
+                }
+            }
+            .padding([.top])
+            
             Spacer()
-            HStack {
-                HStack {
-                    ForEach(viewModel.hostPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.trailing], -self.pieceSize.width)
-                    }
-                    .padding()
-                    Spacer()
+            
+            HStack(spacing: 5) {
+                ForEach(viewModel.peerPieces) {
+                    PieceView(viewModel: $0, size: self.pieceSize)
+                    .padding([.leading])
                 }
-                .background(
-                    ShelfView(viewModel: viewModel.hostShelfViewModel, isRightEdged: false)
-                )
-
-                Spacer()
-
-                HStack {
-                    Spacer()
-                    ForEach(viewModel.peerPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.leading], -self.pieceSize.width)
-                    }
-                    .padding()
-                }
-                .background(
-                    ShelfView(viewModel: viewModel.peerShelfViewModel, isRightEdged: true)
-                )
             }
             .padding([.bottom])
-            .padding([.bottom])
-            .padding([.bottom])
-
         }
     }
 }

@@ -19,6 +19,6 @@ enum ZIndex {
 }
 
 enum Points {
-    static let boardWidthMultiplier: CGFloat = 0.9
+    static let boardWidthMultiplier: CGFloat = 0.85
     static let cellPadding: CGFloat = 10
 }

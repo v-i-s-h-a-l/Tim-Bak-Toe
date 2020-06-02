@@ -1,5 +1,5 @@
 //
-//  ShelfViewModel.swift
+//  TimerViewModel.swift
 //  Tim-Bak-Toe
 //
 //  Created by Vishal Singh on 25/05/20.
@@ -10,18 +10,18 @@ import Combine
 import Foundation
 import SwiftUI
 
-class ShelfViewModel: ObservableObject {
+class TimerViewModel: ObservableObject {
 
     let teamId: UUID
     let refillingDuration: Double
-    let color: Color
+    let style: PieceStyle
     
     @Published var isEmpty: Bool = false
 
-    init(with teamId: UUID, color: Color, refillingDuration: Double = 3.0) {
+    init(with teamId: UUID, style: PieceStyle, refillingDuration: Double = 3.0) {
         self.teamId = teamId
         self.refillingDuration = refillingDuration
-        self.color = color
+        self.style = style
     }
 
     var refillSuccessPublisher = PassthroughSubject<UUID, Never>()

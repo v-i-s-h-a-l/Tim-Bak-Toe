@@ -97,7 +97,6 @@ struct PieceView: View {
                 .opacity(viewModel.disabled ? 0.5 : 1)
             }
         }
-        .zIndex(viewModel.zIndex)
         .frame(width: size.width, height: size.height)
         .offset(viewModel.relativeOffset)
         .gesture(DragGesture(coordinateSpace: .global)
@@ -110,12 +109,6 @@ struct PieceView: View {
                     self.viewModel.onAppear(proxy)
                 })
         })
+        .zIndex(viewModel.zIndex)
     }
-    
 }
-//
-//struct PieceView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PieceView()
-//    }
-//}

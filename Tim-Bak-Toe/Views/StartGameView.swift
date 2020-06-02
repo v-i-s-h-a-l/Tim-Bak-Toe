@@ -17,10 +17,11 @@ struct StartGameView: View {
         Button(action: {
             self.showGameScreen.toggle()
         }) {
-            Text("P L A Y")
+            Text("PLAY")
                 .font(.largeTitle)
                 .fontWeight(.black)
                 .foregroundColor(Color.white)
+                .kerning(10)
                 .multilineTextAlignment(.center)
                 .padding()
         }

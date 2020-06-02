@@ -9,7 +9,7 @@
 
 import SwiftUI
 
-private enum PreviewDeviceName {
+enum PreviewDeviceName {
     static let mac = "Mac"
     
     static let iPhone6s = "iPhone 6s"

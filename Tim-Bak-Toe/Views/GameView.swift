@@ -50,11 +50,13 @@ struct GameView_Previews: PreviewProvider {
                 GameView(showGameScreen: $showGameScreen).colorScheme(.dark)
                     .previewDevice(PreviewDevice.iPhoneSE2)
                     .environmentObject(GameViewModel())
+                    .previewDisplayName(PreviewDeviceName.iPhoneSE2)
             }
             NavigationView {
                 GameView(showGameScreen: $showGameScreen).colorScheme(.light)
-                    .previewDevice(PreviewDevice.iPhoneXʀ)
+                    .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
                     .environmentObject(GameViewModel())
+                    .previewDisplayName(PreviewDeviceName.iPhone11ProMax)
             }
         }
     }

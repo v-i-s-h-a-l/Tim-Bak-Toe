@@ -1,5 +1,5 @@
 //
-//  ShelfView.swift
+//  TimerView.swift
 //  Tim-Bak-Toe
 //
 //  Created by Vishal Singh on 25/05/20.
@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-struct ShelfView: View {
+struct TimerView: View {
     
-    @ObservedObject var viewModel: ShelfViewModel
+    @ObservedObject var viewModel: TimerViewModel
 
     let isRightEdged: Bool
 
@@ -21,8 +21,10 @@ struct ShelfView: View {
             if isRightEdged {
                 Spacer()
             }
-            viewModel.color
-                .frame(width: originalSize.width * (viewModel.isEmpty ? 0 : 1))
+//            viewModel
+//                .style
+//                .gradient
+//                .frame(width: originalSize.width * (viewModel.isEmpty ? 0 : 1))
             if !isRightEdged {
                 Spacer()
             }
@@ -36,9 +38,9 @@ struct ShelfView: View {
         })
     }
 }
-
-//struct ShelfView_Previews: PreviewProvider {
+//
+//struct TimerView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ShelfView().previewDevice(PreviewDevice.iPhoneSE2)
+//        TimerView(viewModel: TimerViewModel(with: UUID(), color: Color.red), isRightEdged: false).previewDevice(PreviewDevice.iPhoneSE2)
 //    }
 //}

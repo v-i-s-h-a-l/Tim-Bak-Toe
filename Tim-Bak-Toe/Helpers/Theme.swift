@@ -18,6 +18,13 @@ enum Theme {
 
         static let lightSource = Color(UIColor(named: "lightSource")!)
         static let shadowCasted = Color(UIColor(named: "shadowCasted")!)
+        
+        static let redStart = Color(UIColor(named: "redStart")!)
+        static let redEnd = Color(UIColor(named: "redEnd")!)
+        
+        static let blueStart = Color(UIColor(named: "blueStart")!)
+        static let blueEnd = Color(UIColor(named: "blueEnd")!)
+
 
         enum Shadow {
             enum BoardCell {

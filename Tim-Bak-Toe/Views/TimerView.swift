@@ -37,11 +37,13 @@ struct TimerView: View {
                     .style
                     .timerGradient
                     .cornerRadius(originalSize.height / 2)
-                    .frame(width: originalSize.width * (viewModel.isEmpty ? 0.0 : 1.0))
+                    .frame(width: originalSize.width * viewModel.currentFill)
                 
                 Spacer()
             }
             .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)
+            
+            Text("\(viewModel.currentFill)")
         }
         .zIndex(ZIndex.board)
         .overlay(GeometryReader{ proxy in

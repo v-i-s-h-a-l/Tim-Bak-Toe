@@ -450,11 +450,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "Build number is set using script under build phases";
 				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Tim-Bak-Toe/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -464,7 +464,7 @@
 				MARKETING_VERSION = "version is set using script under build phases";
 				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
 				PRODUCT_NAME = XO3;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "XO3-AppStore";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

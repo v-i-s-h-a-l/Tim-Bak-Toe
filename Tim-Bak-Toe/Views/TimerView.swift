@@ -39,7 +39,7 @@ struct TimerView: View {
                     .cornerRadius(originalSize.height / 2)
                     .frame(width: originalSize.width * viewModel.currentFill)
                 
-                Spacer()
+                Spacer(minLength: 0.0)
             }
             .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)
             

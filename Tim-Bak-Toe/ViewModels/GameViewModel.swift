@@ -31,6 +31,7 @@ class GameViewModel: ObservableObject {
                 } else {
                     peerScore += 1
                 }
+                winPublisher.send(())
             } else {
                 showWinnerView = false
             }
@@ -46,18 +47,12 @@ class GameViewModel: ObservableObject {
         }
         return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
     }
-//
-//    @Published var hostPieces: [PieceViewModel] = []
-//    @Published var peerPieces: [PieceViewModel] = []
-//    @Published var boardCellViewModels: [BoardCellViewModel] = []
-//    @Published var hostTimerViewModel: TimerViewModel
-//    @Published var peerTimerViewModel: TimerViewModel
     
-    /* private */ lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
-    /* private */ lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
-    /* private */ lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
-    /* private */ lazy var hostTimerViewModel: TimerViewModel = generateTimerViewModel(with: hostId)
-    /* private */ lazy var peerTimerViewModel: TimerViewModel = generateTimerViewModel(with: peerId)
+    lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
+    lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
+    lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
+    lazy var hostTimerViewModel: TimerViewModel = generateTimerViewModel(with: hostId)
+    lazy var peerTimerViewModel: TimerViewModel = generateTimerViewModel(with: peerId)
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -73,6 +68,7 @@ class GameViewModel: ObservableObject {
 
     private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
 
+    private let winPublisher = PassthroughSubject<Void, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - Host pieces -
@@ -174,14 +170,14 @@ class GameViewModel: ObservableObject {
             }
             .store(in: &cancellables)
             
-            cellViewModel.newOccupancyPublisher.sink { (teamId, _, pieceId, _, previousCellId) in
-                self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
-                self.checkWinner(teamId: teamId)
+            cellViewModel.newOccupancyPublisher.sink { (teamId, _, _, _, _) in
+                self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
             }
             .store(in: &cancellables)
 
-            cellViewModel.newOccupancyPublisher.sink { (teamId, _, _, _, _) in
-                self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
+            cellViewModel.newOccupancyPublisher.sink { (teamId, _, pieceId, _, previousCellId) in
+                self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
+                self.checkWinner(teamId: teamId)
             }
             .store(in: &cancellables)
         }
@@ -192,6 +188,7 @@ class GameViewModel: ObservableObject {
     private func generateTimerViewModel(with teamId: UUID) -> TimerViewModel {
         let generatedViewModel = TimerViewModel(with: teamId, style: teamId == hostId ? PieceStyle.X : PieceStyle.O)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
+        generatedViewModel.subscribeToWin(winPublisher)
         generatedViewModel.subscribeToRestart(restartPublisher)
 
         generatedViewModel.refillSuccessPublisher.sink { teamId in

@@ -88,6 +88,14 @@ class TimerViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
+    func subscribeToWin(_ publisher: PassthroughSubject<Void, Never>) {
+        publisher.sink { _ in
+            self.timerObserver?.cancel()
+            self.timer = nil
+        }
+        .store(in: &cancellables)
+    }
+
     func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
         publisher.sink { _ in
             self.reset()
@@ -112,6 +120,7 @@ class TimerViewModel: ObservableObject {
     
     private func resetTimer() {
         timerObserver?.cancel()
+        timer = nil
         timer = Timer.publish(every: timerStride, on: .current, in: .default).autoconnect()
         startObservingTimer()
     }

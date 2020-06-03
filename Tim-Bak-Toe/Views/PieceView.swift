@@ -8,23 +8,78 @@
 
 import SwiftUI
 
-enum PieceStyle: String, Codable {
-    case circle1
-    case circle2
+struct DiagonalLineShape: Shape {
 
-    var gradientColors: [Color] {
+    let lineWidth: CGFloat
+    let insetAmount: CGFloat
+    let isFromBottomLeftCorner: Bool
+
+    func path(in rect: CGRect) -> Path {
+        var points = [CGPoint]()
+        if isFromBottomLeftCorner {
+            points = [
+                CGPoint(x: insetAmount, y: rect.maxY - insetAmount),
+                CGPoint(x: insetAmount + lineWidth, y: rect.maxY - insetAmount),
+                CGPoint(x: rect.maxX - insetAmount, y: insetAmount),
+                CGPoint(x: rect.maxX - insetAmount - lineWidth, y: insetAmount),
+            ]
+        } else {
+            points = [
+                CGPoint(x: insetAmount, y: insetAmount),
+                CGPoint(x: insetAmount + lineWidth, y: insetAmount),
+                CGPoint(x: rect.maxX - insetAmount, y: rect.maxY - insetAmount),
+                CGPoint(x: rect.maxX - insetAmount - lineWidth, y: rect.maxY - insetAmount),
+            ]
+        }
+
+        return Path { path in
+            path.move(to: points.first!)
+            path.addLines(points)
+            path.closeSubpath()
+        }
+    }
+}
+
+struct XGradientShape: View {
+
+    let gradient: LinearGradient
+    let lineWidth: CGFloat
+
+    var body: some View {
+        ZStack {
+            DiagonalLineShape(lineWidth: 10, insetAmount: 25, isFromBottomLeftCorner: false)
+            .fill(gradient)
+
+            DiagonalLineShape(lineWidth: 10, insetAmount: 25, isFromBottomLeftCorner: true)
+            .fill(gradient)
+        }
+    }
+}
+
+enum PieceStyle: String, Codable {
+    case X
+    case O
+    
+    var colorStart: Color {
         switch self {
-        case .circle1: return [.yellow, .orange, .red, .red]
-        case .circle2: return [.blue, .purple, .purple]
+        case .X: return Theme.Col.redStart
+        case .O: return Theme.Col.blueStart
         }
     }
 
-    var borderColor: Color {
-        return Color.white
+    var colorEnd: Color {
+        switch self {
+        case .X: return Theme.Col.redEnd
+        case .O: return Theme.Col.blueEnd
+        }
     }
 
-    var borderWidth: CGFloat {
-        return 5
+    var pieceGradient: LinearGradient {
+        LinearGradient(colorStart, colorEnd, startPoint: .top, endPoint: .bottom)
+    }
+
+    var timerGradient: LinearGradient {
+        LinearGradient(colorStart, colorEnd, startPoint: .leading, endPoint: .trailing)
     }
 }
 
@@ -36,15 +91,27 @@ struct PieceView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(RadialGradient(gradient: Gradient(colors: viewModel.style.gradientColors), center: .center, startRadius: 0, endRadius: size.height * 0.8))
-            
+                .fill(Theme.Col.piece)
+                .shadow(color: Theme.Col.lightSource, radius: 2, x: -2, y: -2)
+                .shadow(color: Theme.Col.shadowCasted, radius: 2, x: 2, y: 2)
+                .blur(radius: 1)
             Circle()
-                .stroke(viewModel.style.borderColor, lineWidth: viewModel.style.borderWidth)
+                .fill(Theme.Col.piece)
+            Circle()
+                .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: 1)
+                .blur(radius: 1)
+            if viewModel.style == .O {
+                Circle()
+                    .inset(by: 25)
+                    .stroke(viewModel.style.pieceGradient, lineWidth: 10)
+                    .opacity(viewModel.disabled ? 0.5 : 1)
+            } else {
+                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: 10)
+                .opacity(viewModel.disabled ? 0.5 : 1)
+            }
         }
-        .zIndex(viewModel.zIndex)
         .frame(width: size.width, height: size.height)
         .offset(viewModel.relativeOffset)
-        .opacity(viewModel.disabled ? 0.5 : 1)
         .gesture(DragGesture(coordinateSpace: .global)
         .onChanged(viewModel.onDragChanged)
         .onEnded(viewModel.onDragEnded))
@@ -55,12 +122,6 @@ struct PieceView: View {
                     self.viewModel.onAppear(proxy)
                 })
         })
+        .zIndex(viewModel.zIndex)
     }
-    
 }
-//
-//struct PieceView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PieceView()
-//    }
-//}

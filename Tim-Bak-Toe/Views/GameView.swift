@@ -15,21 +15,17 @@ struct GameView: View {
     private let size: CGSize = UIScreen.main.bounds.size
     
     private var boardSize: CGSize {
-        CGSize(width: size.width * 0.9, height: size.width * 0.9)
+        CGSize(width: size.width * Points.boardWidthMultiplier, height: size.width * Points.boardWidthMultiplier)
     }
     
     private var pieceSize: CGSize {
-        CGSize(width: boardSize.width / (3 * 1.4), height: boardSize.height / (3 * 1.4))
+        CGSize(width: boardSize.width / 3 - (2 * Points.cellPadding), height: boardSize.height / 3 - (2 * Points.cellPadding))
     }
     
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
             .edgesIgnoringSafeArea([.all])
-
-            ScoreView(hostScore: viewModel.hostScore, peerScore: viewModel.peerScore)
-                .padding([.top])
-                .padding([.top])
 
             BoardView(boardSize: boardSize)
 
@@ -54,11 +50,13 @@ struct GameView_Previews: PreviewProvider {
                 GameView(showGameScreen: $showGameScreen).colorScheme(.dark)
                     .previewDevice(PreviewDevice.iPhoneSE2)
                     .environmentObject(GameViewModel())
+                    .previewDisplayName(PreviewDeviceName.iPhoneSE2)
             }
             NavigationView {
                 GameView(showGameScreen: $showGameScreen).colorScheme(.light)
-                    .previewDevice(PreviewDevice.iPhoneXʀ)
+                    .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
                     .environmentObject(GameViewModel())
+                    .previewDisplayName(PreviewDeviceName.iPhone11ProMax)
             }
         }
     }

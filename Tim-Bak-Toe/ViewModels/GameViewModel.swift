@@ -50,14 +50,14 @@ class GameViewModel: ObservableObject {
 //    @Published var hostPieces: [PieceViewModel] = []
 //    @Published var peerPieces: [PieceViewModel] = []
 //    @Published var boardCellViewModels: [BoardCellViewModel] = []
-//    @Published var hostShelfViewModel: ShelfViewModel
-//    @Published var peerShelfViewModel: ShelfViewModel
+//    @Published var hostTimerViewModel: TimerViewModel
+//    @Published var peerTimerViewModel: TimerViewModel
     
     /* private */ lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     /* private */ lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
     /* private */ lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
-    /* private */ lazy var hostShelfViewModel: ShelfViewModel = generateShelfViewModel(with: hostId)
-    /* private */ lazy var peerShelfViewModel: ShelfViewModel = generateShelfViewModel(with: peerId)
+    /* private */ lazy var hostTimerViewModel: TimerViewModel = generateTimerViewModel(with: hostId)
+    /* private */ lazy var peerTimerViewModel: TimerViewModel = generateTimerViewModel(with: peerId)
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -78,7 +78,7 @@ class GameViewModel: ObservableObject {
     // MARK: - Host pieces -
 
     private func generatePiecesForHost() -> [PieceViewModel] {
-        let generatedHostPieces = [PieceViewModel(with: .circle1), PieceViewModel(with: .circle1), PieceViewModel(with: .circle1)]
+        let generatedHostPieces = [PieceViewModel(with: .X), PieceViewModel(with: .X), PieceViewModel(with: .X)]
 
 //        if userID == hostId {
             setupConnnectionsForDragStart(for: generatedHostPieces)
@@ -132,7 +132,7 @@ class GameViewModel: ObservableObject {
         // MARK: - Peer pieces -
 
     private func generatePiecesForPeer() -> [PieceViewModel] {
-        let generatedPieces = [PieceViewModel(with: .circle2), PieceViewModel(with: .circle2), PieceViewModel(with: .circle2)]
+        let generatedPieces = [PieceViewModel(with: .O), PieceViewModel(with: .O), PieceViewModel(with: .O)]
 
 //        if userID == peerId {
             setupConnnectionsForDragStart(for: generatedPieces)
@@ -189,8 +189,8 @@ class GameViewModel: ObservableObject {
     
     // MARK: - Host and peer shelves -
     
-    private func generateShelfViewModel(with teamId: UUID) -> ShelfViewModel {
-        let generatedViewModel = ShelfViewModel(with: teamId, color: teamId == hostId ? .red : .blue)
+    private func generateTimerViewModel(with teamId: UUID) -> TimerViewModel {
+        let generatedViewModel = TimerViewModel(with: teamId, style: teamId == hostId ? PieceStyle.X : PieceStyle.O)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         generatedViewModel.subscribeToRestart(restartPublisher)
 

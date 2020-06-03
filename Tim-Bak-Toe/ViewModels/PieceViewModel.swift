@@ -18,7 +18,7 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     init(with style: PieceStyle) {
         self.style = style
-        self.teamId = (style == .circle1 ? hostId : peerId)
+        self.teamId = (style == .X ? hostId : peerId)
     }
 
     @Published var relativeOffset: CGSize = .zero

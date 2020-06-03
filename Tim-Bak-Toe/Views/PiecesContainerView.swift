@@ -9,44 +9,39 @@
 import SwiftUI
 
 struct PiecesContainerView: View {
-
+    
     let pieceSize: CGSize
     @EnvironmentObject var viewModel: GameViewModel
     
     var body: some View {
         VStack {
-            Spacer()
-            HStack {
-                HStack {
-                    ForEach(viewModel.hostPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.trailing], -self.pieceSize.width)
-                    }
-                    .padding()
-                    Spacer()
+            HStack(spacing: 5) {
+                ForEach(viewModel.peerPieces) {
+                    PieceView(viewModel: $0, size: self.pieceSize)
+                        .padding([.trailing])
                 }
-                .background(
-                    ShelfView(viewModel: viewModel.hostShelfViewModel, isRightEdged: false)
-                )
-
-                Spacer()
-
-                HStack {
-                    Spacer()
-                    ForEach(viewModel.peerPieces) {
-                        PieceView(viewModel: $0, size: self.pieceSize)
-                            .padding([.leading], -self.pieceSize.width)
-                    }
-                    .padding()
-                }
-                .background(
-                    ShelfView(viewModel: viewModel.peerShelfViewModel, isRightEdged: true)
-                )
             }
-            .padding([.bottom])
-            .padding([.bottom])
-            .padding([.bottom])
-
+            .padding([.top, .bottom])
+            .zIndex(1)
+            
+            TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: true)
+                .frame(height: 10)
+                .padding([.leading, .trailing])
+            
+            Spacer()
+            
+            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: false)
+                .frame(height: 10)
+                .padding([.leading, .trailing])
+            
+            HStack(spacing: 5) {
+                ForEach(viewModel.hostPieces) {
+                    PieceView(viewModel: $0, size: self.pieceSize)
+                        .padding([.leading])
+                }
+            }
+            .padding([.top, .bottom])
+            .zIndex(1)
         }
     }
 }

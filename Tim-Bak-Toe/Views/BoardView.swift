@@ -19,14 +19,13 @@ struct BoardView: View {
             GridStack(rows: 3, columns: 3, content: cell)
                 .frame(width: boardSize.width, height: boardSize.height)
             Spacer()
-            Spacer()
         }
         .zIndex(ZIndex.board)
     }
     
     func cell(atRow row: Int, column: Int) -> some View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
-            .padding(5)
+            .padding(10)
     }
 }
 

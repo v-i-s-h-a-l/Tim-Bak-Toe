@@ -54,7 +54,7 @@ class TimerViewModel: ObservableObject {
         .store(in: &cancellables)
 
         Just(1)
-            .delay(for: .seconds(refillingDuration), scheduler: RunLoop.current)
+            .delay(for: .seconds(2 * refillingDuration), scheduler: RunLoop.current)
             .sink { _ in
                 self.refillSuccessPublisher.send(self.teamId)
         }

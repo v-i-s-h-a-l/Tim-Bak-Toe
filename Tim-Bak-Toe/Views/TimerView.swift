@@ -11,28 +11,34 @@ import SwiftUI
 struct TimerView: View {
     
     @ObservedObject var viewModel: TimerViewModel
-
+    
     let isRightEdged: Bool
-
+    
     @State private var originalSize: CGSize = .zero
     
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(Theme.Col.boardCell)
-                .cornerRadius(originalSize.height / 2)
+                .cornerRadius(originalSize.height / 2.0)
+                .frame(width: originalSize.width)
                 .overlay(
                     Rectangle()
-                        .stroke(LinearGradient(Theme.Col.shadowCasted, Theme.Col.lightSource, startPoint: .top, endPoint: .bottom), lineWidth: 2)
-                        .cornerRadius(originalSize.height / 2)
+                        .stroke(
+                            LinearGradient(
+                                Theme.Col.shadowCasted, Theme.Col.lightSource,
+                                startPoint: .top,
+                                endPoint: .bottom),
+                            lineWidth: 2)
+                        .cornerRadius(originalSize.height / 2.0)
                         .blur(radius: 1))
             HStack {
                 viewModel
                     .style
                     .timerGradient
                     .cornerRadius(originalSize.height / 2)
-                    .frame(width: originalSize.width * (viewModel.isEmpty ? 0 : 1))
-
+                    .frame(width: originalSize.width * (viewModel.isEmpty ? 0.0 : 1.0))
+                
                 Spacer()
             }
             .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)
@@ -44,10 +50,6 @@ struct TimerView: View {
                     self.originalSize = proxy.frame(in: .local).size
             }
         })
-            .onTapGesture {
-                self.viewModel.invokeEmptying()
-                self.viewModel.invokeRefilling()
-        }
     }
 }
 

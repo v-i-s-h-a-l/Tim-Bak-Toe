@@ -16,7 +16,7 @@ struct PiecesContainerView: View {
     var body: some View {
         VStack {
             HStack(spacing: 5) {
-                ForEach(viewModel.hostPieces) {
+                ForEach(viewModel.peerPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
                         .padding([.trailing])
                 }
@@ -24,18 +24,18 @@ struct PiecesContainerView: View {
             .padding([.top, .bottom])
             .zIndex(1)
             
-            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: true)
+            TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: true)
                 .frame(height: 10)
                 .padding([.leading, .trailing])
             
             Spacer()
             
-            TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: false)
+            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: false)
                 .frame(height: 10)
                 .padding([.leading, .trailing])
             
             HStack(spacing: 5) {
-                ForEach(viewModel.peerPieces) {
+                ForEach(viewModel.hostPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
                         .padding([.leading])
                 }

@@ -21,6 +21,7 @@ class TimerViewModel: ObservableObject {
     let style: PieceStyle
     
     @Published var currentFill: CGFloat = 1.0
+//    @Published var scale: CGFloat = 1.0
 
     init(with teamId: UUID, style: PieceStyle, refillingDuration: Double = 6.0) {
         self.teamId = teamId
@@ -133,12 +134,13 @@ class TimerViewModel: ObservableObject {
 
     private func invokeTimerActions() {
         guard self.state != .waiting else { return }
-
+        
         // toggle states if needed
         if currentTime >= refillingDuration {
             currentTime = refillingDuration
             state = .emptyingDown
             refillSuccessPublisher.send(teamId)
+//            animateStateChange()
         } else if currentTime <= 0.0 {
             currentTime = 0.0
             state = .fillingUp
@@ -153,4 +155,27 @@ class TimerViewModel: ObservableObject {
             }
         }
     }
+//
+//    private func animateStateChange() {
+//        guard state == .emptyingDown else { return }
+//        let scaleToAnimate: CGFloat = 1.3
+//        withAnimation(Animation.easeOut(duration: 0.05)) {
+//            scale = scaleToAnimate
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+//            withAnimation(Animation.easeIn(duration: 0.05)) {
+//                self.scale = 1.0
+//            }
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+//            withAnimation(Animation.easeOut(duration: 0.05)) {
+//                self.scale = scaleToAnimate
+//            }
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) {
+//            withAnimation(Animation.easeIn(duration: 0.05)) {
+//                self.scale = 1.0
+//            }
+//        }
+//    }
 }

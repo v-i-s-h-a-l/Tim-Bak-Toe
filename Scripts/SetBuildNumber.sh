@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 git=$(sh /etc/profile; which git)
 number_of_commits=$("$git" rev-list HEAD --count)

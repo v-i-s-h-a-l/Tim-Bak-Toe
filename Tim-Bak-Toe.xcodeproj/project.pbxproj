@@ -185,6 +185,7 @@
 				DC1283E52477740900B1317E /* Sources */,
 				DC1283E62477740900B1317E /* Frameworks */,
 				DC1283E72477740900B1317E /* Resources */,
+				DCF9592D248755D50011B2E5 /* Set build Number */,
 			);
 			buildRules = (
 			);
@@ -240,6 +241,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DCF9592D248755D50011B2E5 /* Set build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set build Number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/bin/sh $SRCROOT/Scripts/SetBuildNumber.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DC1283E52477740900B1317E /* Sources */ = {
@@ -406,7 +428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "Build number is set using script";
+				CURRENT_PROJECT_VERSION = "Build number is set using script under build phases";
 				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe/Preview Content\"";
 				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
 				ENABLE_PREVIEWS = YES;
@@ -415,6 +437,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "version is set using script under build phases";
 				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
 				PRODUCT_NAME = XO3;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -429,7 +452,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "Build number is set using script";
+				CURRENT_PROJECT_VERSION = "Build number is set using script under build phases";
 				DEVELOPMENT_ASSET_PATHS = "\"Tim-Bak-Toe/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
@@ -438,6 +461,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "version is set using script under build phases";
 				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
 				PRODUCT_NAME = XO3;
 				PROVISIONING_PROFILE_SPECIFIER = "";

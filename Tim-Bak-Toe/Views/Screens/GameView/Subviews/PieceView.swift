@@ -90,14 +90,14 @@ struct PieceView: View {
     var size: CGSize
 
     var body: some View {
-        let value = viewModel.disabled ? 0.0 : viewModel.shadowRadius
+        let shadowRadius =  viewModel.stateMultiplier * (viewModel.disabled ? 0.0 : size.height / 40.0)
         let lineWidthForPieceSign = size.height / 9.0
         let insetAmuontForPieceSign = size.height / 3.5
         return ZStack {
             Circle()
                 .fill(Theme.Col.piece)
-                .shadow(color: Theme.Col.lightSource, radius: value, x: -value, y: -value)
-                .shadow(color: Theme.Col.shadowCasted, radius: value, x: value, y: value)
+                .shadow(color: Theme.Col.lightSource, radius: shadowRadius, x: -shadowRadius, y: -shadowRadius)
+                .shadow(color: Theme.Col.shadowCasted, radius: shadowRadius, x: shadowRadius, y: shadowRadius)
                 .animation(Animation.default)
                 .blur(radius: 1)
             Circle()
@@ -108,8 +108,8 @@ struct PieceView: View {
             }
             if !viewModel.disabled {
                 Circle()
-                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: value / 2.0)
-                    .blur(radius: value / 2.0)
+                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: shadowRadius / 2.0)
+                    .blur(radius: shadowRadius / 2.0)
             }
             if viewModel.style == .O {
                 Circle()
@@ -144,6 +144,7 @@ struct PieceView_Previews: PreviewProvider {
         Group {
             PieceView(viewModel: PieceViewModel(with: .X), size: CGSize(width: 80, height: 80))
             PieceView(viewModel: PieceViewModel(with: .O), size: CGSize(width: 80, height: 80))
+                .colorScheme(.dark)
         }
     }
 }

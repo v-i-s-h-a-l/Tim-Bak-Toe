@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GameView: View {
 
-    @Binding var showGameScreen: Bool
+    @Binding var currentScreen: Screen
     @EnvironmentObject var viewModel: GameViewModel
     private let size: CGSize = UIScreen.main.bounds.size
     
@@ -32,7 +32,7 @@ struct GameView: View {
             PiecesContainerView(pieceSize: pieceSize)
             
             if viewModel.showWinnerView {
-                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart, showGameScreen: $showGameScreen)
+                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart, currentScreen: $currentScreen)
             }
         }
         .statusBar(hidden: true)
@@ -40,19 +40,17 @@ struct GameView: View {
 }
 
 struct GameView_Previews: PreviewProvider {
-    
-    @State static private var showGameScreen: Bool = true
-    
+        
     static var previews: some View {
         Group {
             NavigationView {
-                GameView(showGameScreen: $showGameScreen).colorScheme(.dark)
+                GameView(currentScreen: .constant(.game)).colorScheme(.dark)
                     .previewDevice(PreviewDevice.iPhoneSE2)
                     .environmentObject(GameViewModel())
                     .previewDisplayName(PreviewDeviceName.iPhoneSE2)
             }
             NavigationView {
-                GameView(showGameScreen: $showGameScreen).colorScheme(.light)
+                GameView(currentScreen: .constant(.game)).colorScheme(.light)
                     .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
                     .environmentObject(GameViewModel())
                     .previewDisplayName(PreviewDeviceName.iPhone11ProMax)

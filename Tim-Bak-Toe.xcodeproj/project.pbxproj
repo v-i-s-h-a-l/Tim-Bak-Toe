@@ -28,6 +28,8 @@
 		DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475118247B9C35009FEE54 /* PiecesContainerView.swift */; };
 		DC47511B247BA639009FEE54 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511A247BA639009FEE54 /* BoardView.swift */; };
 		DC47511D247C62B8009FEE54 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511C247C62B8009FEE54 /* HomeScreen.swift */; };
+		DC7E6FC524888ADC009039F6 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7E6FC424888ADC009039F6 /* SettingsScreen.swift */; };
+		DC7E6FC724888AE9009039F6 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7E6FC624888AE9009039F6 /* OnboardingScreen.swift */; };
 		DCAA2F70248887AE001B69F1 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F6F248887AE001B69F1 /* PlayButton.swift */; };
 		DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F762488890E001B69F1 /* SettingsButton.swift */; };
 		DCC738BB24885DE800ADED0E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC738BA24885DE800ADED0E /* Animations.swift */; };
@@ -62,6 +64,8 @@
 		DC475118247B9C35009FEE54 /* PiecesContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainerView.swift; sourceTree = "<group>"; };
 		DC47511A247BA639009FEE54 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		DC47511C247C62B8009FEE54 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		DC7E6FC424888ADC009039F6 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		DC7E6FC624888AE9009039F6 /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
 		DCAA2F6F248887AE001B69F1 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		DCAA2F762488890E001B69F1 /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		DCC738BA24885DE800ADED0E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
@@ -174,9 +178,27 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		DC7E6FC224888AB7009039F6 /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DC7E6FC424888ADC009039F6 /* SettingsScreen.swift */,
+			);
+			path = SettingsScreen;
+			sourceTree = "<group>";
+		};
+		DC7E6FC324888ABF009039F6 /* OnboardingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DC7E6FC624888AE9009039F6 /* OnboardingScreen.swift */,
+			);
+			path = OnboardingScreen;
+			sourceTree = "<group>";
+		};
 		DCAA2F6D24888762001B69F1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DC7E6FC324888ABF009039F6 /* OnboardingScreen */,
+				DC7E6FC224888AB7009039F6 /* SettingsScreen */,
 				DCAA2F7124888873001B69F1 /* GameView */,
 				DCAA2F7324888893001B69F1 /* HomeScreen */,
 				DCAA2F722488888C001B69F1 /* WinnerView */,
@@ -334,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC12842E2477A7E300B1317E /* GridStack.swift in Sources */,
+				DC7E6FC524888ADC009039F6 /* SettingsScreen.swift in Sources */,
 				DC128429247793EF00B1317E /* BoardCellView.swift in Sources */,
 				DCF3D75D2479FA5B0071506A /* GameSettings.swift in Sources */,
 				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,
@@ -356,6 +379,7 @@
 				DCF3D75B2479DB390071506A /* Constants.swift in Sources */,
 				DC109C99247B264700EBC286 /* TimerViewModel.swift in Sources */,
 				DC47511D247C62B8009FEE54 /* HomeScreen.swift in Sources */,
+				DC7E6FC724888AE9009039F6 /* OnboardingScreen.swift in Sources */,
 				DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */,
 				DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */,
 				DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */,

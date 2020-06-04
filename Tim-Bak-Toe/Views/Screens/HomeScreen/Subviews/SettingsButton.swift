@@ -10,12 +10,11 @@ import SwiftUI
 
 struct SettingsButton: View {
     
-    @Binding var showSettingsScreen: Bool
-    private let linearGradient = LinearGradient(Theme.Col.greenStart, Theme.Col.greenEnd, startPoint: .top, endPoint: .bottom)
+    @Binding var currentScreen: Screen
     
     var body: some View {
         Button(action: {
-            self.showSettingsScreen.toggle()
+            self.currentScreen = .settings
         }) {
             Image(systemName: "slider.horizontal.3")
                 .foregroundColor(.primary)

@@ -8,22 +8,32 @@
 
 import SwiftUI
 
+enum Screen {
+    case onboarding, home, settings, game
+}
+
 struct ContentView: View {
-    
-    @State var showGameScreen: Bool = false
-    @State var showSettingsScreen: Bool = false
+
+    @State var currentScreen: Screen = .onboarding
 
     var body: some View {
-        let isFirstTime = UserDefaults.standard.bool(forKey: "IsFirstLaunch")
+        
         return ZStack {
-            HomeScreen(showGameScreen: $showGameScreen, showSettingsScreen: $showSettingsScreen)
-            if showGameScreen {
-                GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel())
-            } else {
-                EmptyView()
+            if currentScreen == .onboarding {
+                OnboardingScreen(currentScreen: $currentScreen)
+            }
+            if currentScreen == .home {
+                HomeScreen(currentScreen: $currentScreen)
+            }
+            if currentScreen == .game {
+                GameView(currentScreen: $currentScreen).environmentObject(GameViewModel())
             }
         }
-        .statusBar(hidden: showGameScreen)
+        .statusBar(hidden: currentScreen == .game)
+        .onAppear {
+            let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")
+            self.currentScreen = isFirstLaunch ? .onboarding : .home
+        }
     }
 }
     

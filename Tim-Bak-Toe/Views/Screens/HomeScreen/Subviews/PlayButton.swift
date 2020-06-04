@@ -10,13 +10,13 @@ import SwiftUI
 
 struct PlayButton: View {
     
-    @Binding var showGameScreen: Bool
+    @Binding var currentScreen: Screen
     private let linearGradient = LinearGradient(Theme.Col.greenStart, Theme.Col.greenEnd, startPoint: .top, endPoint: .bottom)
 
     var body: some View {
         Button(action: {
             withAnimation {
-                self.showGameScreen.toggle()
+                self.currentScreen = .game
             }
         }) {
             Image(systemName: "play.fill")

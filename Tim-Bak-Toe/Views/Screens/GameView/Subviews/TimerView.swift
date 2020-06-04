@@ -17,11 +17,13 @@ struct TimerView: View {
     @State private var originalSize: CGSize = .zero
     
     var body: some View {
-        ZStack {
+        let cornerRadius = originalSize.height / 2
+        let originalWidth = originalSize.width
+        return ZStack {
             Rectangle()
                 .fill(Theme.Col.boardCell)
-                .cornerRadius(originalSize.height / 2.0)
-                .frame(width: originalSize.width)
+                .cornerRadius(cornerRadius)
+                .frame(width: originalWidth)
                 .overlay(
                     Rectangle()
                         .stroke(

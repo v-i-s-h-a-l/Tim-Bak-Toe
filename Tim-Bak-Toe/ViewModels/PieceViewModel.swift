@@ -55,9 +55,7 @@ class PieceViewModel: ObservableObject, Identifiable {
             zIndex = ZIndex.playerPieceDragged
         } else {
             self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
-//            withAnimation(Animation.linear(duration: 0.1)) {
                 self.relativeOffset = dragAmount + currentOffset
-//            }
         }
     }
     

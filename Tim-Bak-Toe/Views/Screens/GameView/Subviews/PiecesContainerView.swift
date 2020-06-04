@@ -19,11 +19,12 @@ struct PiecesContainerView: View {
                 ForEach(viewModel.peerPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
                         .padding([.trailing])
+                    .zIndex(ZIndex.playerPiecePlaced)
                 }
             }
             .padding([.top, .bottom])
-            .zIndex(1)
-            
+            .zIndex(ZIndex.playerPiecePlaced)
+
             TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: true)
                 .frame(height: 10)
                 .padding([.leading, .trailing])
@@ -38,10 +39,11 @@ struct PiecesContainerView: View {
                 ForEach(viewModel.hostPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
                         .padding([.leading])
+                    .zIndex(ZIndex.playerPiecePlaced)
                 }
             }
             .padding([.top, .bottom])
-            .zIndex(1)
+            .zIndex(ZIndex.playerPiecePlaced)
         }
     }
 }

@@ -63,7 +63,7 @@ class TimerViewModel: ObservableObject {
     }
 
     func invokeRefilling() {
-        withAnimation(.linear(duration: 0.1)) {
+        withAnimation(.linear(duration: 0.2)) {
             currentTime = refillingDuration
         }
         state = .emptyingDown

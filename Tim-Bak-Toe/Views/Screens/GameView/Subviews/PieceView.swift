@@ -89,25 +89,30 @@ struct PieceView: View {
     var size: CGSize
 
     var body: some View {
-        ZStack {
+        let value = viewModel.disabled ? 0.0 : viewModel.shadowRadius
+        return ZStack {
             Circle()
                 .fill(Theme.Col.piece)
-                .shadow(color: Theme.Col.lightSource, radius: 2, x: -2, y: -2)
-                .shadow(color: Theme.Col.shadowCasted, radius: 2, x: 2, y: 2)
+                .shadow(color: Theme.Col.lightSource, radius: value, x: -value, y: -value)
+                .shadow(color: Theme.Col.shadowCasted, radius: value, x: value, y: value)
                 .blur(radius: 1)
             Circle()
                 .fill(Theme.Col.piece)
-            Circle()
-                .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: 1)
-                .blur(radius: 1)
+            if viewModel.zIndex == ZIndex.playerPieceDragged {
+                Circle()
+                    .fill(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted))
+            }
+            if !viewModel.disabled {
+                Circle()
+                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: value / 2.0)
+                    .blur(radius: value / 2.0)
+            }
             if viewModel.style == .O {
                 Circle()
                     .inset(by: 25)
-                    .stroke(viewModel.style.pieceGradient, lineWidth: 10)
-                    .opacity(viewModel.disabled ? 0.5 : 1)
+                    .stroke(viewModel.style.pieceGradient, lineWidth: 9)
             } else {
                 XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: 10)
-                .opacity(viewModel.disabled ? 0.5 : 1)
             }
         }
         .frame(width: size.width, height: size.height)

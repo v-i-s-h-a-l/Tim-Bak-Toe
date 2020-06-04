@@ -25,6 +25,8 @@ enum Theme {
         static let blueStart = Color(UIColor(named: "blueStart")!)
         static let blueEnd = Color(UIColor(named: "blueEnd")!)
 
+        static let greenStart = Color(UIColor(named: "greenStart")!)
+        static let greenEnd = Color(UIColor(named: "greenEnd")!)
 
         enum Shadow {
             enum BoardCell {

@@ -14,21 +14,13 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            TabView {
-                NavigationLink(destination: GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel()), isActive: $showGameScreen) {
-                    StartGameView(showGameScreen: $showGameScreen)
-                }
-                .tabItem() {
-                    Image(systemName: "play.rectangle.fill")
-                }
-                    
-                WinnerView(message: "Message", onRestart: {}, showGameScreen:  $showGameScreen)
-                    .tabItem {
-                        Image(systemName: "slider.horizontal.3")
-                }
+            NavigationLink(destination: GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel()), isActive: $showGameScreen) {
+                HomeScreen(showGameScreen: $showGameScreen)
             }
-            .navigationBarHidden(true)
         }
+        .navigationBarHidden(true)
+        .navigationBarTitle("Some", displayMode: .inline)
+        .statusBar(hidden: true)
     }
 }
     
@@ -38,6 +30,8 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             ContentView()
                 .previewDevice(PreviewDevice.iPhoneSE2)
+            ContentView()
+                .previewDevice(PreviewDevice.iPhoneXʀ)
         }
     }
 }

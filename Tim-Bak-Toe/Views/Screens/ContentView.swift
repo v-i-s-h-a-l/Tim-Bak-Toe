@@ -13,7 +13,9 @@ struct ContentView: View {
     @State var showGameScreen: Bool = false
     
     var body: some View {
-        ZStack {
+        let isFirstTime = UserDefaults.standard.bool(forKey: "IsFirstLaunch")
+        isFirstTime
+        return ZStack {
             HomeScreen(showGameScreen: $showGameScreen)
             if showGameScreen {
                 GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel())

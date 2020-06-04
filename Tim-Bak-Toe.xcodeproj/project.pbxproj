@@ -127,16 +127,8 @@
 		DC1284012477751400B1317E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DC128428247793EF00B1317E /* BoardCellView.swift */,
-				DC47511A247BA639009FEE54 /* BoardView.swift */,
-				DC1283F02477740900B1317E /* ContentView.swift */,
-				DC12841E24778FAE00B1317E /* GameView.swift */,
-				DC475118247B9C35009FEE54 /* PiecesContainerView.swift */,
-				DC128426247793E000B1317E /* PieceView.swift */,
-				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
-				DC109C94247B00F100EBC286 /* TimerView.swift */,
-				DC47511C247C62B8009FEE54 /* HomeScreen.swift */,
-				DC109C9A247B736400EBC286 /* WinnerView.swift */,
+				DCAA2F6E2488876D001B69F1 /* Subviews */,
+				DCAA2F6D24888762001B69F1 /* Screens */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,6 +168,30 @@
 				DCC738BA24885DE800ADED0E /* Animations.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DCAA2F6D24888762001B69F1 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				DC1283F02477740900B1317E /* ContentView.swift */,
+				DC12841E24778FAE00B1317E /* GameView.swift */,
+				DC47511C247C62B8009FEE54 /* HomeScreen.swift */,
+				DC109C9A247B736400EBC286 /* WinnerView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		DCAA2F6E2488876D001B69F1 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				DC128428247793EF00B1317E /* BoardCellView.swift */,
+				DC47511A247BA639009FEE54 /* BoardView.swift */,
+				DC475118247B9C35009FEE54 /* PiecesContainerView.swift */,
+				DC128426247793E000B1317E /* PieceView.swift */,
+				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
+				DC109C94247B00F100EBC286 /* TimerView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

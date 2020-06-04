@@ -20,7 +20,7 @@ jobs:
       env:
         DECRYPTION_PASSWORD: ${{ secrets.DECRYPTION_PASSWORD }}
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_11.4.app && /usr/bin/xcodebuild -version
+      run: sudo xcode-select -switch /Applications/Xcode_11.5.app && /usr/bin/xcodebuild -version
     - name: Build archive
       run: xcodebuild -sdk iphoneos -project Tim-Bak-Toe.xcodeproj -configuration Release -scheme Tim-Bak-Toe -derivedDataPath DerivedData -archivePath DerivedData/Archive/Tim-Bak-Toe archive
     - name: Export Archive

@@ -12,7 +12,7 @@ struct WinnerView: View {
 
     let message: String
     let onRestart: () -> ()
-    @Binding var showGameScreen: Bool
+    @Binding var currentScreen: Screen
 
     var body: some View {
         ZStack {
@@ -45,7 +45,7 @@ struct WinnerView: View {
 
                 Button(action: {
                     withAnimation {
-                        self.showGameScreen.toggle()
+                        self.currentScreen = .home
                     }
                 }) {
                     Text("Exit🙏🏼")

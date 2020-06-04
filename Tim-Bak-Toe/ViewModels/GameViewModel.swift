@@ -19,7 +19,7 @@ class GameViewModel: ObservableObject {
     
     @Published var hostScore: Int = 0
     @Published var peerScore: Int = 0
-
+    
     @Published var showWinnerView: Bool = false
     
     private var winnerId: UUID? {
@@ -53,40 +53,38 @@ class GameViewModel: ObservableObject {
     lazy var boardCellViewModels: [BoardCellViewModel] = generateBoardCellViewModels()
     lazy var hostTimerViewModel: TimerViewModel = generateTimerViewModel(with: hostId)
     lazy var peerTimerViewModel: TimerViewModel = generateTimerViewModel(with: peerId)
-
+    
     private var cancellables = Set<AnyCancellable>()
-
+    
     private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
     private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
-
+    
     private let pieceDragEndToCellsPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
-
+    
     private let newCellOccupiedByPiecePublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>()
     private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
     private let newCellOccupiedByPiecePublisherForShelf = PassthroughSubject<UUID, Never>()
-
+    
     private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
-
+    
     private let winPublisher = PassthroughSubject<Void, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - Host pieces -
-
+    
     private func generatePiecesForHost() -> [PieceViewModel] {
         let generatedHostPieces = [PieceViewModel(with: .X), PieceViewModel(with: .X), PieceViewModel(with: .X)]
-
-//        if userID == hostId {
-            setupConnnectionsForDragStart(for: generatedHostPieces)
-            setupConnnectionsForDragEnd(for: generatedHostPieces)
-//        }
+        
+        setupConnnectionsForDragStart(for: generatedHostPieces)
+        setupConnnectionsForDragEnd(for: generatedHostPieces)
         
         return generatedHostPieces
     }
-
+    
     private func setupConnnectionsForDragStart(for pieces: [PieceViewModel]) {
         // Receives information from specific piece
         pieces.forEach { $0.subscribeToDragStart(pieceDragStartToFellowPiecesPublisher) }
-
+        
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
             pieceModel.dragStartedPublisher.sink { teamId, pieceID, cellId in
@@ -95,7 +93,7 @@ class GameViewModel: ObservableObject {
             .store(in: &cancellables)
         }
     }
-
+    
     private func setupConnnectionsForDragEnd(for pieces: [PieceViewModel]) {
         // Receive information from specific piece
         pieces.forEach {
@@ -104,36 +102,34 @@ class GameViewModel: ObservableObject {
             $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
             $0.subscribeToRestart(restartPublisher)
         }
-
+        
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
             pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
                 self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID))
             }
             .store(in: &cancellables)
-
+            
             pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
                 self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId))
             }
             .store(in: &cancellables)
         }
     }
-        
-        // MARK: - Peer pieces -
-
+    
+    // MARK: - Peer pieces -
+    
     private func generatePiecesForPeer() -> [PieceViewModel] {
         let generatedPieces = [PieceViewModel(with: .O), PieceViewModel(with: .O), PieceViewModel(with: .O)]
-
-//        if userID == peerId {
-            setupConnnectionsForDragStart(for: generatedPieces)
-            setupConnnectionsForDragEnd(for: generatedPieces)
-//        }
-
+        
+        setupConnnectionsForDragStart(for: generatedPieces)
+        setupConnnectionsForDragEnd(for: generatedPieces)
+        
         return generatedPieces
     }
-
+    
     // MARK: - Board cells -
-
+    
     private func generateBoardCellViewModels() -> [BoardCellViewModel] {
         var generatedBoardCellViewModels = [BoardCellViewModel]()
         for row in 0...2 {
@@ -141,13 +137,13 @@ class GameViewModel: ObservableObject {
                 generatedBoardCellViewModels.append(BoardCellViewModel(with: row, column: column))
             }
         }
-
+        
         subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: generatedBoardCellViewModels)
         subscribeToCellPublishers(generatedCellViewModels: generatedBoardCellViewModels)
-
+        
         return generatedBoardCellViewModels
     }
-
+    
     private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach {
             $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
@@ -155,7 +151,7 @@ class GameViewModel: ObservableObject {
             $0.subscribeToRestart(restartPublisher)
         }
     }
-
+    
     private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach { cellViewModel in
             cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
@@ -167,7 +163,7 @@ class GameViewModel: ObservableObject {
                 self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
             }
             .store(in: &cancellables)
-
+            
             cellViewModel.newOccupancyPublisher.sink { (teamId, _, pieceId, _, previousCellId) in
                 self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
                 self.checkWinner(teamId: teamId)
@@ -183,7 +179,7 @@ class GameViewModel: ObservableObject {
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         generatedViewModel.subscribeToWin(winPublisher)
         generatedViewModel.subscribeToRestart(restartPublisher)
-
+        
         generatedViewModel.refillSuccessPublisher.sink { teamId in
             self.shelfRefillPublisher.send(teamId)
         }
@@ -191,18 +187,18 @@ class GameViewModel: ObservableObject {
         
         return generatedViewModel
     }
-
+    
     // MARK: - Win logic and game reset -
     
     func checkWinner(teamId: UUID) {
         guard winnerId == nil else { return }
-
+        
         let occupiedIndexes = boardCellViewModels.filter { $0.teamId == teamId }
             .map { $0.indexPath }
         guard occupiedIndexes.count == 3 else { return }
         
         let occupiedIndexesSet = Set(occupiedIndexes)
-
+        
         withAnimation {
             self.winnerId = possibleWinnerIndexes.contains(occupiedIndexesSet) ? teamId : nil
         }

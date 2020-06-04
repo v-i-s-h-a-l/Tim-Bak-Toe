@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -eo pipefail
+
 # Decrypt the files
 # --batch to prevent interactive command --yes to assume "yes" for questions
 gpg --quiet --batch --yes --decrypt --passphrase="$DECRYPTION_PASSWORD" --output provisioning/AppStoreCertificates.p12 provisioning/AppStoreCertificates.p12.gpg

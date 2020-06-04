@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install GPG
-      run: brew install gnupg
+      run: brew install gpg
     - name: List available Xcode versions
       run: ls /Applications | grep Xcode
     - name: Decrypt large secret

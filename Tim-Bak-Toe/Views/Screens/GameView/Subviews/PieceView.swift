@@ -95,10 +95,11 @@ struct PieceView: View {
                 .fill(Theme.Col.piece)
                 .shadow(color: Theme.Col.lightSource, radius: value, x: -value, y: -value)
                 .shadow(color: Theme.Col.shadowCasted, radius: value, x: value, y: value)
+                .animation(Animation.default)
                 .blur(radius: 1)
             Circle()
                 .fill(Theme.Col.piece)
-            if viewModel.zIndex == ZIndex.playerPieceDragged {
+            if viewModel.zIndex == ZIndex.playerPieceDragged || viewModel.disabled {
                 Circle()
                     .fill(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted))
             }
@@ -115,6 +116,7 @@ struct PieceView: View {
                 XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: 10)
             }
         }
+        .zIndex(viewModel.zIndex)
         .frame(width: size.width, height: size.height)
         .offset(viewModel.relativeOffset)
         .gesture(
@@ -128,6 +130,5 @@ struct PieceView: View {
                     self.viewModel.onAppear(proxy)
                 })
         })
-        .zIndex(viewModel.zIndex)
     }
 }

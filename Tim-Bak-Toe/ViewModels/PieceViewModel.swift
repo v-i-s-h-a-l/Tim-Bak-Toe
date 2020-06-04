@@ -69,7 +69,6 @@ class PieceViewModel: ObservableObject, Identifiable {
     func onDragEnded(_ drag: DragGesture.Value) {
         // prevents from dragging multiple items
         guard !self.disabled else { return }
-        isDragStarted = false
 
         Just(false)
             .delay(for: .seconds(0.5), scheduler: RunLoop.current)

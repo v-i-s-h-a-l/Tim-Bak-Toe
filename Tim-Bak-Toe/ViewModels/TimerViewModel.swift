@@ -11,7 +11,7 @@ import Foundation
 import SwiftUI
 
 enum TimerState: String {
-    case waiting, emptyingDown, fillingUp
+    case emptyingDown, fillingUp
 }
 
 class TimerViewModel: ObservableObject {
@@ -21,9 +21,8 @@ class TimerViewModel: ObservableObject {
     let style: PieceStyle
     
     @Published var currentFill: CGFloat = 1.0
-//    @Published var scale: CGFloat = 1.0
 
-    init(with teamId: UUID, style: PieceStyle, refillingDuration: Double = 6.0) {
+    init(with teamId: UUID, style: PieceStyle, refillingDuration: Double = 5) {
         self.teamId = teamId
         self.refillingDuration = refillingDuration
         self.style = style
@@ -34,7 +33,7 @@ class TimerViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var timerObserver: AnyCancellable?
     
-    private let timerStride = 0.7
+    private let timerStride = 0.5
 
     private var state: TimerState = .emptyingDown
     private var timer: Publishers.Autoconnect<Timer.TimerPublisher>?
@@ -47,14 +46,16 @@ class TimerViewModel: ObservableObject {
             if ratio >= 1 { ratio = 1.0 }
             if ratio <= 0 { ratio = 0.0}
 
-            currentFill = CGFloat(ratio)
+            if state == .emptyingDown || ratio == 1.0 {
+                currentFill = CGFloat(ratio)
+            }
         }
     }
     
     // MARK: - Functionality -
 
     func invokeEmptying() {
-        withAnimation {
+        withAnimation(.linear(duration: 0.2)) {
             currentTime = 0.0
         }
         state = .fillingUp
@@ -62,7 +63,7 @@ class TimerViewModel: ObservableObject {
     }
 
     func invokeRefilling() {
-        withAnimation {
+        withAnimation(.linear(duration: 0.2)) {
             currentTime = refillingDuration
         }
         state = .emptyingDown
@@ -76,8 +77,7 @@ class TimerViewModel: ObservableObject {
         publisher
             .filter { $0 == self.teamId }
             .sink { _ in
-                self.invokeEmptying()
-        }
+                self.invokeEmptying() }
         .store(in: &cancellables)
 
         // instant refill for opponent
@@ -106,8 +106,8 @@ class TimerViewModel: ObservableObject {
 
     private func reset() {
         currentTime = refillingDuration
-        state = .waiting
-        resetTimer()
+        state = .emptyingDown
+        timerObserver?.cancel()
     }
 
     // MARK: - starting a new game -
@@ -133,21 +133,18 @@ class TimerViewModel: ObservableObject {
     }
 
     private func invokeTimerActions() {
-        guard self.state != .waiting else { return }
-        
         // toggle states if needed
         if currentTime >= refillingDuration {
             currentTime = refillingDuration
             state = .emptyingDown
             refillSuccessPublisher.send(teamId)
-//            animateStateChange()
         } else if currentTime <= 0.0 {
             currentTime = 0.0
             state = .fillingUp
         }
 
         // update fill amount
-        withAnimation(Animation.easeInCubic) {
+        withAnimation(.linear(duration: timerStride)) {
             if state == .emptyingDown {
                 currentTime -= timerStride
             } else if state == .fillingUp {
@@ -155,27 +152,4 @@ class TimerViewModel: ObservableObject {
             }
         }
     }
-//
-//    private func animateStateChange() {
-//        guard state == .emptyingDown else { return }
-//        let scaleToAnimate: CGFloat = 1.3
-//        withAnimation(Animation.easeOut(duration: 0.05)) {
-//            scale = scaleToAnimate
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
-//            withAnimation(Animation.easeIn(duration: 0.05)) {
-//                self.scale = 1.0
-//            }
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-//            withAnimation(Animation.easeOut(duration: 0.05)) {
-//                self.scale = scaleToAnimate
-//            }
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) {
-//            withAnimation(Animation.easeIn(duration: 0.05)) {
-//                self.scale = 1.0
-//            }
-//        }
-//    }
 }

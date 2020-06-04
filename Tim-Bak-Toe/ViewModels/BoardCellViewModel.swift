@@ -10,30 +10,6 @@ import Combine
 import Foundation
 import SwiftUI
 
-enum BoardCellState {
-    case none // when no piece has been picked up for placement
-    case occupied
-    case origin // the current active piece was picked from this cell itself
-    case welcome
-
-    var shadowColor: Color {
-        typealias TC = Theme.Col.Shadow.BoardCell
-        switch self {
-        case .none: return TC.none
-        case .occupied: return TC.occupied
-            case .origin: return TC.origin
-            case .welcome: return TC.welcome
-        }
-    }
-
-    var shadowRadius: CGFloat {
-        switch self {
-        case .none: return 0
-        case .occupied, .origin, .welcome: return 0
-        }
-    }
-}
-
 class BoardCellViewModel: ObservableObject, Identifiable {
 
     let id = UUID()
@@ -45,8 +21,6 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         self.indexPath = "\(row),\(column)"
     }
 
-    @Published var cellState: BoardCellState = .none
-    
     var newOccupancyPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID, UUID?), Never>()
 
     private var frameGlobal: CGRect!
@@ -58,21 +32,6 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         self.frameGlobal = proxy.frame(in: .global)
     }
 
-    func subscribeToDragStart(_ publisher: PassthroughSubject<UUID?, Never>) {
-        publisher.sink(receiveValue: { cellId in
-                if self.id == cellId {
-                    self.animateToState(.origin)
-                } else {
-                    if self.pieceId != nil {
-                        self.animateToState(.occupied)
-                    } else {
-                        self.animateToState(.welcome)
-                    }
-                }
-            }
-        )
-        .store(in: &cancellables)
-    }
 
     func subscribeToDragEnded(_ publisher: PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>) {
         // calculates only successful drops
@@ -82,13 +41,11 @@ class BoardCellViewModel: ObservableObject, Identifiable {
                 if self.frameGlobal.contains(point) && self.pieceId == nil {
                     return true
                 } else {
-                    self.animateNoChange()
                     return false
                 }
             }).sink(receiveValue: { (teamId, _, pieceId, originCellId) in
                 self.pieceId = pieceId
                 self.teamId = teamId
-                self.animateSuccessDestination()
                 self.newOccupancyPublisher.send((teamId, self.centerGlobal, pieceId, self.id, originCellId))
             })
             .store(in: &cancellables)
@@ -106,24 +63,6 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
 
-    private func animateToState(_ updatedState: BoardCellState) {
-        withAnimation(Animation.easeInOut) {
-            self.cellState = updatedState
-        }
-    }
-
-    private func animateSuccessDestination() {
-        withAnimation(Animation.spring()) {
-            self.cellState = .none
-        }
-    }
-
-    private func animateNoChange() {
-        withAnimation {
-            self.cellState = .none
-        }
-    }
-    
     func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
         publisher.sink { _ in
             self.reset()
@@ -134,6 +73,5 @@ class BoardCellViewModel: ObservableObject, Identifiable {
     private func reset() {
         pieceId = nil
         teamId = nil
-        cellState = .none
     }
 }

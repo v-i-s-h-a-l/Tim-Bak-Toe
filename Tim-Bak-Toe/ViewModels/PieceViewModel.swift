@@ -24,14 +24,22 @@ class PieceViewModel: ObservableObject, Identifiable {
     @Published var relativeOffset: CGSize = .zero
     @Published var disabled: Bool = false
     @Published var zIndex: Double = ZIndex.playerPiecePlaced
-    
+    @Published var shadowRadius: CGFloat = 2.0
+
     /// publishes team id, piece id and optional occeupied cell id
     var dragStartedPublisher = PassthroughSubject<(UUID, UUID, UUID?), Never>()
 
     /// publishes team id, drag end location, piece id and optional occeupied cell id
     var draggedEndedPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
-    private var isDragStarted: Bool = false
+    private var isDragStarted: Bool = false {
+        didSet {
+            withAnimation {
+                zIndex = isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced
+                shadowRadius = isDragStarted ? 4.0 : 2.0
+            }
+        }
+    }
     private var cancellables: Set<AnyCancellable> = []
 
     private var dragAmount: CGSize = .zero
@@ -52,7 +60,6 @@ class PieceViewModel: ObservableObject, Identifiable {
             self.isDragStarted = true
             self.dragStartedPublisher
                 .send((teamId, id, occupiedCellID))
-            zIndex = ZIndex.playerPieceDragged
         } else {
             self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
                 self.relativeOffset = dragAmount + currentOffset
@@ -62,13 +69,11 @@ class PieceViewModel: ObservableObject, Identifiable {
     func onDragEnded(_ drag: DragGesture.Value) {
         // prevents from dragging multiple items
         guard !self.disabled else { return }
-        isDragStarted = false
 
         Just(false)
             .delay(for: .seconds(0.5), scheduler: RunLoop.current)
             .sink { _ in
-                self.zIndex = ZIndex.playerPiecePlaced
-        }
+                self.isDragStarted = false }
         .store(in: &cancellables)
 
         draggedEndedPublisher
@@ -153,6 +158,7 @@ class PieceViewModel: ObservableObject, Identifiable {
                 .filter { teamId in
                     teamId != self.teamId}
                 .sink { teamID in
+                    self.isDragStarted = false
                     self.moveToUpdatedOffset()
             }
             .store(in: &cancellables)
@@ -173,7 +179,6 @@ class PieceViewModel: ObservableObject, Identifiable {
             self.isDragStarted = false
             self.occupiedCellID = nil
             self.relativeOffset = .zero
-            self.zIndex = ZIndex.playerPiecePlaced
         }
     }
 }

@@ -13,14 +13,15 @@ struct ContentView: View {
     @State var showGameScreen: Bool = false
     
     var body: some View {
-        NavigationView {
-            NavigationLink(destination: GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel()), isActive: $showGameScreen) {
-                HomeScreen(showGameScreen: $showGameScreen)
+        ZStack {
+            HomeScreen(showGameScreen: $showGameScreen)
+            if showGameScreen {
+                GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel())
+            } else {
+                EmptyView()
             }
         }
-        .navigationBarHidden(true)
-        .navigationBarTitle("Some", displayMode: .inline)
-        .statusBar(hidden: true)
+        .statusBar(hidden: showGameScreen)
     }
 }
     

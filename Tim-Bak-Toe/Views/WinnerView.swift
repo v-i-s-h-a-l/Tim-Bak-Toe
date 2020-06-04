@@ -27,7 +27,9 @@ struct WinnerView: View {
                     .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.5), Color.red.opacity(0.5)]), startPoint: .top, endPoint: .bottom))
 
                 Button(action: {
-                    self.onRestart()
+                    withAnimation {
+                        self.onRestart()
+                    }
                 }) {
                     Text("Re🤝start")
                     .font(.largeTitle)
@@ -42,7 +44,9 @@ struct WinnerView: View {
                 .padding()
 
                 Button(action: {
-                    self.showGameScreen.toggle()
+                    withAnimation {
+                        self.showGameScreen.toggle()
+                    }
                 }) {
                     Text("Exit🙏🏼")
                     .font(.largeTitle)

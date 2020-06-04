@@ -13,22 +13,15 @@ struct ContentView: View {
     @State var showGameScreen: Bool = false
     
     var body: some View {
-        NavigationView {
-            TabView {
-                NavigationLink(destination: GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel()), isActive: $showGameScreen) {
-                    StartGameView(showGameScreen: $showGameScreen)
-                }
-                .tabItem() {
-                    Image(systemName: "play.rectangle.fill")
-                }
-                    
-                WinnerView(message: "Message", onRestart: {}, showGameScreen:  $showGameScreen)
-                    .tabItem {
-                        Image(systemName: "slider.horizontal.3")
-                }
+        ZStack {
+            HomeScreen(showGameScreen: $showGameScreen)
+            if showGameScreen {
+                GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel())
+            } else {
+                EmptyView()
             }
-            .navigationBarHidden(true)
         }
+        .statusBar(hidden: showGameScreen)
     }
 }
     
@@ -38,6 +31,8 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             ContentView()
                 .previewDevice(PreviewDevice.iPhoneSE2)
+            ContentView()
+                .previewDevice(PreviewDevice.iPhoneXʀ)
         }
     }
 }

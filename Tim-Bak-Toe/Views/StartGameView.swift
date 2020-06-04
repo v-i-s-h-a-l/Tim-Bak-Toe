@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct StartGameView: View {
+struct HomeScreen: View {
 
     @Binding var showGameScreen: Bool
     private let linearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]), startPoint: .top, endPoint: .bottom)
@@ -28,5 +28,11 @@ struct StartGameView: View {
         .background(linearGradient)
         .border(Color.accentColor, width: 4)
         .cornerRadius(10.0)
+    }
+}
+
+struct StartGameView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeScreen(showGameScreen: .constant(false))
     }
 }

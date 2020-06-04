@@ -112,9 +112,10 @@ struct PieceView: View {
         }
         .frame(width: size.width, height: size.height)
         .offset(viewModel.relativeOffset)
-        .gesture(DragGesture(coordinateSpace: .global)
-        .onChanged(viewModel.onDragChanged)
-        .onEnded(viewModel.onDragEnded))
+        .gesture(
+            DragGesture(coordinateSpace: .global)
+                .onChanged(viewModel.onDragChanged)
+                .onEnded(viewModel.onDragEnded))
         .allowsHitTesting(!viewModel.disabled)
         .overlay(GeometryReader { proxy in
             Color.clear

@@ -90,6 +90,13 @@ class PieceViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
 
+    fileprivate func moveToUpdatedOffset() {
+        dragAmount = .zero
+        withAnimation {
+            relativeOffset = currentOffset
+        }
+    }
+    
     func subscribeToDragEnd(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
         publisher
             .filter { teamId, _ in
@@ -98,11 +105,8 @@ class PieceViewModel: ObservableObject, Identifiable {
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
-            .sink { _, pieceId in
-                self.dragAmount = .zero
-                withAnimation {
-                    self.relativeOffset = self.currentOffset
-                }
+            .sink { _, _ in
+                self.moveToUpdatedOffset()
         }
         .store(in: &cancellables)
         
@@ -130,25 +134,30 @@ class PieceViewModel: ObservableObject, Identifiable {
 
         // pauses drag for pieces in the same team
         publisher
-            .filter { (teamId, _, _, _) in
-                teamId == self.teamId
-            }
-            .sink { (_, _, _, _) in
-                self.disabled = true
-        }
+            .map { (teamId, _, _, _) in
+                teamId == self.teamId }
+        .assign(to: \.disabled, on: self)
         .store(in: &cancellables)
     }
 
     func subscribeToSuccessfulRefilling(_ publisher: PassthroughSubject<UUID, Never>) {
         // enables the pieces of the team id received
         publisher
-            .filter { teamId in
-                teamId == self.teamId
+                .map { teamId in
+                    // if self team id is refilled then the pieces are enabled
+                    // if opponent's timer is refilled then self is disabled
+                    !(teamId == self.teamId) }
+            .assign(to: \.disabled, on: self)
+            .store(in: &cancellables)
+
+        // force drag end for any piece that the opponent had been dragging
+        publisher
+                .filter { teamId in
+                    teamId != self.teamId}
+                .sink { teamID in
+                    self.moveToUpdatedOffset()
             }
-        .sink { _ in
-            self.disabled = false
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
 
     func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
@@ -159,12 +168,14 @@ class PieceViewModel: ObservableObject, Identifiable {
     }
 
     private func reset() {
-        self.currentOffset = .zero
-        self.dragAmount = .zero
-        self.disabled = false
-        self.isDragStarted = false
-        self.occupiedCellID = nil
-        self.relativeOffset = .zero
-        self.zIndex = ZIndex.playerPiecePlaced
+        withAnimation {
+            self.currentOffset = .zero
+            self.dragAmount = .zero
+            self.disabled = false
+            self.isDragStarted = false
+            self.occupiedCellID = nil
+            self.relativeOffset = .zero
+            self.zIndex = ZIndex.playerPiecePlaced
+        }
     }
 }

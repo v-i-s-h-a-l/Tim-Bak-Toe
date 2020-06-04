@@ -35,8 +35,7 @@ struct GameView: View {
                 WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart, showGameScreen: $showGameScreen)
             }
         }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarHidden(true)
+        .statusBar(hidden: true)
     }
 }
 

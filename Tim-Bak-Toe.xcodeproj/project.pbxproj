@@ -28,6 +28,8 @@
 		DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475118247B9C35009FEE54 /* PiecesContainerView.swift */; };
 		DC47511B247BA639009FEE54 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511A247BA639009FEE54 /* BoardView.swift */; };
 		DC47511D247C62B8009FEE54 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511C247C62B8009FEE54 /* HomeScreen.swift */; };
+		DCAA2F70248887AE001B69F1 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F6F248887AE001B69F1 /* PlayButton.swift */; };
+		DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F762488890E001B69F1 /* SettingsButton.swift */; };
 		DCC738BB24885DE800ADED0E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC738BA24885DE800ADED0E /* Animations.swift */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
@@ -60,6 +62,8 @@
 		DC475118247B9C35009FEE54 /* PiecesContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainerView.swift; sourceTree = "<group>"; };
 		DC47511A247BA639009FEE54 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		DC47511C247C62B8009FEE54 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		DCAA2F6F248887AE001B69F1 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
+		DCAA2F762488890E001B69F1 /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		DCC738BA24885DE800ADED0E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
@@ -127,7 +131,7 @@
 		DC1284012477751400B1317E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DCAA2F6E2488876D001B69F1 /* Subviews */,
+				DCAA2F6E2488876D001B69F1 /* Common Subviews */,
 				DCAA2F6D24888762001B69F1 /* Screens */,
 			);
 			path = Views;
@@ -173,19 +177,61 @@
 		DCAA2F6D24888762001B69F1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DCAA2F7124888873001B69F1 /* GameView */,
+				DCAA2F7324888893001B69F1 /* HomeScreen */,
+				DCAA2F722488888C001B69F1 /* WinnerView */,
 				DC1283F02477740900B1317E /* ContentView.swift */,
-				DC12841E24778FAE00B1317E /* GameView.swift */,
-				DC47511C247C62B8009FEE54 /* HomeScreen.swift */,
-				DC109C9A247B736400EBC286 /* WinnerView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		DCAA2F6E2488876D001B69F1 /* Subviews */ = {
+		DCAA2F6E2488876D001B69F1 /* Common Subviews */ = {
 			isa = PBXGroup;
 			children = (
 				DC128428247793EF00B1317E /* BoardCellView.swift */,
 				DC47511A247BA639009FEE54 /* BoardView.swift */,
+			);
+			path = "Common Subviews";
+			sourceTree = "<group>";
+		};
+		DCAA2F7124888873001B69F1 /* GameView */ = {
+			isa = PBXGroup;
+			children = (
+				DC12841E24778FAE00B1317E /* GameView.swift */,
+				DCAA2F75248888BB001B69F1 /* Subviews */,
+			);
+			path = GameView;
+			sourceTree = "<group>";
+		};
+		DCAA2F722488888C001B69F1 /* WinnerView */ = {
+			isa = PBXGroup;
+			children = (
+				DC109C9A247B736400EBC286 /* WinnerView.swift */,
+			);
+			path = WinnerView;
+			sourceTree = "<group>";
+		};
+		DCAA2F7324888893001B69F1 /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DC47511C247C62B8009FEE54 /* HomeScreen.swift */,
+				DCAA2F74248888B5001B69F1 /* Subviews */,
+			);
+			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		DCAA2F74248888B5001B69F1 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				DCAA2F6F248887AE001B69F1 /* PlayButton.swift */,
+				DCAA2F762488890E001B69F1 /* SettingsButton.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		DCAA2F75248888BB001B69F1 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
 				DC475118247B9C35009FEE54 /* PiecesContainerView.swift */,
 				DC128426247793E000B1317E /* PieceView.swift */,
 				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
@@ -298,12 +344,14 @@
 				DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */,
 				DC475117247B9B2D009FEE54 /* ScoreView.swift in Sources */,
 				DC128427247793E000B1317E /* PieceView.swift in Sources */,
+				DCAA2F70248887AE001B69F1 /* PlayButton.swift in Sources */,
 				DC47511B247BA639009FEE54 /* BoardView.swift in Sources */,
 				DC12841F24778FAE00B1317E /* GameView.swift in Sources */,
 				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
 				DCC738BB24885DE800ADED0E /* Animations.swift in Sources */,
 				DC109C9B247B736400EBC286 /* WinnerView.swift in Sources */,
 				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
+				DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */,
 				DC1283F12477740900B1317E /* ContentView.swift in Sources */,
 				DCF3D75B2479DB390071506A /* Constants.swift in Sources */,
 				DC109C99247B264700EBC286 /* TimerViewModel.swift in Sources */,

@@ -11,12 +11,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State var showGameScreen: Bool = false
-    
+    @State var showSettingsScreen: Bool = false
+
     var body: some View {
         let isFirstTime = UserDefaults.standard.bool(forKey: "IsFirstLaunch")
-        isFirstTime
         return ZStack {
-            HomeScreen(showGameScreen: $showGameScreen)
+            HomeScreen(showGameScreen: $showGameScreen, showSettingsScreen: $showSettingsScreen)
             if showGameScreen {
                 GameView(showGameScreen: $showGameScreen).environmentObject(GameViewModel())
             } else {

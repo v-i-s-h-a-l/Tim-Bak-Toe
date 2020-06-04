@@ -59,7 +59,6 @@ class GameViewModel: ObservableObject {
     private let pieceDragStartToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
     private let pieceDragEndToFellowPiecesPublisher = PassthroughSubject<(UUID, UUID), Never>()
 
-    private let pieceDragStartToCellsPublisher = PassthroughSubject<UUID?, Never>()
     private let pieceDragEndToCellsPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
     private let newCellOccupiedByPiecePublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>()
@@ -92,11 +91,6 @@ class GameViewModel: ObservableObject {
         pieces.forEach { pieceModel in
             pieceModel.dragStartedPublisher.sink { teamId, pieceID, cellId in
                 self.pieceDragStartToFellowPiecesPublisher.send((teamId, pieceID))
-            }
-            .store(in: &cancellables)
-
-            pieceModel.dragStartedPublisher.sink { _, _, cellId in
-                self.pieceDragStartToCellsPublisher.send(cellId)
             }
             .store(in: &cancellables)
         }
@@ -156,7 +150,6 @@ class GameViewModel: ObservableObject {
 
     private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach {
-            $0.subscribeToDragStart(self.pieceDragStartToCellsPublisher)
             $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
             $0.subscribeToNewOccupancy(self.newCellOccupiedPublisherForOriginCell)
             $0.subscribeToRestart(restartPublisher)

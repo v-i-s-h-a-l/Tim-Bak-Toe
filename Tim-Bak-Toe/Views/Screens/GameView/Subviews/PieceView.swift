@@ -44,13 +44,14 @@ struct XGradientShape: View {
 
     let gradient: LinearGradient
     let lineWidth: CGFloat
+    let insetAmount: CGFloat
 
     var body: some View {
         ZStack {
-            DiagonalLineShape(lineWidth: 10, insetAmount: 25, isFromBottomLeftCorner: false)
+            DiagonalLineShape(lineWidth: lineWidth, insetAmount: insetAmount, isFromBottomLeftCorner: false)
             .fill(gradient)
 
-            DiagonalLineShape(lineWidth: 10, insetAmount: 25, isFromBottomLeftCorner: true)
+            DiagonalLineShape(lineWidth: lineWidth, insetAmount: insetAmount, isFromBottomLeftCorner: true)
             .fill(gradient)
         }
     }
@@ -90,6 +91,8 @@ struct PieceView: View {
 
     var body: some View {
         let value = viewModel.disabled ? 0.0 : viewModel.shadowRadius
+        let lineWidthForPieceSign = size.height / 9.0
+        let insetAmuontForPieceSign = size.height / 3.5
         return ZStack {
             Circle()
                 .fill(Theme.Col.piece)
@@ -110,10 +113,10 @@ struct PieceView: View {
             }
             if viewModel.style == .O {
                 Circle()
-                    .inset(by: 25)
-                    .stroke(viewModel.style.pieceGradient, lineWidth: 9)
+                    .inset(by: insetAmuontForPieceSign)
+                    .stroke(viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign)
             } else {
-                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: 10)
+                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign, insetAmount: insetAmuontForPieceSign)
             }
         }
         .zIndex(viewModel.zIndex)
@@ -128,7 +131,21 @@ struct PieceView: View {
             Color.clear
                 .onAppear(perform: {
                     self.viewModel.onAppear(proxy)
+                    print("Size of piece: \(self.size)")
                 })
         })
     }
 }
+
+#if DEBUG
+
+struct PieceView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            PieceView(viewModel: PieceViewModel(with: .X), size: CGSize(width: 80, height: 80))
+            PieceView(viewModel: PieceViewModel(with: .O), size: CGSize(width: 80, height: 80))
+        }
+    }
+}
+
+#endif

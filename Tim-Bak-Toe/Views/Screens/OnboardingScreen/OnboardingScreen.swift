@@ -34,6 +34,8 @@ struct OnboardingScreen: View {
                     Spacer()
                     Text("Tic tac toe")
                         .font(.title)
+                        .fontWeight(.bold)
+                        .kerning(2)
                         .foregroundColor(.primary)
                     Spacer()
                 }
@@ -41,6 +43,8 @@ struct OnboardingScreen: View {
                     Text(
                         "Welcome to tic tac toe\nwith a twist.\nThe turns are timed and\nyou are limited to three pieces each.\n\nGrab a friend to play")
                         .font(.body)
+                        .kerning(1)
+                        .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(UIColor.systemGray))
                     Spacer()

@@ -28,6 +28,9 @@ struct ContentView: View {
             if currentScreen == .game {
                 GameView(currentScreen: $currentScreen).environmentObject(GameViewModel())
             }
+            if currentScreen == .settings {
+                SettingsScreen(currentScreen: $currentScreen)
+            }
         }
         .statusBar(hidden: currentScreen == .game)
         .onAppear {

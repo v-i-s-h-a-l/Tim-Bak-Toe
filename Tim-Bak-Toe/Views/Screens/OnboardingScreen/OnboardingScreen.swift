@@ -11,9 +11,10 @@ import SwiftUI
 struct OnboardingScreen: View {
     
     @Binding var currentScreen: Screen
-    
-    private let personImageConfiguration = UIImage.SymbolConfiguration(pointSize: 100, weight: .medium)
-    
+        
+    let personImageConfiguration = UIImage.SymbolConfiguration(pointSize: Points.isPad ? 150 : 100, weight: Points.isPad ? .semibold : .medium)
+    let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
+
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
@@ -30,26 +31,31 @@ struct OnboardingScreen: View {
                     Spacer()
                     Image(uiImage: UIImage(systemName: "person.2", withConfiguration: personImageConfiguration)!)
                         .foregroundColor(Color.gray)
+                        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
 
                     Spacer()
-                    Text("Tic tac toe")
-                        .font(.title)
+                    Text("Tic Tac Toe")
+                        .font(Points.isPad ? .largeTitle : .title)
                         .fontWeight(.bold)
                         .kerning(2)
                         .foregroundColor(.primary)
+                        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
                     Spacer()
                 }
                 Group {
                     Text(
-                        "Welcome to tic tac toe\nwith a twist.\nThe turns are timed and\nyou are limited to three pieces each.\n\nGrab a friend to play")
-                        .font(.body)
+                        "Welcome to Tic Tac Toe\nwith a twist.\nThe turns are timed and\nyou are limited to three pieces each.\n\nGrab a friend to play")
+                        .font(Points.isPad ? .title : .body)
                         .kerning(1)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(UIColor.systemGray))
+                        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
                     Spacer()
                     Spacer()
+
                     PlayButton(currentScreen: $currentScreen)
+
                     Spacer()
                     Spacer()
                 }

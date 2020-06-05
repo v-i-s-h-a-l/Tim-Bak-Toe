@@ -19,7 +19,7 @@ struct GameView: View {
     }
     
     private var pieceSize: CGSize {
-        CGSize(width: boardSize.width / 3 - (2 * Points.cellPadding), height: boardSize.height / 3 - (2 * Points.cellPadding))
+        CGSize(width: boardSize.width / 3.0 - (2.0 * Points.cellPadding), height: boardSize.height / 3.0 - (2.0 * Points.cellPadding))
     }
     
     var body: some View {
@@ -29,6 +29,8 @@ struct GameView: View {
 
             BoardView(boardSize: boardSize)
 
+            TimersContainerView(pieceSize: pieceSize)
+            
             PiecesContainerView(pieceSize: pieceSize)
             
             if viewModel.showWinnerView {
@@ -38,6 +40,8 @@ struct GameView: View {
         .statusBar(hidden: true)
     }
 }
+
+#if DEBUG
 
 struct GameView_Previews: PreviewProvider {
         
@@ -58,3 +62,5 @@ struct GameView_Previews: PreviewProvider {
         }
     }
 }
+
+#endif

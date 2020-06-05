@@ -12,6 +12,8 @@ struct PlayButton: View {
     
     @Binding var currentScreen: Screen
     private let linearGradient = LinearGradient(Theme.Col.greenStart, Theme.Col.greenEnd, startPoint: .top, endPoint: .bottom)
+    let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
+    let padding: CGFloat = Points.isPad ? 120 : 60
 
     var body: some View {
         Button(action: {
@@ -19,14 +21,17 @@ struct PlayButton: View {
                 self.currentScreen = .game
             }
         }) {
-            Image(systemName: "play.fill")
+            Text("Play Now")
+                .font(Points.isPad ? .title : .body)
+                .kerning(2)
+                .fontWeight(.bold)
                 .foregroundColor(.white)
-                .padding()
-                .padding([.leading, .trailing], 60)
+                .padding(Points.isPad ? 30 : 15)
+                .padding([.leading, .trailing], padding)
                 .background(linearGradient)
         }
-        .cornerRadius(40.0)
-        .shadow(color: Theme.Col.shadowCasted, radius: 2, x: 2, y: 2)
+        .cornerRadius(60.0)
+        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
         .padding(.bottom)
     }
 }

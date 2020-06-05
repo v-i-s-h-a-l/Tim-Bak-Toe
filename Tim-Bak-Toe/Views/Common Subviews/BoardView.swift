@@ -25,12 +25,16 @@ struct BoardView: View {
     
     func cell(atRow row: Int, column: Int) -> some View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
-            .padding(10)
+            .padding(Points.cellPadding)
     }
 }
+
+#if DEBUG
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         BoardView(boardSize: CGSize(width: 300, height: 300)).environmentObject(GameViewModel())
     }
 }
+
+#endif

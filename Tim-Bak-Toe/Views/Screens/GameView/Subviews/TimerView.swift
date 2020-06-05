@@ -17,11 +17,13 @@ struct TimerView: View {
     @State private var originalSize: CGSize = .zero
     
     var body: some View {
-        ZStack {
+        let cornerRadius = originalSize.height / 2
+        let originalWidth = originalSize.width
+        return ZStack {
             Rectangle()
                 .fill(Theme.Col.boardCell)
-                .cornerRadius(originalSize.height / 2.0)
-                .frame(width: originalSize.width)
+                .cornerRadius(cornerRadius)
+                .frame(width: originalWidth)
                 .overlay(
                     Rectangle()
                         .stroke(
@@ -43,8 +45,6 @@ struct TimerView: View {
             }
             .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)            
         }
-//        .modifier(ScaleEffect(scaleY: viewModel.scale))
-        .zIndex(ZIndex.board)
         .overlay(GeometryReader{ proxy in
             Color.clear
                 .onAppear {
@@ -54,8 +54,12 @@ struct TimerView: View {
     }
 }
 
+#if DEBUG
+
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
         TimerView(viewModel: TimerViewModel(with: UUID(), style: .X), isRightEdged: false).previewDevice(PreviewDevice.iPhoneSE2)
     }
 }
+
+#endif

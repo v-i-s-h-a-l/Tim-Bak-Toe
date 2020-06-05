@@ -11,9 +11,9 @@ import SwiftUI
 struct OnboardingScreen: View {
     
     @Binding var currentScreen: Screen
-    
-    private let personImageConfiguration = UIImage.SymbolConfiguration(pointSize: 100, weight: .medium)
-    
+        
+    let personImageConfiguration = UIImage.SymbolConfiguration(pointSize: Points.isPad ? 150 : 100, weight: Points.isPad ? .semibold : .medium)
+
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
@@ -32,8 +32,8 @@ struct OnboardingScreen: View {
                         .foregroundColor(Color.gray)
 
                     Spacer()
-                    Text("Tic tac toe")
-                        .font(.title)
+                    Text("Tic Tac Toe")
+                        .font(Points.isPad ? .largeTitle : .title)
                         .fontWeight(.bold)
                         .kerning(2)
                         .foregroundColor(.primary)
@@ -41,15 +41,17 @@ struct OnboardingScreen: View {
                 }
                 Group {
                     Text(
-                        "Welcome to tic tac toe\nwith a twist.\nThe turns are timed and\nyou are limited to three pieces each.\n\nGrab a friend to play")
-                        .font(.body)
+                        "Welcome to Tic Tac Toe\nwith a twist.\nThe turns are timed and\nyou are limited to three pieces each.\n\nGrab a friend to play")
+                        .font(Points.isPad ? .title : .body)
                         .kerning(1)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(Color(UIColor.systemGray))
+                        .foregroundColor(.secondary)
                     Spacer()
                     Spacer()
+
                     PlayButton(currentScreen: $currentScreen)
+
                     Spacer()
                     Spacer()
                 }
@@ -57,6 +59,8 @@ struct OnboardingScreen: View {
         }
     }
 }
+
+#if DEBUG
 
 struct OnboardingScreen_Previews: PreviewProvider {
     static var previews: some View {
@@ -69,3 +73,5 @@ struct OnboardingScreen_Previews: PreviewProvider {
         }
     }
 }
+
+#endif

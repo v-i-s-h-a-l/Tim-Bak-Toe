@@ -11,20 +11,25 @@ import SwiftUI
 struct SettingsButton: View {
     
     @Binding var currentScreen: Screen
-    
+    let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
+    let padding: CGFloat = Points.isPad ? 120 : 60
+
     var body: some View {
         Button(action: {
             self.currentScreen = .settings
         }) {
-            Image(systemName: "slider.horizontal.3")
+            Text("Settings")
+                .font(Points.isPad ? .title : .body)
+                .kerning(2)
+                .fontWeight(.bold)
                 .foregroundColor(.primary)
-                .padding()
-                .padding([.leading, .trailing], 60)
+                .padding(Points.isPad ? 30 : 15)
+                .padding([.leading, .trailing], padding)
                 .background(Theme.Col.gameBackground)
         }
-        .cornerRadius(40.0)
-        .shadow(color: Theme.Col.lightSource, radius: 2, x: -2, y: -2)
-        .shadow(color: Theme.Col.shadowCasted, radius: 2, x: 2, y: 2)
+        .cornerRadius(60.0)
+        .shadow(color: Theme.Col.lightSource, radius: shadowSize, x: -shadowSize, y: -shadowSize)
+        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
         .padding(.bottom)        
     }
 }

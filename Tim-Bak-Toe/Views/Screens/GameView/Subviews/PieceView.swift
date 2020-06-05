@@ -8,6 +8,80 @@
 
 import SwiftUI
 
+struct PieceView: View {
+    
+    @ObservedObject var viewModel: PieceViewModel
+    var size: CGSize
+
+    var body: some View {
+        let isDragged = viewModel.zIndex == ZIndex.playerPieceDragged
+        let isDisabled = viewModel.disabled
+        let shadowCastedRadius =  viewModel.stateMultiplier * (isDisabled ? 0.0 : size.height / 40.0)
+        let lightSourceShadowRadius = viewModel.stateMultiplier == 1.0 ? (isDisabled ? 0.0 : size.height / 40.0) : 0
+        let blurAmount = 1 * viewModel.stateMultiplier
+        let lineWidthForPieceSign = size.height / 9.0
+        let insetAmuontForPieceSign = size.height / 3.5
+        
+        let width = size.width
+        let height = size.height
+        
+        return ZStack {
+            Circle()
+                .fill(Theme.Col.piece)
+                .shadow(color: Theme.Col.lightSource, radius: lightSourceShadowRadius, x: -lightSourceShadowRadius, y: -lightSourceShadowRadius)
+                .shadow(color: Theme.Col.shadowCasted, radius: shadowCastedRadius, x: shadowCastedRadius, y: shadowCastedRadius)
+                .blur(radius: blurAmount)
+            Circle()
+                .fill(Theme.Col.piece)
+            if isDragged || isDisabled {
+                Circle()
+                    .fill(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted))
+            }
+            if !isDisabled {
+                Circle()
+                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: shadowCastedRadius / 2.0)
+                    .blur(radius: shadowCastedRadius / 2.0)
+            }
+            if viewModel.style == .O {
+                Circle()
+                    .inset(by: insetAmuontForPieceSign)
+                    .stroke(viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign)
+            } else {
+                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign, insetAmount: insetAmuontForPieceSign)
+            }
+        }
+        .zIndex(viewModel.zIndex)
+        .frame(width: width, height: height)
+        .scaleEffect(viewModel.scale)
+        .offset(viewModel.relativeOffset)
+        .gesture(
+            DragGesture(coordinateSpace: .global)
+                .onChanged(viewModel.onDragChanged)
+                .onEnded(viewModel.onDragEnded))
+        .allowsHitTesting(!isDisabled)
+        .overlay(GeometryReader { proxy in
+            Color.clear
+                .onAppear(perform: {
+                    self.viewModel.onAppear(proxy)
+                })
+        })
+    }
+}
+
+#if DEBUG
+
+struct PieceView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            PieceView(viewModel: PieceViewModel(with: .X), size: CGSize(width: 80, height: 80))
+            PieceView(viewModel: PieceViewModel(with: .O), size: CGSize(width: 80, height: 80))
+                .colorScheme(.dark)
+        }
+    }
+}
+
+#endif
+
 struct DiagonalLineShape: Shape {
 
     let lineWidth: CGFloat
@@ -44,13 +118,14 @@ struct XGradientShape: View {
 
     let gradient: LinearGradient
     let lineWidth: CGFloat
+    let insetAmount: CGFloat
 
     var body: some View {
         ZStack {
-            DiagonalLineShape(lineWidth: 10, insetAmount: 25, isFromBottomLeftCorner: false)
+            DiagonalLineShape(lineWidth: lineWidth, insetAmount: insetAmount, isFromBottomLeftCorner: false)
             .fill(gradient)
 
-            DiagonalLineShape(lineWidth: 10, insetAmount: 25, isFromBottomLeftCorner: true)
+            DiagonalLineShape(lineWidth: lineWidth, insetAmount: insetAmount, isFromBottomLeftCorner: true)
             .fill(gradient)
         }
     }
@@ -80,55 +155,5 @@ enum PieceStyle: String, Codable {
 
     var timerGradient: LinearGradient {
         LinearGradient(colorStart, colorEnd, startPoint: .leading, endPoint: .trailing)
-    }
-}
-
-struct PieceView: View {
-    
-    @ObservedObject var viewModel: PieceViewModel
-    var size: CGSize
-
-    var body: some View {
-        let value = viewModel.disabled ? 0.0 : viewModel.shadowRadius
-        return ZStack {
-            Circle()
-                .fill(Theme.Col.piece)
-                .shadow(color: Theme.Col.lightSource, radius: value, x: -value, y: -value)
-                .shadow(color: Theme.Col.shadowCasted, radius: value, x: value, y: value)
-                .animation(Animation.default)
-                .blur(radius: 1)
-            Circle()
-                .fill(Theme.Col.piece)
-            if viewModel.zIndex == ZIndex.playerPieceDragged || viewModel.disabled {
-                Circle()
-                    .fill(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted))
-            }
-            if !viewModel.disabled {
-                Circle()
-                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: value / 2.0)
-                    .blur(radius: value / 2.0)
-            }
-            if viewModel.style == .O {
-                Circle()
-                    .inset(by: 25)
-                    .stroke(viewModel.style.pieceGradient, lineWidth: 9)
-            } else {
-                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: 10)
-            }
-        }
-        .zIndex(viewModel.zIndex)
-        .frame(width: size.width, height: size.height)
-        .offset(viewModel.relativeOffset)
-        .gesture(
-            DragGesture(coordinateSpace: .global)
-                .onChanged(viewModel.onDragChanged)
-                .onEnded(viewModel.onDragEnded))
-        .allowsHitTesting(!viewModel.disabled)
-        .overlay(GeometryReader { proxy in
-            Color.clear
-                .onAppear(perform: {
-                    self.viewModel.onAppear(proxy)
-                })
-        })
     }
 }

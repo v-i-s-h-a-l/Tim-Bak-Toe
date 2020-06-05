@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */; };
 		DC109C95247B00F100EBC286 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C94247B00F100EBC286 /* TimerView.swift */; };
 		DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C96247B066700EBC286 /* Animation+timingCurve.swift */; };
 		DC109C99247B264700EBC286 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C98247B264700EBC286 /* TimerViewModel.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersContainerView.swift; sourceTree = "<group>"; };
 		DC109C94247B00F100EBC286 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		DC109C96247B066700EBC286 /* Animation+timingCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+timingCurve.swift"; sourceTree = "<group>"; };
 		DC109C98247B264700EBC286 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				DC128426247793E000B1317E /* PieceView.swift */,
 				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
 				DC109C94247B00F100EBC286 /* TimerView.swift */,
+				DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -265,9 +268,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DC1283E82477740900B1317E /* Tim-Bak-Toe */ = {
+		DC1283E82477740900B1317E /* XO3 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC1283FD2477741000B1317E /* Build configuration list for PBXNativeTarget "Tim-Bak-Toe" */;
+			buildConfigurationList = DC1283FD2477741000B1317E /* Build configuration list for PBXNativeTarget "XO3" */;
 			buildPhases = (
 				DC1283E52477740900B1317E /* Sources */,
 				DC1283E62477740900B1317E /* Frameworks */,
@@ -278,7 +281,7 @@
 			);
 			dependencies = (
 			);
-			name = "Tim-Bak-Toe";
+			name = XO3;
 			productName = "Tim-Bak-Toe";
 			productReference = DC1283E92477740900B1317E /* XO3.app */;
 			productType = "com.apple.product-type.application";
@@ -311,7 +314,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DC1283E82477740900B1317E /* Tim-Bak-Toe */,
+				DC1283E82477740900B1317E /* XO3 */,
 			);
 		};
 /* End PBXProject section */
@@ -373,6 +376,7 @@
 				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
 				DCC738BB24885DE800ADED0E /* Animations.swift in Sources */,
 				DC109C9B247B736400EBC286 /* WinnerView.swift in Sources */,
+				DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */,
 				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
 				DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */,
 				DC1283F12477740900B1317E /* ContentView.swift in Sources */,
@@ -574,7 +578,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC1283FD2477741000B1317E /* Build configuration list for PBXNativeTarget "Tim-Bak-Toe" */ = {
+		DC1283FD2477741000B1317E /* Build configuration list for PBXNativeTarget "XO3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC1283FE2477741000B1317E /* Debug */,

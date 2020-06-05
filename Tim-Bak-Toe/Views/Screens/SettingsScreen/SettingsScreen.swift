@@ -49,8 +49,12 @@ struct SettingsScreen: View {
     }
 }
 
+#if DEBUG
+
 struct SettingsScreen_Previews: PreviewProvider {
     static var previews: some View {
         SettingsScreen(currentScreen: .constant(.settings))
     }
 }
+
+#endif

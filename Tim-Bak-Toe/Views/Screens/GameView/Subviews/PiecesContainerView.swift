@@ -44,7 +44,7 @@ struct PiecesContainerView: View {
                     .zIndex(ZIndex.playerPiecePlaced)
                 }
             }
-            .padding([.top, .bottom])
+            .padding([.top, .bottom], pieceSize.height / 6.0)
             .zIndex(ZIndex.playerPiecePlaced)
         }
     }

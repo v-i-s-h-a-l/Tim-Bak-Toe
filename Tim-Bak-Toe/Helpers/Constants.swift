@@ -8,17 +8,26 @@
 
 import CoreGraphics
 import Foundation
+import UIKit
 
 enum ZIndex {
     static let board = 0.0
 
-    static let enemyPiece = 0.1
-
-    static let playerPiecePlaced = 0.3
-    static let playerPieceDragged = 0.4
+    static let playerPiecePlaced = 1.0
+    static let playerPieceDragged = 2.0
 }
 
 enum Points {
-    static let boardWidthMultiplier: CGFloat = 0.85
-    static let cellPadding: CGFloat = 10
+    
+    static let isPad = UIDevice.current.userInterfaceIdiom == .pad
+    static let boardWidthMultiplier: CGFloat = isPad ? 0.65 : 0.85
+    static let cellPadding: CGFloat = isPad ? 15 : 10
+}
+
+
+enum UIUserInterfaceIdiom: Int {
+    case unspecified
+
+    case phone
+    case pad
 }

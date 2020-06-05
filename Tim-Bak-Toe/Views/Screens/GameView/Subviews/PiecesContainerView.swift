@@ -21,18 +21,18 @@ struct PiecesContainerView: View {
                 ForEach(0..<viewModel.peerPieces.count) { index in
                     PieceView(viewModel: self.viewModel.peerPieces[index], size: self.pieceSize)
                         .padding([.leading], padding)
-                    .accessibility(identifier: "PeerPiece\(index)")
+                        .setAccessibilityIdentifier(element: .peerPiece(index))
                 }
             }
             .padding([.bottom], padding)
-
+            
             Spacer()
-
+            
             HStack(spacing: spacingForPieces) {
                 ForEach(0..<viewModel.hostPieces.count) { index in
                     PieceView(viewModel: self.viewModel.hostPieces[index], size: self.pieceSize)
                         .padding([.leading], padding)
-                    .accessibility(identifier: "HostPiece\(index)")
+                        .setAccessibilityIdentifier(element: .hostPiece(index))
                 }
             }
             .padding([.top], padding)

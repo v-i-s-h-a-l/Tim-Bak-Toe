@@ -32,17 +32,17 @@ class XO3UITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
 
         app.buttons["Play Now"].tap()
-        let boardCell00 = GSE.boardCell(0, 0).findIn(app: app)
+        let boardCell00 = ScreenElement.boardCell(0, 0).findIn(app: app)
         _ = boardCell00.waitForExistence(timeout: 0.5)
 
         for index in 0..<3 {
-            let hostPiece = GSE.hostPiece(index).findIn(app: app)
-            let hostBoardCell = GSE.boardCell(2, index).findIn(app: app)
+            let hostPiece = ScreenElement.hostPiece(index).findIn(app: app)
+            let hostBoardCell = ScreenElement.boardCell(2, index).findIn(app: app)
             hostPiece.press(forDuration: 0.01, thenDragTo: hostBoardCell)
 //            expectPiecesHittability(piece: GSE.hostPiece(index), in: app)
 
-            let peerPiece = GSE.peerPiece(index).findIn(app: app)
-            let peerBoardCell = GSE.boardCell(1, index).findIn(app: app)
+            let peerPiece = ScreenElement.peerPiece(index).findIn(app: app)
+            let peerBoardCell = ScreenElement.boardCell(1, index).findIn(app: app)
             if peerPiece.isHittable {
                 peerPiece.press(forDuration: 0.01, thenDragTo: peerBoardCell)
 //                expectPiecesHittability(piece: GSE.peerPiece(index), in: app)
@@ -50,21 +50,21 @@ class XO3UITests: XCTestCase {
         }
     }
     
-    fileprivate func expectPiecesHittability(piece: GSE, in app: XCUIApplication) {
+    fileprivate func expectPiecesHittability(piece: ScreenElement, in app: XCUIApplication) {
         switch piece {
         case .hostPiece:
             for index in 0..<3 {
-                let hostPiece = GSE.hostPiece(index).findIn(app: app)
+                let hostPiece = ScreenElement.hostPiece(index).findIn(app: app)
                 XCTAssertFalse(hostPiece.isHittable, "Host piece \(index) should not be hittable.")
-                let peerPiece = GSE.peerPiece(index).findIn(app: app)
+                let peerPiece = ScreenElement.peerPiece(index).findIn(app: app)
                 XCTAssertTrue(peerPiece.isHittable, "Peer piece \(index) should be hittable")
             }
 
         case .peerPiece:
             for index in 0..<3 {
-                let hostPiece = GSE.hostPiece(index).findIn(app: app)
+                let hostPiece = ScreenElement.hostPiece(index).findIn(app: app)
                 XCTAssertTrue(hostPiece.isHittable, "Host piece \(index) should be hittable.")
-                let peerPiece = GSE.peerPiece(index).findIn(app: app)
+                let peerPiece = ScreenElement.peerPiece(index).findIn(app: app)
                 XCTAssertFalse(peerPiece.isHittable, "Peer piece \(index) should not be hittable")
             }
         case .boardCell: break
@@ -83,18 +83,7 @@ class XO3UITests: XCTestCase {
     }
 }
 
-enum GSE { // stands for game screen element
-    case hostPiece(Int)
-    case peerPiece(Int)
-    case boardCell(Int, Int)
-    
-    var identifier: String {
-        switch self {
-        case .hostPiece(let index): return "HostPiece\(index)"
-        case .peerPiece(let index): return "PeerPiece\(index)"
-        case .boardCell(let row, let column): return "BoardCell\(row)\(column)"
-        }
-    }
+extension ScreenElement { // stands for game screen element
 
     func findIn(app: XCUIApplication) -> XCUIElement {
         return app.otherElements[identifier]

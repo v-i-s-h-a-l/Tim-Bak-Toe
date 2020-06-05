@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import SwiftUI
 
-enum GSE { // stands for game screen element
+enum ScreenElement { // stands for game screen element
     case hostPiece(Int)
     case peerPiece(Int)
     case boardCell(Int, Int)
@@ -19,5 +20,13 @@ enum GSE { // stands for game screen element
         case .peerPiece(let index): return "PeerPiece\(index)"
         case .boardCell(let row, let column): return "BoardCell\(row)\(column)"
         }
+    }
+}
+
+
+extension View {
+
+    func setAccessibilityIdentifier(element: ScreenElement) -> some View {
+        return self.accessibility(identifier: element.identifier)
     }
 }

@@ -54,8 +54,9 @@ struct HomeScreen: View {
                 Spacer()
 
                 PlayButton(currentScreen: $currentScreen)
+                .padding([.top])
                 SettingsButton(currentScreen: $currentScreen)
-                    .padding([.bottom, .top])
+                    .padding([.bottom])
             }
         }
     }
@@ -67,6 +68,7 @@ struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             HomeScreen(currentScreen: .constant(.home))
+            .previewDevice(PreviewDevice.iPadMini_5thGen)
             HomeScreen(currentScreen: .constant(.home))
                 .previewDevice(PreviewDevice.iPhoneSE2)
             HomeScreen(currentScreen: .constant(.home))

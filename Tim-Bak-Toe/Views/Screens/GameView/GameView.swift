@@ -29,6 +29,8 @@ struct GameView: View {
 
             BoardView(boardSize: boardSize)
 
+            TimersContainerView(pieceSize: pieceSize)
+            
             PiecesContainerView(pieceSize: pieceSize)
             
             if viewModel.showWinnerView {

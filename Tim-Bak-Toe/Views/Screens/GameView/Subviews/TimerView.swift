@@ -45,7 +45,6 @@ struct TimerView: View {
             }
             .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)            
         }
-        .zIndex(ZIndex.board)
         .overlay(GeometryReader{ proxy in
             Color.clear
                 .onAppear {

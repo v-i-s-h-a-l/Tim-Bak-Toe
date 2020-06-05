@@ -15,38 +15,27 @@ struct PiecesContainerView: View {
     
     var body: some View {
         let spacingForPieces = pieceSize.height / 11.0
-        let timerHeight = pieceSize.height / 8.0
+        let padding = pieceSize.height / 6.0
         return VStack {
             HStack(spacing: spacingForPieces) {
                 ForEach(viewModel.peerPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
-                        .padding([.trailing])
-                    .zIndex(ZIndex.playerPiecePlaced)
+                        .padding([.trailing], padding)
                 }
             }
-            .padding([.top, .bottom])
-            .zIndex(ZIndex.playerPiecePlaced)
+            .padding([.bottom], padding)
 
-            TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: true)
-                .frame(height: timerHeight)
-                .padding([.leading, .trailing])
-            
             Spacer()
-            
-            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: false)
-                .frame(height: timerHeight)
-                .padding([.leading, .trailing])
-            
+
             HStack(spacing: spacingForPieces) {
                 ForEach(viewModel.hostPieces) {
                     PieceView(viewModel: $0, size: self.pieceSize)
-                        .padding([.leading])
-                    .zIndex(ZIndex.playerPiecePlaced)
+                        .padding([.leading], padding)
                 }
             }
-            .padding([.top, .bottom], pieceSize.height / 6.0)
-            .zIndex(ZIndex.playerPiecePlaced)
+            .padding([.top], padding)
         }
+        .padding([.top, .bottom], padding)
     }
 }
 

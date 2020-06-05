@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */; };
+		DC08A189248A039C00B8CE9D /* XO3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A188248A039C00B8CE9D /* XO3UITests.swift */; };
 		DC109C95247B00F100EBC286 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C94247B00F100EBC286 /* TimerView.swift */; };
 		DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C96247B066700EBC286 /* Animation+timingCurve.swift */; };
 		DC109C99247B264700EBC286 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C98247B264700EBC286 /* TimerViewModel.swift */; };
@@ -41,8 +42,21 @@
 		DCF3D75D2479FA5B0071506A /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75C2479FA5B0071506A /* GameSettings.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DC08A18B248A039C00B8CE9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC1283E12477740900B1317E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC1283E82477740900B1317E;
+			remoteInfo = XO3;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersContainerView.swift; sourceTree = "<group>"; };
+		DC08A186248A039C00B8CE9D /* XO3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XO3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC08A188248A039C00B8CE9D /* XO3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XO3UITests.swift; sourceTree = "<group>"; };
+		DC08A18A248A039C00B8CE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC109C94247B00F100EBC286 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		DC109C96247B066700EBC286 /* Animation+timingCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+timingCurve.swift"; sourceTree = "<group>"; };
 		DC109C98247B264700EBC286 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
@@ -79,6 +93,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DC08A183248A039C00B8CE9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC1283E62477740900B1317E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,10 +110,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC08A187248A039C00B8CE9D /* XO3UITests */ = {
+			isa = PBXGroup;
+			children = (
+				DC08A188248A039C00B8CE9D /* XO3UITests.swift */,
+				DC08A18A248A039C00B8CE9D /* Info.plist */,
+			);
+			path = XO3UITests;
+			sourceTree = "<group>";
+		};
 		DC1283E02477740900B1317E = {
 			isa = PBXGroup;
 			children = (
 				DC1283EB2477740900B1317E /* Tim-Bak-Toe */,
+				DC08A187248A039C00B8CE9D /* XO3UITests */,
 				DC1283EA2477740900B1317E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				DC1283E92477740900B1317E /* XO3.app */,
+				DC08A186248A039C00B8CE9D /* XO3UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -268,6 +300,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DC08A185248A039C00B8CE9D /* XO3UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC08A18F248A039C00B8CE9D /* Build configuration list for PBXNativeTarget "XO3UITests" */;
+			buildPhases = (
+				DC08A182248A039C00B8CE9D /* Sources */,
+				DC08A183248A039C00B8CE9D /* Frameworks */,
+				DC08A184248A039C00B8CE9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC08A18C248A039C00B8CE9D /* PBXTargetDependency */,
+			);
+			name = XO3UITests;
+			productName = XO3UITests;
+			productReference = DC08A186248A039C00B8CE9D /* XO3UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		DC1283E82477740900B1317E /* XO3 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC1283FD2477741000B1317E /* Build configuration list for PBXNativeTarget "XO3" */;
@@ -292,10 +342,14 @@
 		DC1283E12477740900B1317E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "v-i-s-h-a-l";
 				TargetAttributes = {
+					DC08A185248A039C00B8CE9D = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = DC1283E82477740900B1317E;
+					};
 					DC1283E82477740900B1317E = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
@@ -315,11 +369,19 @@
 			projectRoot = "";
 			targets = (
 				DC1283E82477740900B1317E /* XO3 */,
+				DC08A185248A039C00B8CE9D /* XO3UITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DC08A184248A039C00B8CE9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC1283E72477740900B1317E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -354,6 +416,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DC08A182248A039C00B8CE9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC08A189248A039C00B8CE9D /* XO3UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC1283E52477740900B1317E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -392,6 +462,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DC08A18C248A039C00B8CE9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC1283E82477740900B1317E /* XO3 */;
+			targetProxy = DC08A18B248A039C00B8CE9D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		DC1283F72477741000B1317E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -404,6 +482,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DC08A18D248A039C00B8CE9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				INFOPLIST_FILE = XO3UITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = XO3;
+			};
+			name = Debug;
+		};
+		DC08A18E248A039C00B8CE9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				INFOPLIST_FILE = XO3UITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = XO3;
+			};
+			name = Release;
+		};
 		DC1283FB2477741000B1317E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -569,6 +687,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DC08A18F248A039C00B8CE9D /* Build configuration list for PBXNativeTarget "XO3UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC08A18D248A039C00B8CE9D /* Debug */,
+				DC08A18E248A039C00B8CE9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DC1283E42477740900B1317E /* Build configuration list for PBXProject "Tim-Bak-Toe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

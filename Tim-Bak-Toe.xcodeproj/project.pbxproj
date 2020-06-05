@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */; };
 		DC08A189248A039C00B8CE9D /* XO3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A188248A039C00B8CE9D /* XO3UITests.swift */; };
+		DC08A192248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */; };
+		DC08A193248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */; };
 		DC109C95247B00F100EBC286 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C94247B00F100EBC286 /* TimerView.swift */; };
 		DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C96247B066700EBC286 /* Animation+timingCurve.swift */; };
 		DC109C99247B264700EBC286 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C98247B264700EBC286 /* TimerViewModel.swift */; };
@@ -57,6 +59,7 @@
 		DC08A186248A039C00B8CE9D /* XO3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XO3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC08A188248A039C00B8CE9D /* XO3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XO3UITests.swift; sourceTree = "<group>"; };
 		DC08A18A248A039C00B8CE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 		DC109C94247B00F100EBC286 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		DC109C96247B066700EBC286 /* Animation+timingCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+timingCurve.swift"; sourceTree = "<group>"; };
 		DC109C98247B264700EBC286 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
@@ -113,10 +116,18 @@
 		DC08A187248A039C00B8CE9D /* XO3UITests */ = {
 			isa = PBXGroup;
 			children = (
+				DC08A190248A17B000B8CE9D /* Screens */,
 				DC08A188248A039C00B8CE9D /* XO3UITests.swift */,
 				DC08A18A248A039C00B8CE9D /* Info.plist */,
 			);
 			path = XO3UITests;
+			sourceTree = "<group>";
+		};
+		DC08A190248A17B000B8CE9D /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		DC1283E02477740900B1317E = {
@@ -146,6 +157,7 @@
 				DC1284012477751400B1317E /* Views */,
 				DC1284022477752900B1317E /* Supporting Files */,
 				DC1283F42477741000B1317E /* Preview Content */,
+				DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */,
 			);
 			path = "Tim-Bak-Toe";
 			sourceTree = "<group>";
@@ -421,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC08A189248A039C00B8CE9D /* XO3UITests.swift in Sources */,
+				DC08A193248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +448,7 @@
 				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,
 				DC1283ED2477740900B1317E /* AppDelegate.swift in Sources */,
 				DCF3D7352478F3E80071506A /* Theme.swift in Sources */,
+				DC08A192248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */,
 				DC1283EF2477740900B1317E /* SceneDelegate.swift in Sources */,
 				DC109C95247B00F100EBC286 /* TimerView.swift in Sources */,
 				DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */,

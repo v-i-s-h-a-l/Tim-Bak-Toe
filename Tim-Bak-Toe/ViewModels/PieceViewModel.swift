@@ -34,10 +34,8 @@ class PieceViewModel: ObservableObject, Identifiable {
 
     private var isDragStarted: Bool = false {
         didSet {
-            withAnimation {
                 zIndex = isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced
                 stateMultiplier = isDragStarted ? 3.0 : 1.0
-            }
         }
     }
     private var cancellables: Set<AnyCancellable> = []

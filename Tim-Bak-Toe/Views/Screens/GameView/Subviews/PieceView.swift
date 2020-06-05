@@ -26,7 +26,6 @@ struct PieceView: View {
                 .fill(Theme.Col.piece)
                 .shadow(color: Theme.Col.lightSource, radius: lightSourceShadowRadius, x: -lightSourceShadowRadius, y: -lightSourceShadowRadius)
                 .shadow(color: Theme.Col.shadowCasted, radius: shadowCastedRadius, x: shadowCastedRadius, y: shadowCastedRadius)
-                .animation(Animation.default)
                 .blur(radius: blurAmount)
             Circle()
                 .fill(Theme.Col.piece)

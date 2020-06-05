@@ -29,8 +29,12 @@ struct BoardView: View {
     }
 }
 
+#if DEBUG
+
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         BoardView(boardSize: CGSize(width: 300, height: 300)).environmentObject(GameViewModel())
     }
 }
+
+#endif

@@ -38,8 +38,12 @@ struct ScoreView: View {
     }
 }
 
+#if DEBUG
+
 struct ScoreView_Previews: PreviewProvider {
     static var previews: some View {
         ScoreView(hostScore: 3, peerScore: 4)
     }
 }
+
+#endif

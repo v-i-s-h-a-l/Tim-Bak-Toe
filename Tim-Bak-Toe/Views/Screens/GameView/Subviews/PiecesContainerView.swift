@@ -39,8 +39,12 @@ struct PiecesContainerView: View {
     }
 }
 
+#if DEBUG
+
 struct PiecesContainerView_Previews: PreviewProvider {
     static var previews: some View {
         PiecesContainerView(pieceSize: CGSize(width: 90, height: 90)).environmentObject(GameViewModel())
     }
 }
+
+#endif

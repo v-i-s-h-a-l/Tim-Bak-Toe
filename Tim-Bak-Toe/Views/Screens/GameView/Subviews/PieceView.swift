@@ -131,7 +131,6 @@ struct PieceView: View {
             Color.clear
                 .onAppear(perform: {
                     self.viewModel.onAppear(proxy)
-                    print("Size of piece: \(self.size)")
                 })
         })
     }

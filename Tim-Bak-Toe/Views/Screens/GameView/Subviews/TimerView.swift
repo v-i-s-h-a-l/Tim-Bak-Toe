@@ -54,8 +54,12 @@ struct TimerView: View {
     }
 }
 
+#if DEBUG
+
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
         TimerView(viewModel: TimerViewModel(with: UUID(), style: .X), isRightEdged: false).previewDevice(PreviewDevice.iPhoneSE2)
     }
 }
+
+#endif

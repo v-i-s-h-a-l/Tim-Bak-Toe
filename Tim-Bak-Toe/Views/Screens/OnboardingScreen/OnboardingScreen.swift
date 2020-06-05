@@ -58,6 +58,8 @@ struct OnboardingScreen: View {
     }
 }
 
+#if DEBUG
+
 struct OnboardingScreen_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -69,3 +71,5 @@ struct OnboardingScreen_Previews: PreviewProvider {
         }
     }
 }
+
+#endif

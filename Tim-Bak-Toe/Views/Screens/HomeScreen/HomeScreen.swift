@@ -55,6 +55,8 @@ struct HomeScreen: View {
     }
 }
 
+#if DEBUG
+
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -66,3 +68,5 @@ struct HomeScreen_Previews: PreviewProvider {
         }
     }
 }
+
+#endif

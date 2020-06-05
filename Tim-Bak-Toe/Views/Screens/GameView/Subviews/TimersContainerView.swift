@@ -33,9 +33,12 @@ struct TimersContainerView: View {
         .padding([.top, .bottom], spacing)
     }
 }
+//#if DEBUG
 //
 //struct TimersContainerView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TimersContainerView()
 //    }
 //}
+//
+//#endif

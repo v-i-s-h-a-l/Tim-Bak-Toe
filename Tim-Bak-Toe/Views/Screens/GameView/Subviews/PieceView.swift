@@ -21,6 +21,10 @@ struct PieceView: View {
         let blurAmount = 1 * viewModel.stateMultiplier
         let lineWidthForPieceSign = size.height / 9.0
         let insetAmuontForPieceSign = size.height / 3.5
+        
+        let width = size.width
+        let height = size.height
+        
         return ZStack {
             Circle()
                 .fill(Theme.Col.piece)
@@ -47,7 +51,8 @@ struct PieceView: View {
             }
         }
         .zIndex(viewModel.zIndex)
-        .frame(width: size.width, height: size.height)
+        .frame(width: width, height: height)
+        .scaleEffect(viewModel.scale)
         .offset(viewModel.relativeOffset)
         .gesture(
             DragGesture(coordinateSpace: .global)

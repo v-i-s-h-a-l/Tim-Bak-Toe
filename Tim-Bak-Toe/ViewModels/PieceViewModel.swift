@@ -25,6 +25,7 @@ class PieceViewModel: ObservableObject, Identifiable {
     @Published var disabled: Bool = false
     @Published var zIndex: Double = ZIndex.playerPiecePlaced
     @Published var stateMultiplier: CGFloat = 1.0
+    @Published var scale: CGFloat = 1.0
 
     /// publishes team id, piece id and optional occeupied cell id
     var dragStartedPublisher = PassthroughSubject<(UUID, UUID, UUID?), Never>()
@@ -36,6 +37,9 @@ class PieceViewModel: ObservableObject, Identifiable {
         didSet {
                 zIndex = isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced
                 stateMultiplier = isDragStarted ? 3.0 : 1.0
+            withAnimation {
+                self.scale = isDragStarted ? 1.1 : 1.0
+            }
         }
     }
     private var cancellables: Set<AnyCancellable> = []

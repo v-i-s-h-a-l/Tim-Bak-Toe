@@ -13,7 +13,6 @@ struct OnboardingScreen: View {
     @Binding var currentScreen: Screen
         
     let personImageConfiguration = UIImage.SymbolConfiguration(pointSize: Points.isPad ? 150 : 100, weight: Points.isPad ? .semibold : .medium)
-    let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
 
     var body: some View {
         ZStack {
@@ -31,7 +30,6 @@ struct OnboardingScreen: View {
                     Spacer()
                     Image(uiImage: UIImage(systemName: "person.2", withConfiguration: personImageConfiguration)!)
                         .foregroundColor(Color.gray)
-                        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
 
                     Spacer()
                     Text("Tic Tac Toe")
@@ -39,7 +37,6 @@ struct OnboardingScreen: View {
                         .fontWeight(.bold)
                         .kerning(2)
                         .foregroundColor(.primary)
-                        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
                     Spacer()
                 }
                 Group {
@@ -49,8 +46,7 @@ struct OnboardingScreen: View {
                         .kerning(1)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(Color(UIColor.systemGray))
-                        .shadow(color: Theme.Col.shadowCasted, radius: shadowSize, x: shadowSize, y: shadowSize)
+                        .foregroundColor(.secondary)
                     Spacer()
                     Spacer()
 

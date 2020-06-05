@@ -22,34 +22,40 @@ struct HomeScreen: View {
         ZStack {
             Theme.Col.gameBackground
                 .edgesIgnoringSafeArea(.all)
+            BoardView(boardSize: boardSize).environmentObject(GameViewModel())
             VStack {
-                HStack {
-                    Image("XO3")
-                        .renderingMode(.original)
-                        .padding([.leading, .top], 40)
-                        .padding([.bottom], 20)
-                    Spacer()
+                Group {
+                    HStack {
+                        Image(decorative: "XO3")
+                            .renderingMode(.original)
+                            .padding([.top], 40)
+                            .padding([.bottom], 20)
+                        Spacer()
+                    }
+                    HStack {
+                        Text("Tic Tac Toe")
+                            .font(Points.isPad ? .largeTitle : .title)
+                            .fontWeight(.bold)
+                            .kerning(2)
+                            .foregroundColor(.primary)
+                        Spacer()
+                    }
+                    HStack {
+                        Text("Grab a friend to play")
+                            .font(Points.isPad ? .title : .body)
+                            .kerning(1)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
                 }
+                .padding(.leading, Points.isPad ? 160 : 40)
                 
-                HStack {
-                    Text("Tic tac toe")
-                        .font(.title)
-                        .foregroundColor(.primary)
-                        .padding([.leading], 40)
-                    Spacer()
-                }
-                HStack {
-                    Text("Grab a friend to play")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .padding([.leading], 40)
-                    Spacer()
-                }
-                
-                
-                BoardView(boardSize: boardSize).environmentObject(GameViewModel())
+                Spacer()
+
                 PlayButton(currentScreen: $currentScreen)
                 SettingsButton(currentScreen: $currentScreen)
+                    .padding([.bottom, .top])
             }
         }
     }
@@ -60,6 +66,7 @@ struct HomeScreen: View {
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
         Group {
+            HomeScreen(currentScreen: .constant(.home))
             HomeScreen(currentScreen: .constant(.home))
                 .previewDevice(PreviewDevice.iPhoneSE2)
             HomeScreen(currentScreen: .constant(.home))

@@ -36,7 +36,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         didSet {
             withAnimation {
                 zIndex = isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced
-                stateMultiplier = isDragStarted ? 2.0 : 1.0
+                stateMultiplier = isDragStarted ? 3.0 : 1.0
             }
         }
     }

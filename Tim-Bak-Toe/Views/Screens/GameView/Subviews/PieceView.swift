@@ -90,26 +90,30 @@ struct PieceView: View {
     var size: CGSize
 
     var body: some View {
-        let shadowRadius =  viewModel.stateMultiplier * (viewModel.disabled ? 0.0 : size.height / 40.0)
+        let isDragged = viewModel.zIndex == ZIndex.playerPieceDragged
+        let isDisabled = viewModel.disabled
+        let shadowCastedRadius =  viewModel.stateMultiplier * (isDisabled ? 0.0 : size.height / 40.0)
+        let lightSourceShadowRadius = viewModel.stateMultiplier == 1.0 ? (isDisabled ? 0.0 : size.height / 40.0) : 0
+        let blurAmount = 1 * viewModel.stateMultiplier
         let lineWidthForPieceSign = size.height / 9.0
         let insetAmuontForPieceSign = size.height / 3.5
         return ZStack {
             Circle()
                 .fill(Theme.Col.piece)
-                .shadow(color: Theme.Col.lightSource, radius: shadowRadius, x: -shadowRadius, y: -shadowRadius)
-                .shadow(color: Theme.Col.shadowCasted, radius: shadowRadius, x: shadowRadius, y: shadowRadius)
+                .shadow(color: Theme.Col.lightSource, radius: lightSourceShadowRadius, x: -lightSourceShadowRadius, y: -lightSourceShadowRadius)
+                .shadow(color: Theme.Col.shadowCasted, radius: shadowCastedRadius, x: shadowCastedRadius, y: shadowCastedRadius)
                 .animation(Animation.default)
-                .blur(radius: 1)
+                .blur(radius: blurAmount)
             Circle()
                 .fill(Theme.Col.piece)
-            if viewModel.zIndex == ZIndex.playerPieceDragged || viewModel.disabled {
+            if isDragged || isDisabled {
                 Circle()
                     .fill(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted))
             }
-            if !viewModel.disabled {
+            if !isDisabled {
                 Circle()
-                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: shadowRadius / 2.0)
-                    .blur(radius: shadowRadius / 2.0)
+                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: shadowCastedRadius / 2.0)
+                    .blur(radius: shadowCastedRadius / 2.0)
             }
             if viewModel.style == .O {
                 Circle()
@@ -126,7 +130,7 @@ struct PieceView: View {
             DragGesture(coordinateSpace: .global)
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded))
-        .allowsHitTesting(!viewModel.disabled)
+        .allowsHitTesting(!isDisabled)
         .overlay(GeometryReader { proxy in
             Color.clear
                 .onAppear(perform: {

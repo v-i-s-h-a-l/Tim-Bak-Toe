@@ -17,37 +17,46 @@ struct PieceView: View {
         let isDragged = viewModel.zIndex == ZIndex.playerPieceDragged
         let isDisabled = viewModel.disabled
         let shadowCastedRadius =  viewModel.stateMultiplier * (isDisabled ? 0.0 : size.height / 40.0)
-        let lightSourceShadowRadius = viewModel.stateMultiplier == 1.0 ? (isDisabled ? 0.0 : size.height / 40.0) : 0
-        let blurAmount = 1 * viewModel.stateMultiplier
+        let lightSourceShadowRadius = (isDragged || isDisabled) ? 0.0 : size.height / 40.0
+        let lightSourceShadowColor = (isDragged || isDisabled) ? Color.clear : Theme.Col.lightSource
+        let blurAmount: CGFloat = 1.0
         let lineWidthForPieceSign = size.height / 9.0
         let insetAmuontForPieceSign = size.height / 3.5
+    
+        let pieceColor = isDragged ? Theme.Col.boardCell : Theme.Col.piece
+        let pieceStrokeColor = isDragged ? LinearGradient(Theme.Col.lightSource, pieceColor, pieceColor) : LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted)
         
         let width = size.width
         let height = size.height
         
         return ZStack {
+            // Bottom layer responsible for the shadow casted (the layer is not visible, just its shadow, if any, is visible
             Circle()
                 .fill(Theme.Col.piece)
-                .shadow(color: Theme.Col.lightSource, radius: lightSourceShadowRadius, x: -lightSourceShadowRadius, y: -lightSourceShadowRadius)
+                .shadow(color: lightSourceShadowColor, radius: lightSourceShadowRadius, x: -lightSourceShadowRadius, y: -lightSourceShadowRadius)
                 .shadow(color: Theme.Col.shadowCasted, radius: shadowCastedRadius, x: shadowCastedRadius, y: shadowCastedRadius)
                 .blur(radius: blurAmount)
-            Circle()
-                .fill(Theme.Col.piece)
-            if isDragged || isDisabled {
+
+            // The actual color of the piece that appears
+            if isDisabled {
                 Circle()
                     .fill(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted))
             }
             if !isDisabled {
                 Circle()
-                    .stroke(LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted), lineWidth: shadowCastedRadius / 2.0)
-                    .blur(radius: shadowCastedRadius / 2.0)
+                    .fill(pieceColor)
+                Circle()
+                    .stroke(pieceStrokeColor, lineWidth: shadowCastedRadius / 2.0)
+                    .blur(radius: 1)
             }
+            
+            // X or O
             if viewModel.style == .O {
                 Circle()
                     .inset(by: insetAmuontForPieceSign)
                     .stroke(viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign)
             } else {
-                XGradientShape(gradient: viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign, insetAmount: insetAmuontForPieceSign)
+                XGradientView(gradient: viewModel.style.pieceGradient, lineWidth: lineWidthForPieceSign, insetAmount: insetAmuontForPieceSign)
             }
         }
         .zIndex(viewModel.zIndex)
@@ -114,7 +123,7 @@ struct DiagonalLineShape: Shape {
     }
 }
 
-struct XGradientShape: View {
+struct XGradientView: View {
 
     let gradient: LinearGradient
     let lineWidth: CGFloat

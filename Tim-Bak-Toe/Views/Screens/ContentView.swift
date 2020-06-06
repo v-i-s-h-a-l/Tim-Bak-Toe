@@ -18,7 +18,7 @@ struct ContentView: View {
 
     var body: some View {
         
-        return ZStack {
+        return Group {
             if currentScreen == .onboarding {
                 OnboardingScreen(currentScreen: $currentScreen)
             }
@@ -32,7 +32,7 @@ struct ContentView: View {
                 SettingsScreen(currentScreen: $currentScreen)
             }
         }
-        .statusBar(hidden: currentScreen == .game)
+        .statusBar(hidden: withAnimation { currentScreen == .game })
         .onAppear {
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")
             self.currentScreen = isFirstLaunch ? .onboarding : .home

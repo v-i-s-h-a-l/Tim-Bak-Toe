@@ -89,7 +89,7 @@ class TimerViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
-    func subscribeToWin(_ publisher: PassthroughSubject<Void, Never>) {
+    func subscribeToWin(_ publisher: PassthroughSubject<UUID, Never>) {
         publisher.sink { _ in
             self.timerObserver?.cancel()
             self.timer = nil

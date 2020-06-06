@@ -10,14 +10,12 @@ import SwiftUI
 
 struct SettingsButton: View {
     
-    @Binding var currentScreen: Screen
-    let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
-    let padding: CGFloat = Points.isPad ? 120 : 60
+    let action: () -> ()
+    private let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
+    private let padding: CGFloat = Points.isPad ? 120 : 60
 
     var body: some View {
-        Button(action: {
-            self.currentScreen = .settings
-        }) {
+        Button(action: action) {
             Text("Settings")
                 .font(Points.isPad ? .title : .body)
                 .kerning(2)

@@ -53,9 +53,13 @@ struct HomeScreen: View {
                 
                 Spacer()
 
-                PlayButton(currentScreen: $currentScreen)
+                GreenButton(title: "Play Now") {
+                    self.currentScreen = .game
+                }
                 .padding([.top])
-                SettingsButton(currentScreen: $currentScreen)
+                SettingsButton {
+                    self.currentScreen = .settings
+                }
                     .padding([.bottom])
             }
         }

@@ -24,29 +24,29 @@ class GameViewModel: ObservableObject {
     
     private var winnerId: UUID? {
         didSet {
-            if winnerId != nil {
+            if let winnerId = winnerId {
                 showWinnerView = true
                 if winnerId == hostId {
                     hostScore += 1
                 } else {
                     peerScore += 1
                 }
-                winPublisher.send(())
+                winPublisher.send(winnerId)
             } else {
                 showWinnerView = false
             }
         }
     }
-    
-    var winMessage: String {
-        let teamName: String
-        if winnerId == hostId {
-            teamName = "RED"
-        } else {
-            teamName = "BLUE"
-        }
-        return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
-    }
+//
+//    var winMessage: String {
+//        let teamName: String
+//        if winnerId == hostId {
+//            teamName = "RED"
+//        } else {
+//            teamName = "BLUE"
+//        }
+//        return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
+//    }
     
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
@@ -67,7 +67,7 @@ class GameViewModel: ObservableObject {
     
     private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
     
-    private let winPublisher = PassthroughSubject<Void, Never>()
+    private let winPublisher = PassthroughSubject<UUID, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - Host pieces -
@@ -97,10 +97,11 @@ class GameViewModel: ObservableObject {
     private func setupConnnectionsForDragEnd(for pieces: [PieceViewModel]) {
         // Receive information from specific piece
         pieces.forEach {
-            $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
-            $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
             $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
+            $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
+            $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToRestart(restartPublisher)
+            $0.subscribeToWin(winPublisher)
         }
         
         // transmits info to all pieces and board cells

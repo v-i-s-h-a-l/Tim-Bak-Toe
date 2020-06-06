@@ -18,22 +18,24 @@ struct PiecesContainerView: View {
         let padding = pieceSize.height / 6.0
         return VStack {
             HStack(spacing: spacingForPieces) {
-                ForEach(viewModel.peerPieces) {
-                    PieceView(viewModel: $0, size: self.pieceSize)
-                        .padding([.trailing], padding)
-                }
-            }
-            .padding([.bottom], padding)
-
-            Spacer()
-
-            HStack(spacing: spacingForPieces) {
-                ForEach(viewModel.hostPieces) {
-                    PieceView(viewModel: $0, size: self.pieceSize)
+                ForEach(0..<viewModel.peerPieces.count) { index in
+                    PieceView(viewModel: self.viewModel.peerPieces[index], size: self.pieceSize)
                         .padding([.leading], padding)
+                        .setAccessibilityIdentifier(element: .peerPiece(index))
                 }
             }
-            .padding([.top], padding)
+//            .padding([.bottom], padding)
+            
+            Spacer()
+            
+            HStack(spacing: spacingForPieces) {
+                ForEach(0..<viewModel.hostPieces.count) { index in
+                    PieceView(viewModel: self.viewModel.hostPieces[index], size: self.pieceSize)
+                        .padding([.leading], padding)
+                        .setAccessibilityIdentifier(element: .hostPiece(index))
+                }
+            }
+//            .padding([.top], padding)
         }
         .padding([.top, .bottom], padding)
     }

@@ -50,7 +50,9 @@ struct OnboardingScreen: View {
                     Spacer()
                     Spacer()
 
-                    PlayButton(currentScreen: $currentScreen)
+                    GreenButton(title: "Play Now") {
+                        self.currentScreen = .game
+                    }
 
                     Spacer()
                     Spacer()

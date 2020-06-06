@@ -17,8 +17,7 @@ struct BoardCellView: View {
             .fill(Theme.Col.boardCell)
             .overlay(
                 Circle()
-                    .stroke(LinearGradient(Theme.Col.shadowCasted, Theme.Col.lightSource), lineWidth: Points.isPad ? 6 : 3)
-                    .blur(radius: Points.isPad ? 2 : 1))
+                    .stroke(LinearGradient(Theme.Col.shadowCasted, Theme.Col.lightSource), lineWidth: Points.isPad ? 6 : 3))
             .overlay(GeometryReader { proxy in
                 Color.clear
                     .onAppear(perform: {

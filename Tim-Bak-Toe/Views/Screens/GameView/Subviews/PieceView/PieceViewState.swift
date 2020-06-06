@@ -98,7 +98,6 @@ enum PieceViewState {
             .fill(pieceColor)
             .shadow(color: lightSourceShadowColor, radius: lightSourceShadowRadius(for: size), x: -lightSourceShadowDisplacement(for: size), y: -lightSourceShadowDisplacement(for: size))
             .shadow(color: Theme.Col.shadowCasted, radius: shadowCastedRadius(for: size), x: shadowCastedDisplacement(for: size), y: shadowCastedDisplacement(for: size))
-            .blur(radius: 1)
     }
 
     func upperFillLayer(pieceSize size: CGSize) -> some View {
@@ -112,7 +111,6 @@ enum PieceViewState {
                         .fill(pieceColor)
                     Circle()
                         .stroke(pieceStrokeColor, lineWidth: shadowCastedRadius(for: size) / 2.0)
-                        .blur(radius: 1)
                 }
             }
     }

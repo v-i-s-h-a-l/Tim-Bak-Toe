@@ -11,6 +11,8 @@
 		DC08A189248A039C00B8CE9D /* XO3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A188248A039C00B8CE9D /* XO3UITests.swift */; };
 		DC08A192248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */; };
 		DC08A193248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */; };
+		DC08A198248B1BB700B8CE9D /* PieceViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A197248B1BB700B8CE9D /* PieceViewState.swift */; };
+		DC08A19A248B1BE300B8CE9D /* PieceStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A199248B1BE300B8CE9D /* PieceStyle.swift */; };
 		DC109C95247B00F100EBC286 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C94247B00F100EBC286 /* TimerView.swift */; };
 		DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C96247B066700EBC286 /* Animation+timingCurve.swift */; };
 		DC109C99247B264700EBC286 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC109C98247B264700EBC286 /* TimerViewModel.swift */; };
@@ -60,6 +62,8 @@
 		DC08A188248A039C00B8CE9D /* XO3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XO3UITests.swift; sourceTree = "<group>"; };
 		DC08A18A248A039C00B8CE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifier.swift; sourceTree = "<group>"; };
+		DC08A197248B1BB700B8CE9D /* PieceViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceViewState.swift; sourceTree = "<group>"; };
+		DC08A199248B1BE300B8CE9D /* PieceStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceStyle.swift; sourceTree = "<group>"; };
 		DC109C94247B00F100EBC286 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		DC109C96247B066700EBC286 /* Animation+timingCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+timingCurve.swift"; sourceTree = "<group>"; };
 		DC109C98247B264700EBC286 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
@@ -128,6 +132,16 @@
 			children = (
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		DC08A196248B1B9A00B8CE9D /* PieceView */ = {
+			isa = PBXGroup;
+			children = (
+				DC128426247793E000B1317E /* PieceView.swift */,
+				DC08A197248B1BB700B8CE9D /* PieceViewState.swift */,
+				DC08A199248B1BE300B8CE9D /* PieceStyle.swift */,
+			);
+			path = PieceView;
 			sourceTree = "<group>";
 		};
 		DC1283E02477740900B1317E = {
@@ -300,8 +314,8 @@
 		DCAA2F75248888BB001B69F1 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				DC08A196248B1B9A00B8CE9D /* PieceView */,
 				DC475118247B9C35009FEE54 /* PiecesContainerView.swift */,
-				DC128426247793E000B1317E /* PieceView.swift */,
 				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
 				DC109C94247B00F100EBC286 /* TimerView.swift */,
 				DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */,
@@ -443,6 +457,7 @@
 			files = (
 				DC12842E2477A7E300B1317E /* GridStack.swift in Sources */,
 				DC7E6FC524888ADC009039F6 /* SettingsScreen.swift in Sources */,
+				DC08A19A248B1BE300B8CE9D /* PieceStyle.swift in Sources */,
 				DC128429247793EF00B1317E /* BoardCellView.swift in Sources */,
 				DCF3D75D2479FA5B0071506A /* GameSettings.swift in Sources */,
 				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,
@@ -461,6 +476,7 @@
 				DCC738BB24885DE800ADED0E /* Animations.swift in Sources */,
 				DC109C9B247B736400EBC286 /* WinnerView.swift in Sources */,
 				DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */,
+				DC08A198248B1BB700B8CE9D /* PieceViewState.swift in Sources */,
 				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
 				DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */,
 				DC1283F12477740900B1317E /* ContentView.swift in Sources */,

@@ -97,9 +97,9 @@ class GameViewModel: ObservableObject {
     private func setupConnnectionsForDragEnd(for pieces: [PieceViewModel]) {
         // Receive information from specific piece
         pieces.forEach {
-            $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
-            $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
             $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
+            $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
+            $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToRestart(restartPublisher)
         }
         

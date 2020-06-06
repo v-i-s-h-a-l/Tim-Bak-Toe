@@ -22,10 +22,8 @@ class PieceViewModel: ObservableObject, Identifiable {
     }
 
     @Published var relativeOffset: CGSize = .zero
-    @Published var disabled: Bool = false
-    @Published var zIndex: Double = ZIndex.playerPiecePlaced
-    @Published var stateMultiplier: CGFloat = 1.0
-    @Published var scale: CGFloat = 1.0
+    @Published var pieceState: PieceViewState = .placed
+    @Published var zIndex: Double = 0.0
 
     /// publishes team id, piece id and optional occeupied cell id
     var dragStartedPublisher = PassthroughSubject<(UUID, UUID, UUID?), Never>()
@@ -33,15 +31,6 @@ class PieceViewModel: ObservableObject, Identifiable {
     /// publishes team id, drag end location, piece id and optional occeupied cell id
     var draggedEndedPublisher = PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>()
 
-    private var isDragStarted: Bool = false {
-        didSet {
-                zIndex = isDragStarted ? ZIndex.playerPieceDragged : ZIndex.playerPiecePlaced
-                stateMultiplier = isDragStarted ? 3.0 : 1.0
-            withAnimation {
-                self.scale = isDragStarted ? 1.1 : 1.0
-            }
-        }
-    }
     private var cancellables: Set<AnyCancellable> = []
 
     private var dragAmount: CGSize = .zero
@@ -57,26 +46,20 @@ class PieceViewModel: ObservableObject, Identifiable {
     
     func onDragChanged(_ drag: DragGesture.Value) {
         // prevents from dragging multiple items
-        guard !self.disabled else { return }
-        if !isDragStarted {
-            self.isDragStarted = true
+        guard self.pieceState != .disabled else { return }
+        if !(self.pieceState == .dragged) {
             self.dragStartedPublisher
                 .send((teamId, id, occupiedCellID))
-        } else {
-            self.dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
-                self.relativeOffset = dragAmount + currentOffset
+        }
+        _ = withAnimation(.easeOutQuart) {
+            dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
+            relativeOffset = dragAmount + currentOffset
         }
     }
     
     func onDragEnded(_ drag: DragGesture.Value) {
         // prevents from dragging multiple items
-        guard !self.disabled else { return }
-
-        Just(false)
-            .delay(for: .seconds(0.5), scheduler: RunLoop.current)
-            .sink { _ in
-                self.isDragStarted = false }
-        .store(in: &cancellables)
+        guard self.pieceState != .disabled else { return }
 
         draggedEndedPublisher
             .send((teamId, drag.location, id, occupiedCellID))
@@ -90,7 +73,9 @@ class PieceViewModel: ObservableObject, Identifiable {
                 teamId == self.teamId
             }
             .sink { (_, draggedPieceId) in
-            self.disabled = self.id != draggedPieceId
+                _ = withAnimation {
+                    self.pieceState = self.id == draggedPieceId ? .dragged : .disabled
+                }
         }
         .store(in: &cancellables)
     }
@@ -120,7 +105,7 @@ class PieceViewModel: ObservableObject, Identifiable {
                 teamId == self.teamId
         }
         .sink { _ in
-            self.disabled = false
+            self.pieceState = .placed
         }
         .store(in: &cancellables)
     }
@@ -140,8 +125,9 @@ class PieceViewModel: ObservableObject, Identifiable {
         // pauses drag for pieces in the same team
         publisher
             .map { (teamId, _, _, _) in
-                teamId == self.teamId }
-        .assign(to: \.disabled, on: self)
+                return (teamId == self.teamId) ? PieceViewState.disabled : PieceViewState.placed
+        }
+        .assign(to: \.pieceState, on: self)
         .store(in: &cancellables)
     }
 
@@ -151,16 +137,18 @@ class PieceViewModel: ObservableObject, Identifiable {
                 .map { teamId in
                     // if self team id is refilled then the pieces are enabled
                     // if opponent's timer is refilled then self is disabled
-                    !(teamId == self.teamId) }
-            .assign(to: \.disabled, on: self)
+                    return (teamId == self.teamId) ? PieceViewState.placed : PieceViewState.disabled
+        }
+            .assign(to: \.pieceState, on: self)
             .store(in: &cancellables)
 
         // force drag end for any piece that the opponent had been dragging
         publisher
                 .filter { teamId in
-                    teamId != self.teamId}
+                    teamId != self.teamId
+        }
                 .sink { teamID in
-                    self.isDragStarted = false
+                    self.pieceState = .disabled
                     self.moveToUpdatedOffset()
             }
             .store(in: &cancellables)
@@ -177,8 +165,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         withAnimation {
             self.currentOffset = .zero
             self.dragAmount = .zero
-            self.disabled = false
-            self.isDragStarted = false
+            self.pieceState = .placed
             self.occupiedCellID = nil
             self.relativeOffset = .zero
         }

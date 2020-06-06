@@ -35,15 +35,20 @@ struct TimerView: View {
                         .cornerRadius(originalSize.height / 2.0)
                         .blur(radius: 1))
             HStack {
+                if isRightEdged {
+                    Spacer(minLength: 0.0)
+                }
                 viewModel
                     .style
                     .timerGradient
                     .cornerRadius(originalSize.height / 2)
                     .frame(width: originalSize.width * viewModel.currentFill)
                 
-                Spacer(minLength: 0.0)
+                if !isRightEdged {
+                    Spacer(minLength: 0.0)
+                }
             }
-            .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)            
+//            .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)            
         }
         .overlay(GeometryReader{ proxy in
             Color.clear

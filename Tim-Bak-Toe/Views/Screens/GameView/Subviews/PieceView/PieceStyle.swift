@@ -81,7 +81,13 @@ enum PieceStyle: String, Codable {
     }
 
     var timerGradient: LinearGradient {
-        LinearGradient(colorStart, colorEnd, startPoint: .leading, endPoint: .trailing)
+        switch self {
+        case .X:
+            return LinearGradient(colorStart, colorEnd, startPoint: .leading, endPoint: .trailing)
+        case .O:
+            return LinearGradient(colorEnd, colorStart, startPoint: .leading, endPoint: .trailing)
+        }
+        
     }
 
     func overlay(forSize size: CGSize) -> some View {

@@ -9,19 +9,17 @@
 import SwiftUI
 
 struct GreenButton: View {
-    
-    @Binding var currentScreen: Screen
+
+    let title: String
+    let action: () -> ()
+
     private let linearGradient = LinearGradient(Theme.Col.greenStart, Theme.Col.greenEnd, startPoint: .top, endPoint: .bottom)
-    let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
-    let padding: CGFloat = Points.isPad ? 120 : 60
+    private let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
+    private let padding: CGFloat = Points.isPad ? 120 : 60
 
     var body: some View {
-        Button(action: {
-            withAnimation {
-                self.currentScreen = .game
-            }
-        }) {
-            Text("Play Now")
+        Button(action: action) {
+            Text(title)
                 .font(Points.isPad ? .title : .body)
                 .kerning(2)
                 .fontWeight(.bold)

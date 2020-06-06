@@ -24,7 +24,7 @@ struct PiecesContainerView: View {
                         .setAccessibilityIdentifier(element: .peerPiece(index))
                 }
             }
-            .padding([.bottom], padding)
+//            .padding([.bottom], padding)
             
             Spacer()
             
@@ -35,7 +35,7 @@ struct PiecesContainerView: View {
                         .setAccessibilityIdentifier(element: .hostPiece(index))
                 }
             }
-            .padding([.top], padding)
+//            .padding([.top], padding)
         }
         .padding([.top, .bottom], padding)
     }

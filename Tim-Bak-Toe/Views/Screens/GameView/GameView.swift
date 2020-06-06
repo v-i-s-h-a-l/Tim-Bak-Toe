@@ -32,12 +32,15 @@ struct GameView: View {
             TimersContainerView(pieceSize: pieceSize)
             
             PiecesContainerView(pieceSize: pieceSize)
-            
-            if viewModel.showWinnerView {
-                WinnerView(message: viewModel.winMessage, onRestart: viewModel.onRestart, currentScreen: $currentScreen)
-            }
         }
-        .statusBar(hidden: true)
+        .overlay(
+            Group {
+                EmptyView()
+                if viewModel.showWinnerView {
+                    WinnerView(onRestart: viewModel.onRestart, currentScreen: $currentScreen)
+                }
+            }
+        )
     }
 }
 
@@ -47,18 +50,16 @@ struct GameView_Previews: PreviewProvider {
         
     static var previews: some View {
         Group {
-            NavigationView {
                 GameView(currentScreen: .constant(.game)).colorScheme(.dark)
-                    .previewDevice(PreviewDevice.iPhoneSE2)
                     .environmentObject(GameViewModel())
-                    .previewDisplayName(PreviewDeviceName.iPhoneSE2)
-            }
-            NavigationView {
                 GameView(currentScreen: .constant(.game)).colorScheme(.light)
-                    .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
+                    .previewDevice(PreviewDevice.iPhoneXʀ)
                     .environmentObject(GameViewModel())
-                    .previewDisplayName(PreviewDeviceName.iPhone11ProMax)
-            }
+                    .previewDisplayName(PreviewDeviceName.iPhone8)
+            GameView(currentScreen: .constant(.game)).colorScheme(.light)
+                .previewDevice(PreviewDevice.iPadAir_3rdGen)
+                .environmentObject(GameViewModel())
+                .previewDisplayName(PreviewDeviceName.iPadAir_3rdGen)
         }
     }
 }

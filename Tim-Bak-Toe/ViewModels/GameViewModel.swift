@@ -37,16 +37,16 @@ class GameViewModel: ObservableObject {
             }
         }
     }
-    
-    var winMessage: String {
-        let teamName: String
-        if winnerId == hostId {
-            teamName = "RED"
-        } else {
-            teamName = "BLUE"
-        }
-        return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
-    }
+//
+//    var winMessage: String {
+//        let teamName: String
+//        if winnerId == hostId {
+//            teamName = "RED"
+//        } else {
+//            teamName = "BLUE"
+//        }
+//        return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
+//    }
     
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()

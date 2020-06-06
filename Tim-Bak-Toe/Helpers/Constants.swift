@@ -18,10 +18,10 @@ enum ZIndex {
 }
 
 enum Points {
-    
     static let isPad = UIDevice.current.userInterfaceIdiom == .pad
     static let boardWidthMultiplier: CGFloat = isPad ? 0.65 : 0.85
     static let cellPadding: CGFloat = isPad ? 15 : 10
+    static let screenEdgePadding: CGFloat = isPad ? 30 : 15
 }
 
 

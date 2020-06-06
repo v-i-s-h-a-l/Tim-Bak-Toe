@@ -12,9 +12,12 @@ struct PieceView: View {
     
     @ObservedObject var viewModel: PieceViewModel
     var size: CGSize
-    
+
+    @State private var scale: CGFloat = 1.0
+    @State private var zIndex: Double = ZIndex.playerPiecePlaced
+
     var body: some View {        
-        return ZStack {
+        ZStack {
             viewModel.pieceState.bottomShadowLayer(pieceSize: size)
             viewModel.pieceState.upperFillLayer(pieceSize: size)
             
@@ -22,9 +25,9 @@ struct PieceView: View {
             viewModel.style.overlay(forSize: size)
         }
         .frame(width: size.width, height: size.height)
-        .scaleEffect(viewModel.pieceState.scale)
+        .scaleEffect(scale)
         .offset(viewModel.relativeOffset)
-        .zIndex(viewModel.pieceState.zIndex)
+        .zIndex(zIndex)
         .allowsHitTesting(viewModel.pieceState.allowsHitTesting)
         .overlay(GeometryReader { proxy in
             Color.clear
@@ -34,6 +37,19 @@ struct PieceView: View {
             DragGesture(coordinateSpace: .global)
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded))
+        .onReceive(viewModel.$pieceState.eraseToAnyPublisher()) { state in
+            self.handleStateUpdate(for: state)
+        }
+    }
+
+    private func handleStateUpdate(for state: PieceViewState) {
+        let animation = state == .won ? Animation.easeInOutBack.repeatForever(autoreverses: true) : Animation.default
+        withAnimation(animation) {
+            self.scale = state.scale
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.zIndex = state.zIndex
+        }
     }
 }
 

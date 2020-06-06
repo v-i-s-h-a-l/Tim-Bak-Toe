@@ -24,14 +24,14 @@ class GameViewModel: ObservableObject {
     
     private var winnerId: UUID? {
         didSet {
-            if winnerId != nil {
+            if let winnerId = winnerId {
                 showWinnerView = true
                 if winnerId == hostId {
                     hostScore += 1
                 } else {
                     peerScore += 1
                 }
-                winPublisher.send(())
+                winPublisher.send(winnerId)
             } else {
                 showWinnerView = false
             }
@@ -67,7 +67,7 @@ class GameViewModel: ObservableObject {
     
     private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
     
-    private let winPublisher = PassthroughSubject<Void, Never>()
+    private let winPublisher = PassthroughSubject<UUID, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
     
     // MARK: - Host pieces -
@@ -101,6 +101,7 @@ class GameViewModel: ObservableObject {
             $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
             $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToRestart(restartPublisher)
+            $0.subscribeToWin(winPublisher)
         }
         
         // transmits info to all pieces and board cells

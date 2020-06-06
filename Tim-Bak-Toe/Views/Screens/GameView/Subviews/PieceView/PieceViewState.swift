@@ -13,6 +13,9 @@ enum PieceViewState {
     case disabled
     case dragged
     case placed
+
+    case won
+    case lost
     
     private var dragMultiplier: CGFloat {
         return 3.0
@@ -20,72 +23,73 @@ enum PieceViewState {
 
     var scale: CGFloat {
         switch self {
-        case .disabled, .placed: return 1
+        case .disabled, .placed, .lost: return 1
         case .dragged: return 1.1
+        case .won: return 1.1
         }
     }
 
     var pieceColor: LinearGradient {
         switch self {
-        case .disabled: return LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted)
+        case .disabled, .won: return LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted)
         case .dragged: return LinearGradient(Theme.Col.boardCell, Theme.Col.boardCell)
-        case .placed: return LinearGradient(Theme.Col.piece, Theme.Col.piece)
+        case .placed, .lost: return LinearGradient(Theme.Col.piece, Theme.Col.piece)
         }
     }
 
     var pieceStrokeColor: LinearGradient {
         switch self {
-        case .disabled, .placed: return LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted)
+        case .disabled, .placed, .won, .lost: return LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted)
         case .dragged: return LinearGradient(Theme.Col.lightSource, Theme.Col.boardCell, Theme.Col.boardCell)
         }
     }
 
     var lightSourceShadowColor: Color {
         switch self {
-        case .disabled, .dragged: return .clear
-        case .placed: return Theme.Col.lightSource
+        case .disabled, .dragged, .won: return .clear
+        case .placed, .lost: return Theme.Col.lightSource
         }
     }
 
     var zIndex: Double {
         switch self {
-        case .disabled, .placed: return 0.0
+        case .disabled, .placed, .won, .lost: return 0.0
         case .dragged: return 1.0
         }
     }
 
     var allowsHitTesting: Bool {
-        return self != .disabled
+        return [Self.dragged, Self.placed].contains(self)
     }
 
     func shadowCastedRadius(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled: return 0
+        case .disabled, .won: return 0
         case .dragged: return 2 * dragMultiplier * pieceSize.height / 40.0
-        case .placed: return pieceSize.height / 40.0
+        case .placed, .lost: return pieceSize.height / 40.0
         }
     }
 
     func shadowCastedDisplacement(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled: return 0
+        case .disabled, .won: return 0
         case .dragged: return dragMultiplier * pieceSize.height / 40.0
-        case .placed: return pieceSize.height / 40.0
+        case .placed, .lost: return pieceSize.height / 40.0
         }
     }
 
     func lightSourceShadowRadius(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled, .dragged: return 0
-        case .placed: return pieceSize.height / 40.0
+        case .disabled, .dragged, .won: return 0
+        case .placed, .lost: return pieceSize.height / 40.0
         }
     }
 
     func lightSourceShadowDisplacement(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled: return 0
+        case .disabled, .won: return 0
         case .dragged: return 0
-        case .placed: return pieceSize.height / 40.0
+        case .placed, .lost: return pieceSize.height / 40.0
         }
     }
 

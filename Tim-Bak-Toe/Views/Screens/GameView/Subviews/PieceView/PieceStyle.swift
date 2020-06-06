@@ -12,8 +12,8 @@ import SwiftUI
 struct DiagonalLineShape: Shape {
 
     let lineWidth: CGFloat
-    let insetAmount: CGFloat
     let isFromBottomLeftCorner: Bool
+    let insetAmount: CGFloat
 
     func path(in rect: CGRect) -> Path {
         var points = [CGPoint]()
@@ -45,14 +45,14 @@ struct XGradientView: View {
 
     let gradient: LinearGradient
     let lineWidth: CGFloat
-    let insetAmount: CGFloat
+    let insetAmount: CGFloat = 0.0
 
     var body: some View {
         ZStack {
-            DiagonalLineShape(lineWidth: lineWidth, insetAmount: insetAmount, isFromBottomLeftCorner: false)
+            DiagonalLineShape(lineWidth: lineWidth, isFromBottomLeftCorner: false, insetAmount: insetAmount)
             .fill(gradient)
 
-            DiagonalLineShape(lineWidth: lineWidth, insetAmount: insetAmount, isFromBottomLeftCorner: true)
+            DiagonalLineShape(lineWidth: lineWidth, isFromBottomLeftCorner: true, insetAmount: insetAmount)
             .fill(gradient)
         }
     }
@@ -85,7 +85,8 @@ enum PieceStyle: String, Codable {
     }
 
     func overlay(forSize size: CGSize) -> some View {
-        let lineWidthForPieceSign = size.height / 9.0
+        let lineWidthForPieceSign = size.height / 11.0
+        let scale: CGFloat = 3.0 / 7.0
         let insetAmuontForPieceSign = size.height / 3.5
 
         return Group {
@@ -95,7 +96,9 @@ enum PieceStyle: String, Codable {
                     .stroke(pieceGradient, lineWidth: lineWidthForPieceSign)
             }
             if self == .X {
-                XGradientView(gradient: pieceGradient, lineWidth: lineWidthForPieceSign, insetAmount: insetAmuontForPieceSign)
+                XGradientView(gradient: pieceGradient, lineWidth: lineWidthForPieceSign / scale)
+                    .scaleEffect(scale, anchor: .center)
+                //, insetAmount: insetAmuontForPieceSign)
             }
         }
     }

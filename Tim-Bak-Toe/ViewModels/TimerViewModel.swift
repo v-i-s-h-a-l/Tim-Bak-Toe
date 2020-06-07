@@ -103,7 +103,9 @@ class TimerViewModel: ObservableObject {
     // MARK: - Any team wins -
 
     func subscribeToWin(_ publisher: PassthroughSubject<UUID, Never>) {
-        publisher.sink { _ in
+        publisher
+            .delay(for: .seconds(timerStride), scheduler: RunLoop.main)
+            .sink { _ in
             self.reset()
         }
         .store(in: &cancellables)

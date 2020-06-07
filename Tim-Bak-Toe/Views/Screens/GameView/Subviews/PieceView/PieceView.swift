@@ -38,7 +38,9 @@ struct PieceView: View {
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded))
         .onReceive(viewModel.$pieceState.eraseToAnyPublisher()) { state in
-            self.handleStateUpdate(for: state)
+            DispatchQueue.main.async {
+                self.handleStateUpdate(for: state)
+            }
         }
     }
 

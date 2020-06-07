@@ -32,7 +32,7 @@ import Foundation
 //    }
 //}
 
-class GameSettings: ObservableObject {
-    
+enum GameSettings {
+    static var maxTurnDuration: Double = 5.0
 }
 

@@ -17,15 +17,14 @@ enum TimerState: String {
 class TimerViewModel: ObservableObject {
 
     let teamId: UUID
-    let refillingDuration: Double
     let style: PieceStyle
     
     @Published var currentFill: CGFloat = 1.0
 
-    init(with teamId: UUID, style: PieceStyle, refillingDuration: Double = 5) {
+    init(with teamId: UUID, style: PieceStyle) {
         self.teamId = teamId
-        self.refillingDuration = refillingDuration
         self.style = style
+        self.currentTime = GameSettings.maxTurnDuration
     }
 
     var emptyPublisher = PassthroughSubject<UUID, Never>()
@@ -38,10 +37,11 @@ class TimerViewModel: ObservableObject {
     private var timer: Publishers.Autoconnect<Timer.TimerPublisher>?
 
     private var currentState: TimerState = .waiting
-    private var currentTime: Double = 0 {
+
+    private var currentTime: Double {
         didSet {
             guard oldValue != currentTime else { return }
-            var ratio = currentTime / refillingDuration
+            var ratio = currentTime / GameSettings.maxTurnDuration
             if ratio >= 1 { ratio = 1.0 }
             if ratio <= 0 { ratio = 0.0}
 
@@ -55,6 +55,17 @@ class TimerViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    // MARK: - Starting a new game -
+
+    func subscribeToGameStart(_ publisher: PassthroughSubject<UUID, Never>) {
+        publisher.sink { teamId in
+            if self.teamId == teamId {
+                self.startTimer()
+            }
+        }
+        .store(in: &cancellables)
     }
 
     // MARK: - Successful drop for a team -
@@ -71,7 +82,7 @@ class TimerViewModel: ObservableObject {
         publisher
             .filter { $0 != self.teamId }
             .sink { _ in
-                self.resetAndStartTimer()
+                self.startTimer()
         }
         .store(in: &cancellables)
     }
@@ -83,7 +94,7 @@ class TimerViewModel: ObservableObject {
             if self.teamId == teamId {
                 self.reset()
             } else {
-                self.resetAndStartTimer()
+                self.startTimer()
             }
         }
         .store(in: &cancellables)
@@ -107,26 +118,16 @@ class TimerViewModel: ObservableObject {
         .store(in: &cancellables)
     }
 
+    // MARK: - internal functionalities -
+
     private func reset() {
         timerObserver?.cancel()
         timer = nil
         currentState = .waiting
-        currentTime = refillingDuration
-    }
-
-    // MARK: - Starting a new game -
-
-    func subscribeToGameStart(_ publisher: PassthroughSubject<UUID, Never>) {
-        publisher.sink { teamId in
-            if self.teamId == teamId {
-                self.resetAndStartTimer()
-            }
-        }
-        .store(in: &cancellables)
+        currentTime = GameSettings.maxTurnDuration
     }
     
-    private func resetAndStartTimer() {
-//        currentTime = refillingDuration
+    private func startTimer() {
         currentState = .emptyingDown
         timerObserver?.cancel()
 
@@ -142,7 +143,6 @@ class TimerViewModel: ObservableObject {
     }
 
     private func invokeTimerActions() {
-        // toggle states if needed
         currentTime -= timerStride
         if currentTime <= 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + timerStride) {

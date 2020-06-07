@@ -16,7 +16,7 @@ let peerId = UUID()
 let userID = hostId
 
 class GameViewModel: ObservableObject {
-    
+        
     @Published var hostScore: Int = 0
     @Published var peerScore: Int = 0
     
@@ -37,16 +37,6 @@ class GameViewModel: ObservableObject {
             }
         }
     }
-//
-//    var winMessage: String {
-//        let teamName: String
-//        if winnerId == hostId {
-//            teamName = "RED"
-//        } else {
-//            teamName = "BLUE"
-//        }
-//        return "Congratulations!!\n🎉🎊\nTeam \(teamName) wins!"
-//    }
     
     lazy var hostPieces: [PieceViewModel] = generatePiecesForHost()
     lazy var peerPieces: [PieceViewModel] = generatePiecesForPeer()
@@ -65,7 +55,7 @@ class GameViewModel: ObservableObject {
     private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
     private let newCellOccupiedByPiecePublisherForShelf = PassthroughSubject<UUID, Never>()
     
-    private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
+    private let emptyTimerPublisher = PassthroughSubject<UUID, Never>()
     
     private let winPublisher = PassthroughSubject<UUID, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
@@ -97,7 +87,7 @@ class GameViewModel: ObservableObject {
     private func setupConnnectionsForDragEnd(for pieces: [PieceViewModel]) {
         // Receive information from specific piece
         pieces.forEach {
-            $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
+            $0.subscribeToTimerEmptied(emptyTimerPublisher)
             $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
             $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToRestart(restartPublisher)
@@ -147,8 +137,8 @@ class GameViewModel: ObservableObject {
     
     private func subscribeCellViewModelsToDragUpdatesFromAPiece(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach {
-            $0.subscribeToDragEnded(self.pieceDragEndToCellsPublisher)
-            $0.subscribeToNewOccupancy(self.newCellOccupiedPublisherForOriginCell)
+            $0.subscribeToDragEnded(pieceDragEndToCellsPublisher)
+            $0.subscribeToNewOccupancy(newCellOccupiedPublisherForOriginCell)
             $0.subscribeToRestart(restartPublisher)
         }
     }
@@ -177,12 +167,14 @@ class GameViewModel: ObservableObject {
     
     private func generateTimerViewModel(with teamId: UUID) -> TimerViewModel {
         let generatedViewModel = TimerViewModel(with: teamId, style: teamId == hostId ? PieceStyle.X : PieceStyle.O)
+        generatedViewModel.subscribeToEmptiedTimer(emptyTimerPublisher)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         generatedViewModel.subscribeToWin(winPublisher)
         generatedViewModel.subscribeToRestart(restartPublisher)
         
-        generatedViewModel.refillSuccessPublisher.sink { teamId in
-            self.shelfRefillPublisher.send(teamId)
+        generatedViewModel.emptyPublisher
+            .sink { teamId in
+            self.emptyTimerPublisher.send(teamId)
         }
         .store(in: &cancellables)
         

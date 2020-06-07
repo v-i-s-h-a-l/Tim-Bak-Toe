@@ -21,7 +21,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         self.teamId = (style == .X ? hostId : peerId)
     }
     
-    @Published var relativeOffset: CGSize = .zero
+    @Published var relativeOffset: CGSize = .zero  // dynamic relative offset to original location
     @Published var pieceState: PieceViewState = .placed
     @Published var zIndex: Double = 0.0
     
@@ -33,8 +33,9 @@ class PieceViewModel: ObservableObject, Identifiable {
     
     private var cancellables: Set<AnyCancellable> = []
     
+    private var dragStartOffset: CGSize = .zero  // how much far from the center of a piece had the drag started
     private var dragAmount: CGSize = .zero
-    private var currentOffset: CGSize = .zero
+    private var currentOffset: CGSize = .zero  // last placed location offset relative to original
     
     private var centerGlobal: CGPoint = .zero
     
@@ -50,10 +51,15 @@ class PieceViewModel: ObservableObject, Identifiable {
         if !(self.pieceState == .dragged) {
             self.dragStartedPublisher
                 .send((teamId, id, occupiedCellID))
+            
+            dragStartOffset = CGSize(width: drag.startLocation.x - (currentOffset.width + centerGlobal.x), height: drag.startLocation.y - (currentOffset.height + centerGlobal.y))
+//            print("drag started")
+//            print("self center: \(currentOffset.width + centerGlobal.x), \(currentOffset.height + centerGlobal.y)")
+            print("start offset: \(dragStartOffset)")
         }
         _ = withAnimation(.easeOutQuart) {
             dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
-            relativeOffset = dragAmount + currentOffset
+            relativeOffset = dragAmount + currentOffset + dragStartOffset
         }
     }
     
@@ -82,6 +88,7 @@ class PieceViewModel: ObservableObject, Identifiable {
     
     fileprivate func moveToUpdatedOffset() {
         dragAmount = .zero
+        dragStartOffset = .zero
         withAnimation {
             relativeOffset = currentOffset
         }
@@ -131,13 +138,11 @@ class PieceViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
     
-    func subscribeToSuccessfulRefilling(_ publisher: PassthroughSubject<UUID, Never>) {
+    func subscribeToTimerEmptied(_ publisher: PassthroughSubject<UUID, Never>) {
         // enables the pieces of the team id received
         publisher
             .map { teamId in
-                // if self team id is refilled then the pieces are enabled
-                // if opponent's timer is refilled then self is disabled
-                return (teamId == self.teamId) ? PieceViewState.placed : PieceViewState.disabled
+                return (teamId != self.teamId) ? PieceViewState.placed : PieceViewState.disabled
         }
         .assign(to: \.pieceState, on: self)
         .store(in: &cancellables)
@@ -145,7 +150,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         // force drag end for any piece that the opponent had been dragging
         publisher
             .filter { teamId in
-                teamId != self.teamId
+                teamId == self.teamId
         }
         .sink { teamID in
             self.pieceState = .disabled
@@ -165,6 +170,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         withAnimation {
             self.currentOffset = .zero
             self.dragAmount = .zero
+            self.dragStartOffset = .zero
             self.relativeOffset = .zero
             self.pieceState = .placed
             self.occupiedCellID = nil

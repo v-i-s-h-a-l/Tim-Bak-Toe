@@ -32,8 +32,8 @@ enum PieceViewState {
     var pieceColor: LinearGradient {
         switch self {
         case .disabled, .won: return LinearGradient(Theme.Col.lightSource, Theme.Col.shadowCasted)
-        case .dragged: return LinearGradient(Theme.Col.boardCell, Theme.Col.boardCell)
-        case .placed, .lost: return LinearGradient(Theme.Col.piece, Theme.Col.piece)
+//        case .dragged: return LinearGradient(Theme.Col.boardCell, Theme.Col.boardCell)
+        case .placed, .dragged, .lost: return LinearGradient(Theme.Col.piece, Theme.Col.piece)
         }
     }
 
@@ -46,7 +46,8 @@ enum PieceViewState {
 
     var lightSourceShadowColor: Color {
         switch self {
-        case .disabled, .dragged, .won: return .clear
+        case .disabled, .won: return .clear
+        case .dragged: return Theme.Col.shadowCasted
         case .placed, .lost: return Theme.Col.lightSource
         }
     }
@@ -65,7 +66,7 @@ enum PieceViewState {
     func shadowCastedRadius(for pieceSize: CGSize) -> CGFloat {
         switch self {
         case .disabled, .won: return 0
-        case .dragged: return 2 * dragMultiplier * pieceSize.height / 40.0
+        case .dragged: return pieceSize.height / 40.0
         case .placed, .lost: return pieceSize.height / 40.0
         }
     }
@@ -73,14 +74,15 @@ enum PieceViewState {
     func shadowCastedDisplacement(for pieceSize: CGSize) -> CGFloat {
         switch self {
         case .disabled, .won: return 0
-        case .dragged: return dragMultiplier * pieceSize.height / 40.0
+        case .dragged: return pieceSize.height / 40.0
         case .placed, .lost: return pieceSize.height / 40.0
         }
     }
 
     func lightSourceShadowRadius(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled, .dragged, .won: return 0
+        case .disabled, .won: return 0
+        case .dragged: return pieceSize.height / 40.0
         case .placed, .lost: return pieceSize.height / 40.0
         }
     }
@@ -88,7 +90,7 @@ enum PieceViewState {
     func lightSourceShadowDisplacement(for pieceSize: CGSize) -> CGFloat {
         switch self {
         case .disabled, .won: return 0
-        case .dragged: return 0
+        case .dragged: return pieceSize.height / 40.0
         case .placed, .lost: return pieceSize.height / 40.0
         }
     }
@@ -112,7 +114,6 @@ enum PieceViewState {
                         .fill(pieceColor)
                     Circle()
                         .stroke(pieceStrokeColor, lineWidth: shadowCastedRadius(for: size) / 2.0)
-                        .blur(radius: 1)
                 }
             }
     }

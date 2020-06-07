@@ -39,6 +39,10 @@
 		DCAA2F70248887AE001B69F1 /* GreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F6F248887AE001B69F1 /* GreenButton.swift */; };
 		DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F762488890E001B69F1 /* SettingsButton.swift */; };
 		DCC738BB24885DE800ADED0E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC738BA24885DE800ADED0E /* Animations.swift */; };
+		DCF07878248DAF02009A856D /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF07875248DAF02009A856D /* win.wav */; };
+		DCF0787A248DAF02009A856D /* place.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF07877248DAF02009A856D /* place.wav */; };
+		DCF0787E248DB051009A856D /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787D248DB051009A856D /* pop.wav */; };
+		DCF07880248DB167009A856D /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787F248DB167009A856D /* tap.wav */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
@@ -92,6 +96,10 @@
 		DCAA2F6F248887AE001B69F1 /* GreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenButton.swift; sourceTree = "<group>"; };
 		DCAA2F762488890E001B69F1 /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		DCC738BA24885DE800ADED0E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		DCF07875248DAF02009A856D /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win.wav; sourceTree = "<group>"; };
+		DCF07877248DAF02009A856D /* place.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = place.wav; sourceTree = "<group>"; };
+		DCF0787D248DB051009A856D /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
+		DCF0787F248DB167009A856D /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -167,6 +175,7 @@
 			children = (
 				DC12842A2477A71B00B1317E /* Helpers */,
 				DC1284002477750800B1317E /* Models */,
+				DCF07874248DAEE3009A856D /* Sounds */,
 				DC1284032477753600B1317E /* ViewModels */,
 				DC1284012477751400B1317E /* Views */,
 				DC1284022477752900B1317E /* Supporting Files */,
@@ -323,6 +332,17 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		DCF07874248DAEE3009A856D /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				DCF0787F248DB167009A856D /* tap.wav */,
+				DCF0787D248DB051009A856D /* pop.wav */,
+				DCF07877248DAF02009A856D /* place.wav */,
+				DCF07875248DAF02009A856D /* win.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -413,7 +433,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1283F92477741000B1317E /* LaunchScreen.storyboard in Resources */,
+				DCF07878248DAF02009A856D /* win.wav in Resources */,
+				DCF0787A248DAF02009A856D /* place.wav in Resources */,
 				DC1283F62477741000B1317E /* Preview Assets.xcassets in Resources */,
+				DCF0787E248DB051009A856D /* pop.wav in Resources */,
+				DCF07880248DB167009A856D /* tap.wav in Resources */,
 				DC1283F32477741000B1317E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

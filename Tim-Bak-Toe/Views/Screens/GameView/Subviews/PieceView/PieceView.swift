@@ -47,8 +47,12 @@ struct PieceView: View {
         withAnimation(animation) {
             self.scale = state.scale
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        if state == .dragged {
             self.zIndex = state.zIndex
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.zIndex = state.zIndex
+            }
         }
     }
 }

@@ -65,7 +65,7 @@ class GameViewModel: ObservableObject {
     private let newCellOccupiedPublisherForOriginCell = PassthroughSubject<(UUID, UUID?), Never>()
     private let newCellOccupiedByPiecePublisherForShelf = PassthroughSubject<UUID, Never>()
     
-    private let shelfRefillPublisher = PassthroughSubject<UUID, Never>()
+    private let emptyTimerPublisher = PassthroughSubject<UUID, Never>()
     
     private let winPublisher = PassthroughSubject<UUID, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
@@ -97,7 +97,7 @@ class GameViewModel: ObservableObject {
     private func setupConnnectionsForDragEnd(for pieces: [PieceViewModel]) {
         // Receive information from specific piece
         pieces.forEach {
-            $0.subscribeToSuccessfulRefilling(shelfRefillPublisher)
+            $0.subscribeToTimerEmptied(emptyTimerPublisher)
             $0.subscribeToNewOccupancy(newCellOccupiedByPiecePublisher)
             $0.subscribeToDragEnd(pieceDragEndToFellowPiecesPublisher)
             $0.subscribeToRestart(restartPublisher)
@@ -180,9 +180,11 @@ class GameViewModel: ObservableObject {
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         generatedViewModel.subscribeToWin(winPublisher)
         generatedViewModel.subscribeToRestart(restartPublisher)
+        generatedViewModel.subscribeToEmptiedTimer(emptyTimerPublisher)
         
-        generatedViewModel.refillSuccessPublisher.sink { teamId in
-            self.shelfRefillPublisher.send(teamId)
+        generatedViewModel.emptyPublisher
+            .sink { teamId in
+            self.emptyTimerPublisher.send(teamId)
         }
         .store(in: &cancellables)
         

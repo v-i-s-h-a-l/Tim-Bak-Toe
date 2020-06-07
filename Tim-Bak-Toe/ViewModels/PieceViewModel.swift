@@ -131,13 +131,11 @@ class PieceViewModel: ObservableObject, Identifiable {
         .store(in: &cancellables)
     }
     
-    func subscribeToSuccessfulRefilling(_ publisher: PassthroughSubject<UUID, Never>) {
+    func subscribeToTimerEmptied(_ publisher: PassthroughSubject<UUID, Never>) {
         // enables the pieces of the team id received
         publisher
             .map { teamId in
-                // if self team id is refilled then the pieces are enabled
-                // if opponent's timer is refilled then self is disabled
-                return (teamId == self.teamId) ? PieceViewState.placed : PieceViewState.disabled
+                return (teamId != self.teamId) ? PieceViewState.placed : PieceViewState.disabled
         }
         .assign(to: \.pieceState, on: self)
         .store(in: &cancellables)
@@ -145,7 +143,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         // force drag end for any piece that the opponent had been dragging
         publisher
             .filter { teamId in
-                teamId != self.teamId
+                teamId == self.teamId
         }
         .sink { teamID in
             self.pieceState = .disabled

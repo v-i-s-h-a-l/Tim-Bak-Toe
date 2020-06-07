@@ -6,6 +6,7 @@
 //  Copyright © 2020 v-i-s-h-a-l. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 struct TimerView: View {
@@ -15,7 +16,7 @@ struct TimerView: View {
     let isRightEdged: Bool
     
     @State private var originalSize: CGSize = .zero
-    
+
     var body: some View {
         let cornerRadius = originalSize.height / 2
         let originalWidth = originalSize.width
@@ -32,12 +33,12 @@ struct TimerView: View {
                                 startPoint: .top,
                                 endPoint: .bottom),
                             lineWidth: 2)
-                        .cornerRadius(originalSize.height / 2.0)
-                        .blur(radius: 1))
+                        .cornerRadius(originalSize.height / 2.0))
             HStack {
                 if isRightEdged {
                     Spacer(minLength: 0.0)
                 }
+
                 viewModel
                     .style
                     .timerGradient
@@ -48,7 +49,6 @@ struct TimerView: View {
                     Spacer(minLength: 0.0)
                 }
             }
-//            .rotationEffect(.radians(isRightEdged ? .pi : 0), anchor: .center)            
         }
         .overlay(GeometryReader{ proxy in
             Color.clear

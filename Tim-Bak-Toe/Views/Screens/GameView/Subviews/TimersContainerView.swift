@@ -25,7 +25,7 @@ struct TimersContainerView: View {
 
             Spacer()
             
-            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: true)
+            TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: false)
                 .frame(height: timerHeight)
                 .padding([.leading, .trailing], padding)
 

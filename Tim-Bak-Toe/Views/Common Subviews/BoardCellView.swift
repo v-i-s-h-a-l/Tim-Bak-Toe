@@ -13,16 +13,16 @@ struct BoardCellView: View {
     @ObservedObject var viewModel: BoardCellViewModel
     
     var body: some View {
-        Circle()
-            .fill(Theme.Col.boardCell)
-            .overlay(
-                Circle()
-                    .stroke(LinearGradient(Theme.Col.shadowCasted, Theme.Col.lightSource), lineWidth: Points.isPad ? 6 : 3))
+        ZStack {
+            Circle()
+                .fill(Theme.Col.boardCell)
+            Circle()
+                .stroke(LinearGradient(Theme.Col.shadowCasted, Theme.Col.lightSource), lineWidth: Points.isPad ? 6 : 3) }
+            .padding(Points.cellPadding)
             .overlay(GeometryReader { proxy in
                 Color.clear
                     .onAppear(perform: {
-                        self.viewModel.onAppear(proxy)
-                    })
+                        self.viewModel.onAppear(proxy) })
             })
     }
 }

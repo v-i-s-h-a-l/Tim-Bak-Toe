@@ -15,8 +15,8 @@ struct TimersContainerView: View {
     
     var body: some View {
         let timerHeight = pieceSize.height / 8.0
-        let spacing = pieceSize.height * (4.0 / 3.0)
-        let padding = pieceSize.height / 6.0
+        let spacing = pieceSize.height * (Points.isPad ? 1.4 : 1.6)
+        let padding = pieceSize.height / 3.0
 
         return VStack {
             TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: true)

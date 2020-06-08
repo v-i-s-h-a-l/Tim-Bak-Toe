@@ -14,28 +14,24 @@ struct PiecesContainerView: View {
     @EnvironmentObject var viewModel: GameViewModel
     
     var body: some View {
-        let spacingForPieces = pieceSize.height / 11.0
-        let padding = pieceSize.height / 6.0
+        let spacingForPieces = pieceSize.height / 5.0
+        let padding = pieceSize.height / (Points.isPad ? 5.0 : 3.0)
         return VStack {
             HStack(spacing: spacingForPieces) {
                 ForEach(0..<viewModel.peerPieces.count) { index in
                     PieceView(viewModel: self.viewModel.peerPieces[index], size: self.pieceSize)
-                        .padding([.leading], padding)
                         .setAccessibilityIdentifier(element: .peerPiece(index))
                 }
             }
-//            .padding([.bottom], padding)
             
             Spacer()
             
             HStack(spacing: spacingForPieces) {
                 ForEach(0..<viewModel.hostPieces.count) { index in
                     PieceView(viewModel: self.viewModel.hostPieces[index], size: self.pieceSize)
-                        .padding([.leading], padding)
                         .setAccessibilityIdentifier(element: .hostPiece(index))
                 }
             }
-//            .padding([.top], padding)
         }
         .padding([.top, .bottom], padding)
     }
@@ -45,7 +41,11 @@ struct PiecesContainerView: View {
 
 struct PiecesContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        PiecesContainerView(pieceSize: CGSize(width: 90, height: 90)).environmentObject(GameViewModel())
+        Group {
+            PiecesContainerView(pieceSize: CGSize(width: 90, height: 90)).environmentObject(GameViewModel())
+            PiecesContainerView(pieceSize: CGSize(width: 90, height: 90)).environmentObject(GameViewModel())
+                .previewDevice(PreviewDevice.iPadAir)
+        }
     }
 }
 

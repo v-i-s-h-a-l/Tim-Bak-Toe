@@ -31,7 +31,16 @@ struct SettingsScreen: View {
                     }
                     Spacer()
                 }
-                
+
+                Picker(selection: $gameSettings.preferredColorScheme, label: Text("Appearance")) {
+                    Text("System").tag(0)
+                    Text("Light").tag(1)
+                    Text("Dark").tag(2)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                .padding([.trailing, .leading])
+
                 Group {
                     Toggle(isOn: $gameSettings.soundOn) {
                             Image(uiImage: UIImage(systemName: gameSettings.soundOn ? "speaker.2.fill" : "speaker.slash.fill", withConfiguration: symbolConfiguration)!)
@@ -62,6 +71,7 @@ struct SettingsScreen: View {
                 }
             }
         }
+        .colorScheme(gameSettings.preferredColorScheme == 1 ? .light : .dark)
     }
 }
 

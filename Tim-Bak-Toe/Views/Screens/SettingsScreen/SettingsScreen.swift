@@ -59,9 +59,9 @@ struct SettingsScreen: View {
 struct SettingsScreen_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings())
+            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings.user)
                 .colorScheme(.dark)
-            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings())
+            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings.user)
         }
     }
 }

@@ -38,19 +38,22 @@ final class GameSettings: ObservableObject {
         case factory, user
     }
 
-    static var user: GameSettings? = GameSettings(with: .user)
-    static var factory: GameSettings = GameSettings()
+    static var user: GameSettings = GameSettings(with: .user)
+    private static var factory: GameSettings = GameSettings()
     
     @Published var soundOn: Bool = true
     @Published var timerDuration: Double = 5.0
 
     public let timerStride = 1.0
-    init() {}
+
+    private var cancellables = Set<AnyCancellable>()
+    private init() {}
     
-    init(with type: SettingsType) {
+    private init(with type: SettingsType) {
         // default settings that come bundled with app
         let factorySettings = GameSettings()
-        
+
+        // taking soundOff because by default user defaults will return false
         let savedSoundOn = !UserDefaults.standard.bool(forKey: "soundOff")
         let savedTimerDuration = UserDefaults.standard.double(forKey: "timerDuration")
 
@@ -59,5 +62,15 @@ final class GameSettings: ObservableObject {
 
         self.soundOn = factorySettings.soundOn
         self.timerDuration = factorySettings.timerDuration
+
+        self.$soundOn.sink { newValue in
+            UserDefaults.standard.set(!newValue, forKey: "soundOff")
+        }
+        .store(in: &cancellables)
+
+        self.$timerDuration.sink { newValue in
+            UserDefaults.standard.set(newValue, forKey: "timerDuration")
+        }
+        .store(in: &cancellables)
     }
 }

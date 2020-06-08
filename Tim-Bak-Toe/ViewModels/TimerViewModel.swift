@@ -18,14 +18,14 @@ class TimerViewModel: ObservableObject {
 
     let teamId: UUID
     let style: PieceStyle
-    private var gameSettings = GameSettings.factory
+    private var gameSettings = GameSettings.user
 
     @Published var currentFill: CGFloat = 1.0
 
     init(with teamId: UUID, style: PieceStyle) {
         self.teamId = teamId
         self.style = style
-        self.currentTime = GameSettings.factory.timerDuration
+        self.currentTime = GameSettings.user.timerDuration
     }
 
     var emptyPublisher = PassthroughSubject<UUID, Never>()

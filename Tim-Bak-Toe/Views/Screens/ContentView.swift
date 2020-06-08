@@ -17,8 +17,7 @@ struct ContentView: View {
     @State var currentScreen: Screen = .onboarding
 
     var body: some View {
-        
-        return Group {
+        Group {
             if currentScreen == .onboarding {
                 OnboardingScreen(currentScreen: $currentScreen)
             }

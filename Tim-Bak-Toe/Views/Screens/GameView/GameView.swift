@@ -33,6 +33,8 @@ struct GameView: View {
             
             PiecesContainerView(pieceSize: pieceSize)
         }
+        // status bar height
+        .padding(.top, -20)
         .overlay(
             Group {
                 EmptyView()
@@ -60,6 +62,10 @@ struct GameView_Previews: PreviewProvider {
                 .previewDevice(PreviewDevice.iPadAir_3rdGen)
                 .environmentObject(GameViewModel())
                 .previewDisplayName(PreviewDeviceName.iPadAir_3rdGen)
+            GameView(currentScreen: .constant(.game)).colorScheme(.light)
+                .previewDevice(PreviewDevice.iPadPro_12_9_4thGen)
+                .environmentObject(GameViewModel())
+                .previewDisplayName(PreviewDeviceName.iPadPro_12_9_4thGen)
         }
     }
 }

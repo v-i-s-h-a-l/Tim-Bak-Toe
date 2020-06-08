@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PieceView: View {
     
+    @Binding var zIndexOfContainer: Double
     @ObservedObject var viewModel: PieceViewModel
     var size: CGSize
 
@@ -38,7 +39,9 @@ struct PieceView: View {
                 .onChanged(viewModel.onDragChanged)
                 .onEnded(viewModel.onDragEnded))
         .onReceive(viewModel.$pieceState.eraseToAnyPublisher()) { state in
-            self.handleStateUpdate(for: state)
+            DispatchQueue.main.async {
+                self.handleStateUpdate(for: state)
+            }
         }
     }
 
@@ -47,26 +50,33 @@ struct PieceView: View {
         withAnimation(animation) {
             self.scale = state.scale
         }
-        if state == .dragged {
+        let delay = state == .dragged ? 0.0 : 0.2
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             self.zIndex = state.zIndex
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.zIndex = state.zIndex
-            }
+            self.zIndexOfContainer = state.zIndex
         }
+//        if state == .dragged {
+//            self.zIndex = state.zIndex
+//            self.zIndexOfContainer = state.zIndex
+//        } else {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                self.zIndex = state.zIndex
+//                self.zIndexOfContainer = state.zIndex
+//            }
+//        }
     }
 }
 
-#if DEBUG
-
-struct PieceView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PieceView(viewModel: PieceViewModel(with: .X), size: CGSize(width: 80, height: 80))
-            PieceView(viewModel: PieceViewModel(with: .O), size: CGSize(width: 80, height: 80))
-                .colorScheme(.dark)
-        }
-    }
-}
-
-#endif
+//#if DEBUG
+//
+//struct PieceView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            PieceView(viewModel: PieceViewModel(with: .X), size: CGSize(width: 80, height: 80))
+//            PieceView(viewModel: PieceViewModel(with: .O), size: CGSize(width: 80, height: 80))
+//                .colorScheme(.dark)
+//        }
+//    }
+//}
+//
+//#endif

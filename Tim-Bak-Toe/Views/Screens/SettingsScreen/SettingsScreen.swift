@@ -9,40 +9,51 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-
+    
     @Binding var currentScreen: Screen
-
-    private let backButtonConfiguration = UIImage.SymbolConfiguration(pointSize: 32, weight: .heavy)
+    @EnvironmentObject var gameSettings: GameSettings
+    
+    private let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: Points.isPad ? 32 : 20, weight: .heavy)
+    let random = [PieceStyle.X, PieceStyle.O].randomElement()!
 
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
                 .edgesIgnoringSafeArea(.all)
-
-            Text("Work in progress..")
-                .font(.title)
             
-            VStack(alignment: .leading) {
-                Spacer()
-                HStack {
-                    Button(action: {
-                        self.currentScreen = .home
-                    }) {
-                        ZStack(alignment: .leading) {
-                            Circle()
-                                .inset(by: -20)
-                            .fill(Theme.Col.gameBackground)
-                            .shadow(color: Theme.Col.lightSource, radius: 2, x: -2, y: -2)
-                            .shadow(color: Theme.Col.shadowCasted, radius: 2, x: 2, y: 2)
-
-                            Image(uiImage: UIImage(systemName: "arrowshape.turn.up.left.fill", withConfiguration: backButtonConfiguration)!)
-                                .foregroundColor(.primary)
-                        }
-                    }
-                    .frame(width: 44, height: 44)
-                    .padding(60)
-
+            VStack {
+                Group {
                     Spacer()
+                    Spacer()
+                }
+                
+                Group {
+                    Toggle(isOn: $gameSettings.soundOn) {
+                            Image(uiImage: UIImage(systemName: gameSettings.soundOn ? "speaker.2.fill" : "speaker.slash.fill", withConfiguration: symbolConfiguration)!)
+                                .renderingMode(.template)
+                                .foregroundColor(Color.primary)
+                        .padding(.trailing)
+                    }
+                    .padding()
+
+                    Stepper(value: $gameSettings.timerDuration, in: 3.0...10.0) {
+                        VStack {
+                            TimerView(viewModel: TimerViewModel(with: UUID(), style: random), isRightEdged: false)
+                                .frame(height: 20)
+                            
+                            Text("\(Int(gameSettings.timerDuration)) seconds").font(Points.isPad ? .title : .body)
+                        }
+                        .padding(.trailing)
+                    }
+                    .padding()
+                }
+                .frame(maxWidth: Points.isPad ? 350 : 250)
+                .padding()
+                
+                Spacer()
+                
+                SettingsButton(title: "Back") {
+                    self.currentScreen = .home
                 }
             }
         }
@@ -53,7 +64,15 @@ struct SettingsScreen: View {
 
 struct SettingsScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsScreen(currentScreen: .constant(.settings))
+        Group {
+            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings.user)
+                .colorScheme(.dark)
+            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings.user)
+            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings.user)
+                .previewDevice(PreviewDevice.iPhoneSE2)
+            SettingsScreen(currentScreen: .constant(.settings)).environmentObject(GameSettings.user)
+                .previewDevice(PreviewDevice.iPhone11Pro)
+        }
     }
 }
 

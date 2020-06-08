@@ -18,7 +18,10 @@ struct GreenButton: View {
     private let padding: CGFloat = Points.isPad ? 120 : 60
 
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            self.action()
+            Sound.tap.play()
+        }) {
             Text(title)
                 .font(Points.isPad ? .title : .body)
                 .kerning(2)

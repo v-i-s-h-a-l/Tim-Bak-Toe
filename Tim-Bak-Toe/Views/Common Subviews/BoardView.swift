@@ -25,7 +25,6 @@ struct BoardView: View {
     
     func cell(atRow row: Int, column: Int) -> some View {
         return BoardCellView(viewModel: viewModel.boardCellViewModels[row * 3 + column])
-            .padding(Points.cellPadding)
             .setAccessibilityIdentifier(element: .boardCell(row, column))
     }
 }

@@ -13,10 +13,8 @@ import SwiftUI
 let hostId = UUID()
 let peerId = UUID()
 
-let userID = hostId
-
 class GameViewModel: ObservableObject {
-        
+
     @Published var hostScore: Int = 0
     @Published var peerScore: Int = 0
     
@@ -32,6 +30,9 @@ class GameViewModel: ObservableObject {
                     peerScore += 1
                 }
                 winPublisher.send(winnerId)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    Sound.win.play()
+                }
             } else {
                 showWinnerView = false
             }
@@ -96,15 +97,15 @@ class GameViewModel: ObservableObject {
         
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
-            pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
-                self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID))
-            }
-            .store(in: &cancellables)
+            pieceModel.draggedEndedPublisher
+                .sink { teamId, location, pieceID, cellId in
+                    self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID)) }
+                .store(in: &cancellables)
             
-            pieceModel.draggedEndedPublisher.sink { teamId, location, pieceID, cellId in
-                self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId))
-            }
-            .store(in: &cancellables)
+            pieceModel.draggedEndedPublisher
+                .sink { teamId, location, pieceID, cellId in
+                    self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId)) }
+                .store(in: &cancellables)
         }
     }
     
@@ -145,21 +146,21 @@ class GameViewModel: ObservableObject {
     
     private func subscribeToCellPublishers(generatedCellViewModels: [BoardCellViewModel]) {
         generatedCellViewModels.forEach { cellViewModel in
-            cellViewModel.newOccupancyPublisher.sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
-                self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId))
-            }
-            .store(in: &cancellables)
+            cellViewModel.newOccupancyPublisher
+                .sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
+                    self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId)) }
+                .store(in: &cancellables)
             
-            cellViewModel.newOccupancyPublisher.sink { (teamId, _, _, _, _) in
-                self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
-            }
-            .store(in: &cancellables)
+            cellViewModel.newOccupancyPublisher
+                .sink { (teamId, _, _, _, _) in
+                    self.newCellOccupiedByPiecePublisherForShelf.send((teamId)) }
+                .store(in: &cancellables)
             
-            cellViewModel.newOccupancyPublisher.sink { (teamId, _, pieceId, _, previousCellId) in
-                self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
-                self.checkWinner(teamId: teamId)
-            }
-            .store(in: &cancellables)
+            cellViewModel.newOccupancyPublisher
+                .sink { (teamId, _, pieceId, _, previousCellId) in
+                    self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
+                    self.checkWinner(teamId: teamId) }
+                .store(in: &cancellables)
         }
     }
     
@@ -173,10 +174,8 @@ class GameViewModel: ObservableObject {
         generatedViewModel.subscribeToRestart(restartPublisher)
         
         generatedViewModel.emptyPublisher
-            .sink { teamId in
-            self.emptyTimerPublisher.send(teamId)
-        }
-        .store(in: &cancellables)
+            .sink { teamId in self.emptyTimerPublisher.send(teamId) }
+            .store(in: &cancellables)
         
         return generatedViewModel
     }
@@ -186,15 +185,15 @@ class GameViewModel: ObservableObject {
     func checkWinner(teamId: UUID) {
         guard winnerId == nil else { return }
         
-        let occupiedIndexes = boardCellViewModels.filter { $0.teamId == teamId }
+        let occupiedIndexes = boardCellViewModels
+            .filter { $0.teamId == teamId }
             .map { $0.indexPath }
+
         guard occupiedIndexes.count == 3 else { return }
         
         let occupiedIndexesSet = Set(occupiedIndexes)
         
-        withAnimation {
-            self.winnerId = possibleWinnerIndexes.contains(occupiedIndexesSet) ? teamId : nil
-        }
+        withAnimation { winnerId = possibleWinnerIndexes.contains(occupiedIndexesSet) ? teamId : nil }
     }
     
     private let possibleWinnerIndexes = Set([
@@ -209,9 +208,7 @@ class GameViewModel: ObservableObject {
     ])
     
     func onRestart() {
-        withAnimation {
-            self.winnerId = nil
-        }
+        withAnimation { winnerId = nil }
         restartPublisher.send(())
     }
 }

@@ -38,8 +38,8 @@ struct SettingsScreen: View {
                     Text("Dark").tag(2)
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .frame(maxWidth: Points.isPad ? 350 : 250)
                 .padding()
-                .padding([.trailing, .leading])
 
                 Group {
                     Toggle(isOn: $gameSettings.soundOn) {
@@ -55,7 +55,8 @@ struct SettingsScreen: View {
                             TimerView(viewModel: TimerViewModel(with: UUID(), style: random), isRightEdged: false)
                                 .frame(height: 20)
                             
-                            Text("\(Int(gameSettings.timerDuration)) seconds").font(Points.isPad ? .title : .body)
+                            Text("\(Int(gameSettings.timerDuration)) seconds")
+                                .font(Points.isPad ? .title : .body)
                         }
                         .padding(.trailing)
                     }

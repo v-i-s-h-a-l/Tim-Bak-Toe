@@ -71,6 +71,13 @@ class PieceViewModel: ObservableObject, Identifiable {
     
     // MARK: - functions called by game vm to provide publishers -
     
+    func subscribeToGameStart(_ publisher: PassthroughSubject<UUID, Never>) {
+        publisher
+        .filter { teamId in teamId != self.teamId }
+        .sink { _ in self.pieceState = .disabled }
+        .store(in: &cancellables)
+    }
+    
     func subscribeToDragStart(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
         publisher
             .filter { teamId, _ in teamId == self.teamId }

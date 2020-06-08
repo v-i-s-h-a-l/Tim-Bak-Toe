@@ -15,21 +15,23 @@ let peerId = UUID()
 
 class GameViewModel: ObservableObject {
 
-    @Published var hostScore: Int = 0
-    @Published var peerScore: Int = 0
-    
     @Published var showWinnerView: Bool = false
-    
+
+    private var turnsWasted: Int = 0
+    private var maxTurnsAllowed = 6
+
     private var winnerId: UUID? {
         didSet {
             if let winnerId = winnerId {
                 showWinnerView = true
-                if winnerId == hostId {
-                    hostScore += 1
-                } else {
-                    peerScore += 1
-                }
                 winPublisher.send(winnerId)
+                if winnerId == hostId {
+//                    hostScore += 1
+                } else if winnerId == peerId {
+//                    peerScore += 1
+                } else {
+                    return
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     Sound.win.play()
                 }
@@ -60,7 +62,8 @@ class GameViewModel: ObservableObject {
     
     private let winPublisher = PassthroughSubject<UUID, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
-    
+    private let startPublisher = PassthroughSubject<UUID, Never>()
+
     // MARK: - Host pieces -
     
     private func generatePiecesForHost() -> [PieceViewModel] {
@@ -74,7 +77,9 @@ class GameViewModel: ObservableObject {
     
     private func setupConnnectionsForDragStart(for pieces: [PieceViewModel]) {
         // Receives information from specific piece
-        pieces.forEach { $0.subscribeToDragStart(pieceDragStartToFellowPiecesPublisher) }
+        pieces.forEach { $0.subscribeToDragStart(pieceDragStartToFellowPiecesPublisher)
+            $0.subscribeToGameStart(startPublisher)
+        }
         
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
@@ -161,6 +166,11 @@ class GameViewModel: ObservableObject {
                     self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
                     self.checkWinner(teamId: teamId) }
                 .store(in: &cancellables)
+
+            cellViewModel.newOccupancyPublisher
+                .sink { (_, _, _, _, previousCellId) in
+                    self.turnsWasted = 0 }
+                .store(in: &cancellables)
         }
     }
     
@@ -168,13 +178,16 @@ class GameViewModel: ObservableObject {
     
     private func generateTimerViewModel(with teamId: UUID) -> TimerViewModel {
         let generatedViewModel = TimerViewModel(with: teamId, style: teamId == hostId ? PieceStyle.X : PieceStyle.O)
+        generatedViewModel.subscribeToGameStart(startPublisher)
         generatedViewModel.subscribeToEmptiedTimer(emptyTimerPublisher)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         generatedViewModel.subscribeToWin(winPublisher)
         generatedViewModel.subscribeToRestart(restartPublisher)
         
         generatedViewModel.emptyPublisher
-            .sink { teamId in self.emptyTimerPublisher.send(teamId) }
+            .sink { teamId in self.emptyTimerPublisher.send(teamId)
+                self.turnsWasted += 1
+                self.checkTurnsWasted() }
             .store(in: &cancellables)
         
         return generatedViewModel
@@ -182,7 +195,7 @@ class GameViewModel: ObservableObject {
     
     // MARK: - Win logic and game reset -
     
-    func checkWinner(teamId: UUID) {
+    private func checkWinner(teamId: UUID) {
         guard winnerId == nil else { return }
         
         let occupiedIndexes = boardCellViewModels
@@ -207,8 +220,20 @@ class GameViewModel: ObservableObject {
         Set(["0,2", "1,2", "2,2"]),
     ])
     
+    private func checkTurnsWasted() {
+        if self.turnsWasted >= maxTurnsAllowed {
+            winnerId = UUID()
+        }
+    }
+    
     func onRestart() {
         withAnimation { winnerId = nil }
         restartPublisher.send(())
+        onGameStart()
+        turnsWasted = 0
+    }
+
+    func onGameStart() {
+        startPublisher.send(hostId)
     }
 }

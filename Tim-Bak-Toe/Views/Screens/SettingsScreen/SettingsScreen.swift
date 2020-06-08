@@ -24,9 +24,23 @@ struct SettingsScreen: View {
             VStack {
                 Group {
                     Spacer()
+                    VStack {
+                        SocialButton(contributor: .akb)
+                            .padding()
+                        SocialButton(contributor: .vishal)
+                    }
                     Spacer()
                 }
-                
+
+                Picker(selection: $gameSettings.preferredColorScheme, label: Text("Appearance")) {
+                    Text("System").tag(0)
+                    Text("Light").tag(1)
+                    Text("Dark").tag(2)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .frame(maxWidth: Points.isPad ? 350 : 250)
+                .padding()
+
                 Group {
                     Toggle(isOn: $gameSettings.soundOn) {
                             Image(uiImage: UIImage(systemName: gameSettings.soundOn ? "speaker.2.fill" : "speaker.slash.fill", withConfiguration: symbolConfiguration)!)
@@ -41,7 +55,8 @@ struct SettingsScreen: View {
                             TimerView(viewModel: TimerViewModel(with: UUID(), style: random), isRightEdged: false)
                                 .frame(height: 20)
                             
-                            Text("\(Int(gameSettings.timerDuration)) seconds").font(Points.isPad ? .title : .body)
+                            Text("\(Int(gameSettings.timerDuration)) seconds")
+                                .font(Points.isPad ? .title : .body)
                         }
                         .padding(.trailing)
                     }
@@ -57,6 +72,7 @@ struct SettingsScreen: View {
                 }
             }
         }
+        .colorScheme(gameSettings.preferredColorScheme == 1 ? .light : .dark)
     }
 }
 

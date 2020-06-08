@@ -43,6 +43,9 @@ struct GameView: View {
                 }
             }
         )
+        .onAppear {
+            self.viewModel.onGameStart()
+        }
     }
 }
 

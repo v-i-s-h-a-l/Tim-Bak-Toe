@@ -17,8 +17,7 @@ struct ContentView: View {
     @State var currentScreen: Screen = .onboarding
 
     var body: some View {
-        
-        return Group {
+        Group {
             if currentScreen == .onboarding {
                 OnboardingScreen(currentScreen: $currentScreen)
             }
@@ -33,6 +32,7 @@ struct ContentView: View {
                     .environmentObject(GameSettings.user)
             }
         }
+        .colorScheme(GameSettings.user.preferredColorScheme == 1 ? .light : .dark)
         .statusBar(hidden: withAnimation { currentScreen == .game })
         .onAppear {
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")

@@ -32,6 +32,7 @@ class GameViewModel: ObservableObject {
                     peerScore += 1
                 }
                 winPublisher.send(winnerId)
+                Sound.win.play()
             } else {
                 showWinnerView = false
             }

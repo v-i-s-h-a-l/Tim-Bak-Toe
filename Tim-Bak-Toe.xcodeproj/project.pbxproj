@@ -43,6 +43,7 @@
 		DCF0787A248DAF02009A856D /* place.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF07877248DAF02009A856D /* place.wav */; };
 		DCF0787E248DB051009A856D /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787D248DB051009A856D /* pop.wav */; };
 		DCF07880248DB167009A856D /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787F248DB167009A856D /* tap.wav */; };
+		DCF07882248DB22F009A856D /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07881248DB22F009A856D /* PlaySound.swift */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
@@ -100,6 +101,7 @@
 		DCF07877248DAF02009A856D /* place.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = place.wav; sourceTree = "<group>"; };
 		DCF0787D248DB051009A856D /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
 		DCF0787F248DB167009A856D /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
+		DCF07881248DB22F009A856D /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				DCF0787D248DB051009A856D /* pop.wav */,
 				DCF07877248DAF02009A856D /* place.wav */,
 				DCF07875248DAF02009A856D /* win.wav */,
+				DCF07881248DB22F009A856D /* PlaySound.swift */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				DC7E6FC524888ADC009039F6 /* SettingsScreen.swift in Sources */,
 				DC08A19A248B1BE300B8CE9D /* PieceStyle.swift in Sources */,
 				DC128429247793EF00B1317E /* BoardCellView.swift in Sources */,
+				DCF07882248DB22F009A856D /* PlaySound.swift in Sources */,
 				DCF3D75D2479FA5B0071506A /* GameSettings.swift in Sources */,
 				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,
 				DC1283ED2477740900B1317E /* AppDelegate.swift in Sources */,

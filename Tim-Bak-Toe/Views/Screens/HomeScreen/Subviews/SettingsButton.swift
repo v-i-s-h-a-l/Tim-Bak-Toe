@@ -15,7 +15,10 @@ struct SettingsButton: View {
     private let padding: CGFloat = Points.isPad ? 120 : 60
 
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            self.action()
+            Sound.tap.play()
+        }) {
             Text("Settings")
                 .font(Points.isPad ? .title : .body)
                 .kerning(2)

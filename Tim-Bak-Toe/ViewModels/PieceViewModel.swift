@@ -49,13 +49,11 @@ class PieceViewModel: ObservableObject, Identifiable {
         // prevents from dragging multiple items
         guard self.pieceState != .disabled else { return }
         if !(self.pieceState == .dragged) {
+            Sound.pop.play()
             self.dragStartedPublisher
                 .send((teamId, id, occupiedCellID))
             
             dragStartOffset = CGSize(width: drag.startLocation.x - (currentOffset.width + centerGlobal.x), height: drag.startLocation.y - (currentOffset.height + centerGlobal.y))
-//            print("drag started")
-//            print("self center: \(currentOffset.width + centerGlobal.x), \(currentOffset.height + centerGlobal.y)")
-            print("start offset: \(dragStartOffset)")
         }
         _ = withAnimation(.easeOutQuart) {
             dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
@@ -124,6 +122,7 @@ class PieceViewModel: ObservableObject, Identifiable {
                 pieceId == self.id
         }
         .sink { (_, newCellCenter, _, newCellId) in
+            Sound.place.play()
             self.occupiedCellID = newCellId
             self.currentOffset = newCellCenter - self.centerGlobal
         }

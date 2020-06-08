@@ -24,6 +24,11 @@ struct SettingsScreen: View {
             VStack {
                 Group {
                     Spacer()
+                    VStack {
+                        SocialButton(contributor: .akb)
+                            .padding()
+                        SocialButton(contributor: .vishal)
+                    }
                     Spacer()
                 }
                 

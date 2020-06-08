@@ -44,6 +44,7 @@
 		DCF0787E248DB051009A856D /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787D248DB051009A856D /* pop.wav */; };
 		DCF07880248DB167009A856D /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787F248DB167009A856D /* tap.wav */; };
 		DCF07882248DB22F009A856D /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07881248DB22F009A856D /* PlaySound.swift */; };
+		DCF07884248E3EEB009A856D /* SocialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07883248E3EEB009A856D /* SocialButton.swift */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
@@ -102,6 +103,7 @@
 		DCF0787D248DB051009A856D /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
 		DCF0787F248DB167009A856D /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		DCF07881248DB22F009A856D /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
+		DCF07883248E3EEB009A856D /* SocialButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialButton.swift; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -283,6 +285,9 @@
 			children = (
 				DC128428247793EF00B1317E /* BoardCellView.swift */,
 				DC47511A247BA639009FEE54 /* BoardView.swift */,
+				DCAA2F6F248887AE001B69F1 /* GreenButton.swift */,
+				DCAA2F762488890E001B69F1 /* SettingsButton.swift */,
+				DCF07883248E3EEB009A856D /* SocialButton.swift */,
 			);
 			path = "Common Subviews";
 			sourceTree = "<group>";
@@ -308,18 +313,8 @@
 			isa = PBXGroup;
 			children = (
 				DC47511C247C62B8009FEE54 /* HomeScreen.swift */,
-				DCAA2F74248888B5001B69F1 /* Subviews */,
 			);
 			path = HomeScreen;
-			sourceTree = "<group>";
-		};
-		DCAA2F74248888B5001B69F1 /* Subviews */ = {
-			isa = PBXGroup;
-			children = (
-				DCAA2F6F248887AE001B69F1 /* GreenButton.swift */,
-				DCAA2F762488890E001B69F1 /* SettingsButton.swift */,
-			);
-			path = Subviews;
 			sourceTree = "<group>";
 		};
 		DCAA2F75248888BB001B69F1 /* Subviews */ = {
@@ -486,6 +481,7 @@
 				DC7E6FC524888ADC009039F6 /* SettingsScreen.swift in Sources */,
 				DC08A19A248B1BE300B8CE9D /* PieceStyle.swift in Sources */,
 				DC128429247793EF00B1317E /* BoardCellView.swift in Sources */,
+				DCF07884248E3EEB009A856D /* SocialButton.swift in Sources */,
 				DCF07882248DB22F009A856D /* PlaySound.swift in Sources */,
 				DCF3D75D2479FA5B0071506A /* GameSettings.swift in Sources */,
 				DC128423247793A600B1317E /* GameViewModel.swift in Sources */,

@@ -14,7 +14,7 @@ enum Contributor: String {
     
     var twitterURL: URL {
         switch self {
-        case .akb: return URL(string: "https://twitter.com/alistairkb")!
+        case .akb: return URL(string: "http://akbmedia.co.uk")!
         case .vishal: return URL(string: "https://twitter.com/v_s_h_a_l")!
         }
     }

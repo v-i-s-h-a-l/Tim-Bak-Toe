@@ -60,7 +60,8 @@ class GameViewModel: ObservableObject {
     
     private let winPublisher = PassthroughSubject<UUID, Never>()
     private let restartPublisher = PassthroughSubject<Void, Never>()
-    
+    private let startPublisher = PassthroughSubject<UUID, Never>()
+
     // MARK: - Host pieces -
     
     private func generatePiecesForHost() -> [PieceViewModel] {
@@ -74,7 +75,9 @@ class GameViewModel: ObservableObject {
     
     private func setupConnnectionsForDragStart(for pieces: [PieceViewModel]) {
         // Receives information from specific piece
-        pieces.forEach { $0.subscribeToDragStart(pieceDragStartToFellowPiecesPublisher) }
+        pieces.forEach { $0.subscribeToDragStart(pieceDragStartToFellowPiecesPublisher)
+            $0.subscribeToGameStart(startPublisher)
+        }
         
         // transmits info to all pieces and board cells
         pieces.forEach { pieceModel in
@@ -168,6 +171,7 @@ class GameViewModel: ObservableObject {
     
     private func generateTimerViewModel(with teamId: UUID) -> TimerViewModel {
         let generatedViewModel = TimerViewModel(with: teamId, style: teamId == hostId ? PieceStyle.X : PieceStyle.O)
+        generatedViewModel.subscribeToGameStart(startPublisher)
         generatedViewModel.subscribeToEmptiedTimer(emptyTimerPublisher)
         generatedViewModel.subscribeToNewOccupancy(newCellOccupiedByPiecePublisherForShelf)
         generatedViewModel.subscribeToWin(winPublisher)
@@ -210,5 +214,10 @@ class GameViewModel: ObservableObject {
     func onRestart() {
         withAnimation { winnerId = nil }
         restartPublisher.send(())
+        onGameStart()
+    }
+
+    func onGameStart() {
+        startPublisher.send(hostId)
     }
 }

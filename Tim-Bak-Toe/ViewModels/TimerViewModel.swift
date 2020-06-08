@@ -54,13 +54,14 @@ class TimerViewModel: ObservableObject {
     }
 
 //    // MARK: - Starting a new game -
-//
-//    func subscribeToGameStart(_ publisher: PassthroughSubject<UUID, Never>) {
-//        publisher
-//            .filter { self.teamId == $0 }
-//            .sink { _ in self.startTimer() }
-//            .store(in: &cancellables)
-//    }
+
+    func subscribeToGameStart(_ publisher: PassthroughSubject<UUID, Never>) {
+        publisher
+            .filter { self.teamId == $0 }
+            .delay(for: .seconds(0.5), scheduler: RunLoop.main)
+            .sink { _ in self.startTimer() }
+            .store(in: &cancellables)
+    }
 
     // MARK: - Successful drop for a team -
     

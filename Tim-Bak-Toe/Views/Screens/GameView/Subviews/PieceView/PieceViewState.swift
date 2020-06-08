@@ -43,8 +43,8 @@ enum PieceViewState {
     
     var lightSourceShadowColor: Color {
         switch self {
-        case .disabled, .dragged, .won: return Theme.Col.shadowCasted
-        case .placed, .lost: return Theme.Col.lightSource
+        case .disabled, .dragged, .won, .lost: return Theme.Col.shadowCasted
+        case .placed: return Theme.Col.lightSource
         }
     }
     
@@ -61,33 +61,33 @@ enum PieceViewState {
     
     func shadowCastedRadius(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled, .won: return 1
+        case .disabled, .won, .lost: return 1
         case .dragged: return pieceSize.height / 40.0
-        case .placed, .lost: return pieceSize.height / 40.0
+        case .placed: return pieceSize.height / 40.0
         }
     }
     
     func shadowCastedDisplacement(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled, .won: return 0
+        case .disabled, .won, .lost: return 0
         case .dragged: return pieceSize.height / 40.0
-        case .placed, .lost: return pieceSize.height / 40.0
+        case .placed: return pieceSize.height / 40.0
         }
     }
     
     func lightSourceShadowRadius(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled, .won: return 1
+        case .disabled, .won, .lost: return 1
         case .dragged: return pieceSize.height / 40.0
-        case .placed, .lost: return pieceSize.height / 40.0
+        case .placed: return pieceSize.height / 40.0
         }
     }
     
     func lightSourceShadowDisplacement(for pieceSize: CGSize) -> CGFloat {
         switch self {
-        case .disabled, .won: return 0
+        case .disabled, .won, .lost: return 0
         case .dragged: return pieceSize.height / 40.0
-        case .placed, .lost: return pieceSize.height / 40.0
+        case .placed: return pieceSize.height / 40.0
         }
     }
     

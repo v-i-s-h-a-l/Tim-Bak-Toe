@@ -18,13 +18,14 @@ class TimerViewModel: ObservableObject {
 
     let teamId: UUID
     let style: PieceStyle
-    
+    private var gameSettings = GameSettings.factory
+
     @Published var currentFill: CGFloat = 1.0
 
     init(with teamId: UUID, style: PieceStyle) {
         self.teamId = teamId
         self.style = style
-        self.currentTime = GameSettings.maxTurnDuration
+        self.currentTime = GameSettings.factory.timerDuration
     }
 
     var emptyPublisher = PassthroughSubject<UUID, Never>()
@@ -36,7 +37,7 @@ class TimerViewModel: ObservableObject {
     private var currentTime: Double {
         didSet {
             guard oldValue != currentTime else { return }
-            var ratio = currentTime / GameSettings.maxTurnDuration
+            var ratio = currentTime / gameSettings.timerDuration
             if ratio >= 1 { ratio = 1.0 }
             if ratio <= 0 { ratio = 0.0 }
 
@@ -45,7 +46,7 @@ class TimerViewModel: ObservableObject {
                     currentFill = CGFloat(ratio)
                 }
             } else {
-                withAnimation(Animation.linear(duration: GameSettings.timerStride + 0.1)) {
+                withAnimation(Animation.linear(duration: gameSettings.timerStride + 0.1)) {
                     currentFill = CGFloat(ratio)
                 }
             }
@@ -93,7 +94,6 @@ class TimerViewModel: ObservableObject {
 
     func subscribeToWin(_ publisher: PassthroughSubject<UUID, Never>) {
         publisher
-//            .delay(for: .seconds(GameSettings.timerStride), scheduler: RunLoop.main)
             .sink { _ in self.reset() }
             .store(in: &cancellables)
     }
@@ -110,7 +110,7 @@ class TimerViewModel: ObservableObject {
 
     private func reset() {
         currentState = .waiting
-        currentTime = GameSettings.maxTurnDuration
+        currentTime = gameSettings.timerDuration
     }
     
     private func startTimer() {
@@ -120,8 +120,8 @@ class TimerViewModel: ObservableObject {
 
     private func invokeTimerActions() {
         guard self.currentState == .emptyingDown else { return }
-        currentTime -= GameSettings.timerStride
-        DispatchQueue.main.asyncAfter(deadline: .now() + GameSettings.timerStride) { [weak self] in
+        currentTime -= gameSettings.timerStride
+        DispatchQueue.main.asyncAfter(deadline: .now() + gameSettings.timerStride) { [weak self] in
             guard let self = self else { return }
             if self.currentTime <= 0 {
                 self.emptyPublisher.send(self.teamId)

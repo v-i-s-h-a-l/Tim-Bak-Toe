@@ -57,7 +57,7 @@ struct HomeScreen: View {
                     self.currentScreen = .game
                 }
                 .padding([.top])
-                SettingsButton {
+                SettingsButton(title: "Settings") {
                     self.currentScreen = .settings
                 }
                     .padding([.bottom])

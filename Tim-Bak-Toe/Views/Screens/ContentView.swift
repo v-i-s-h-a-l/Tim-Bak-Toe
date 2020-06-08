@@ -15,6 +15,7 @@ enum Screen {
 struct ContentView: View {
 
     @State var currentScreen: Screen = .onboarding
+    @EnvironmentObject var gameSettings: GameSettings
 
     var body: some View {
         

@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct SettingsButton: View {
-    
+
+    let title: String
     let action: () -> ()
     private let shadowSize: CGFloat = Points.isPad ? 5.0 : 2.0
     private let padding: CGFloat = Points.isPad ? 120 : 60
@@ -19,7 +20,7 @@ struct SettingsButton: View {
             self.action()
             Sound.tap.play()
         }) {
-            Text("Settings")
+            Text(title)
                 .font(Points.isPad ? .title : .body)
                 .kerning(2)
                 .fontWeight(.bold)

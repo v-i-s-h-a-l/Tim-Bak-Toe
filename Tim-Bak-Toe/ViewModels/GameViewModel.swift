@@ -14,7 +14,7 @@ let hostId = UUID()
 let peerId = UUID()
 
 class GameViewModel: ObservableObject {
-        
+
     @Published var hostScore: Int = 0
     @Published var peerScore: Int = 0
     

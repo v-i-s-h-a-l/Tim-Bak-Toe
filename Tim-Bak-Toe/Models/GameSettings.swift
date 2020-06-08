@@ -32,10 +32,32 @@ import Foundation
 //    }
 //}
 
-enum GameSettings {
-    static var maxTurnDuration: Double = 5.0
+final class GameSettings: ObservableObject {
+    
+    enum SettingsType: String {
+        case factory, user
+    }
 
-    // not exposed to user
-    static let timerStride: Double = 1.0
+    static var user: GameSettings? = GameSettings(with: .user)
+    static var factory: GameSettings = GameSettings()
+    
+    @Published var soundOn: Bool = true
+    @Published var timerDuration: Double = 5.0
+
+    public let timerStride = 1.0
+    init() {}
+    
+    init(with type: SettingsType) {
+        // default settings that come bundled with app
+        let factorySettings = GameSettings()
+        
+        let savedSoundOn = !UserDefaults.standard.bool(forKey: "soundOff")
+        let savedTimerDuration = UserDefaults.standard.double(forKey: "timerDuration")
+
+        factorySettings.soundOn = savedSoundOn
+        factorySettings.timerDuration = savedTimerDuration == 0 ? factorySettings.timerDuration : timerDuration
+
+        self.soundOn = factorySettings.soundOn
+        self.timerDuration = factorySettings.timerDuration
+    }
 }
-

@@ -73,96 +73,73 @@ class PieceViewModel: ObservableObject, Identifiable {
     
     func subscribeToDragStart(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
         publisher
-            .filter { teamId, _ in
-                teamId == self.teamId
-        }
-        .sink { (_, draggedPieceId) in
-            _ = withAnimation {
-                self.pieceState = self.id == draggedPieceId ? .dragged : .disabled
-            }
-        }
-        .store(in: &cancellables)
+            .filter { teamId, _ in teamId == self.teamId }
+            .sink { (_, draggedPieceId) in
+                _ = withAnimation { self.pieceState = self.id == draggedPieceId ? .dragged : .disabled } }
+            .store(in: &cancellables)
     }
     
     fileprivate func moveToUpdatedOffset() {
         dragAmount = .zero
         dragStartOffset = .zero
-        withAnimation {
-            relativeOffset = currentOffset
-        }
+        withAnimation { relativeOffset = currentOffset }
     }
     
     func subscribeToDragEnd(_ publisher: PassthroughSubject<(UUID, UUID), Never>) {
         publisher
-            .filter { teamId, _ in
-                teamId == self.teamId
-        }
+            .filter { teamId, _ in teamId == self.teamId }
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
             .delay(for: .milliseconds(20), scheduler: RunLoop.current)
-            .sink { _, _ in
-                self.moveToUpdatedOffset()
-        }
-        .store(in: &cancellables)
+            .sink { _, _ in self.moveToUpdatedOffset() }
+            .store(in: &cancellables)
         
         publisher
-            .filter { teamId, _ in
-                teamId == self.teamId
-        }
-        .sink { _ in
-            self.pieceState = .placed
-        }
-        .store(in: &cancellables)
+            .filter { teamId, _ in teamId == self.teamId }
+            .sink { _ in self.pieceState = .placed }
+            .store(in: &cancellables)
     }
     
     func subscribeToNewOccupancy(_ publisher: PassthroughSubject<(UUID, CGPoint, UUID, UUID), Never>) {
         // updates the dragged piece
         publisher
             .filter { (_, _, pieceId, _) in
-                pieceId == self.id
-        }
-        .sink { (_, newCellCenter, _, newCellId) in
-            Sound.place.play()
-            self.occupiedCellID = newCellId
-            self.currentOffset = newCellCenter - self.centerGlobal
-        }
-        .store(in: &cancellables)
+                pieceId == self.id }
+            .sink { (_, newCellCenter, _, newCellId) in
+                Sound.place.play()
+                self.occupiedCellID = newCellId
+                self.currentOffset = newCellCenter - self.centerGlobal }
+            .store(in: &cancellables)
         
         // pauses drag for pieces in the same team
         publisher
             .map { (teamId, _, _, _) in
-                return (teamId == self.teamId) ? PieceViewState.disabled : PieceViewState.placed
-        }
-        .assign(to: \.pieceState, on: self)
-        .store(in: &cancellables)
+                return (teamId == self.teamId) ? PieceViewState.disabled : PieceViewState.placed }
+            .assign(to: \.pieceState, on: self)
+            .store(in: &cancellables)
     }
     
     func subscribeToTimerEmptied(_ publisher: PassthroughSubject<UUID, Never>) {
         // enables the pieces of the team id received
         publisher
             .map { teamId in
-                return (teamId != self.teamId) ? PieceViewState.placed : PieceViewState.disabled
-        }
-        .assign(to: \.pieceState, on: self)
-        .store(in: &cancellables)
+                return (teamId != self.teamId) ? PieceViewState.placed : PieceViewState.disabled }
+            .assign(to: \.pieceState, on: self)
+            .store(in: &cancellables)
         
         // force drag end for any piece that the opponent had been dragging
         publisher
-            .filter { teamId in
-                teamId == self.teamId
-        }
-        .sink { teamID in
-            self.pieceState = .disabled
-            self.moveToUpdatedOffset()
-        }
-        .store(in: &cancellables)
+            .filter { $0 == self.teamId }
+            .sink { teamID in
+                self.pieceState = .disabled
+                self.moveToUpdatedOffset() }
+            .store(in: &cancellables)
     }
     
     func subscribeToRestart(_ publisher: PassthroughSubject<Void, Never>) {
-        publisher.sink { _ in
-            self.reset()
-        }
-        .store(in: &cancellables)
+        publisher
+            .sink { _ in self.reset() }
+            .store(in: &cancellables)
     }
     
     private func reset() {
@@ -182,8 +159,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         publisher
             .delay(for: .milliseconds(50), scheduler: RunLoop.main)
             .sink { teamId in
-                self.pieceState = (teamId == self.teamId) ? .won : .lost
-        }
-        .store(in: &cancellables)
+                self.pieceState = (teamId == self.teamId) ? .won : .lost }
+            .store(in: &cancellables)
     }
 }

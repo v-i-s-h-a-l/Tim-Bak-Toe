@@ -34,5 +34,8 @@ import Foundation
 
 enum GameSettings {
     static var maxTurnDuration: Double = 5.0
+
+    // not exposed to user
+    static let timerStride: Double = 1.0
 }
 

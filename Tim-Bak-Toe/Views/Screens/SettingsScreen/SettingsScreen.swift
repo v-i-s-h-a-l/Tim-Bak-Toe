@@ -29,12 +29,9 @@ struct SettingsScreen: View {
                 
                 Group {
                     Toggle(isOn: $gameSettings.soundOn) {
-                        HStack {
-                            Spacer()
                             Image(uiImage: UIImage(systemName: gameSettings.soundOn ? "speaker.2.fill" : "speaker.slash.fill", withConfiguration: symbolConfiguration)!)
                                 .renderingMode(.template)
                                 .foregroundColor(Color.primary)
-                        }
                         .padding(.trailing)
                     }
                     .padding()

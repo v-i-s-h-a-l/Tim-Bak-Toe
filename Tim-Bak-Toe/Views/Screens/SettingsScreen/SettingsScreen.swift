@@ -34,7 +34,7 @@ struct SettingsScreen: View {
                     }
                     .frame(maxWidth: 200)
 
-                    Stepper(value: $gameSettings.timerDuration, in: 4.0...10.0) {
+                    Stepper(value: $gameSettings.timerDuration, in: 3.0...10.0) {
                         VStack {
                             Image(systemName: "timer")
                             Text("\(Int(gameSettings.timerDuration)) seconds")

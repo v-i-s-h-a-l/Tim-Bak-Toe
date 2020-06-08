@@ -26,6 +26,7 @@ enum Sound: String {
     }
 
     func play() {
+        guard GameSettings.factory.soundOn else { return }
         DispatchQueue.global().async {
             SoundManager.shared.play(self)
         }

@@ -15,7 +15,6 @@ enum Screen {
 struct ContentView: View {
 
     @State var currentScreen: Screen = .onboarding
-    @EnvironmentObject var gameSettings: GameSettings
 
     var body: some View {
         
@@ -31,6 +30,7 @@ struct ContentView: View {
             }
             if currentScreen == .settings {
                 SettingsScreen(currentScreen: $currentScreen)
+                    .environmentObject(GameSettings.user)
             }
         }
         .statusBar(hidden: withAnimation { currentScreen == .game })

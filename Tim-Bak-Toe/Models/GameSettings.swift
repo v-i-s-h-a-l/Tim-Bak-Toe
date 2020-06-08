@@ -34,7 +34,7 @@ import Foundation
 
 final class GameSettings: ObservableObject {
     
-    enum SettingsType: String {
+    private enum SettingsType: String {
         case factory, user
     }
 
@@ -58,11 +58,13 @@ final class GameSettings: ObservableObject {
         let savedTimerDuration = UserDefaults.standard.double(forKey: "timerDuration")
 
         factorySettings.soundOn = savedSoundOn
-        factorySettings.timerDuration = savedTimerDuration == 0 ? factorySettings.timerDuration : timerDuration
+        factorySettings.timerDuration = savedTimerDuration == 0.0 ? factorySettings.timerDuration : savedTimerDuration
 
         self.soundOn = factorySettings.soundOn
         self.timerDuration = factorySettings.timerDuration
 
+        guard type == .user else { return }
+        
         self.$soundOn.sink { newValue in
             UserDefaults.standard.set(!newValue, forKey: "soundOff")
         }

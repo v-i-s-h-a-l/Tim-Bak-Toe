@@ -53,7 +53,7 @@ class TimerViewModel: ObservableObject {
         }
     }
 
-//    // MARK: - Starting a new game -
+    // MARK: - Starting a new game -
 
     func subscribeToGameStart(_ publisher: PassthroughSubject<UUID, Never>) {
         publisher

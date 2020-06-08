@@ -37,6 +37,7 @@ struct ContentView: View {
         .onAppear {
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")
             self.currentScreen = isFirstLaunch ? .onboarding : .home
+            UserDefaults.standard.set(true, forKey: "AlreadyLaunched")
         }
     }
 }

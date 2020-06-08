@@ -26,7 +26,9 @@ enum Sound: String {
     }
 
     func play() {
-        SoundManager.shared.play(self)
+        DispatchQueue.global().async {
+            SoundManager.shared.play(self)
+        }
     }
 }
 

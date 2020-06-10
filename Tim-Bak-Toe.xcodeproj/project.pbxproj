@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */; };
 		DC08A189248A039C00B8CE9D /* XO3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A188248A039C00B8CE9D /* XO3UITests.swift */; };
 		DC08A192248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */; };
 		DC08A193248A17DC00B8CE9D /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08A191248A17DC00B8CE9D /* AccessibilityIdentifier.swift */; };
@@ -31,7 +30,6 @@
 		DC128429247793EF00B1317E /* BoardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC128428247793EF00B1317E /* BoardCellView.swift */; };
 		DC12842E2477A7E300B1317E /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12842D2477A7E300B1317E /* GridStack.swift */; };
 		DC475117247B9B2D009FEE54 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475116247B9B2D009FEE54 /* ScoreView.swift */; };
-		DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC475118247B9C35009FEE54 /* PiecesContainerView.swift */; };
 		DC47511B247BA639009FEE54 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511A247BA639009FEE54 /* BoardView.swift */; };
 		DC47511D247C62B8009FEE54 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47511C247C62B8009FEE54 /* HomeScreen.swift */; };
 		DC7E6FC524888ADC009039F6 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7E6FC424888ADC009039F6 /* SettingsScreen.swift */; };
@@ -63,7 +61,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersContainerView.swift; sourceTree = "<group>"; };
 		DC08A186248A039C00B8CE9D /* XO3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XO3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC08A188248A039C00B8CE9D /* XO3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XO3UITests.swift; sourceTree = "<group>"; };
 		DC08A18A248A039C00B8CE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,7 +87,6 @@
 		DC128428247793EF00B1317E /* BoardCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCellView.swift; sourceTree = "<group>"; };
 		DC12842D2477A7E300B1317E /* GridStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
 		DC475116247B9B2D009FEE54 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
-		DC475118247B9C35009FEE54 /* PiecesContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainerView.swift; sourceTree = "<group>"; };
 		DC47511A247BA639009FEE54 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		DC47511C247C62B8009FEE54 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		DC7E6FC424888ADC009039F6 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
@@ -321,10 +317,8 @@
 			isa = PBXGroup;
 			children = (
 				DC08A196248B1B9A00B8CE9D /* PieceView */,
-				DC475118247B9C35009FEE54 /* PiecesContainerView.swift */,
 				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
 				DC109C94247B00F100EBC286 /* TimerView.swift */,
-				DC08A1802489C71E00B8CE9D /* TimersContainerView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -499,7 +493,6 @@
 				DC1284212477938B00B1317E /* PieceViewModel.swift in Sources */,
 				DCC738BB24885DE800ADED0E /* Animations.swift in Sources */,
 				DC109C9B247B736400EBC286 /* WinnerView.swift in Sources */,
-				DC08A1812489C71E00B8CE9D /* TimersContainerView.swift in Sources */,
 				DC08A198248B1BB700B8CE9D /* PieceViewState.swift in Sources */,
 				DC128425247793C300B1317E /* BoardCellViewModel.swift in Sources */,
 				DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */,
@@ -510,7 +503,6 @@
 				DC7E6FC724888AE9009039F6 /* OnboardingScreen.swift in Sources */,
 				DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */,
 				DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */,
-				DC475119247B9C35009FEE54 /* PiecesContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,10 +15,8 @@ struct BoardView: View {
     
     var body: some View {
         VStack {
-            Spacer()
             GridStack(rows: 3, columns: 3, content: cell)
                 .frame(width: boardSize.width, height: boardSize.height)
-            Spacer()
         }
         .zIndex(ZIndex.board)
     }

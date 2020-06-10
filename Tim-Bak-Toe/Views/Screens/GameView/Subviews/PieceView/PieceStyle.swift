@@ -108,4 +108,11 @@ enum PieceStyle: String, Codable {
             }
         }
     }
+
+    func accessibilityElement(for index: Int) -> ScreenElement {
+        switch self {
+        case .X: return .hostPiece(index)
+        case .O: return .peerPiece(index)
+        }
+    }
 }

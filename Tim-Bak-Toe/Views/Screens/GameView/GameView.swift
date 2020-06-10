@@ -12,6 +12,7 @@ struct GameView: View {
 
     @Binding var currentScreen: Screen
     @EnvironmentObject var viewModel: GameViewModel
+
     private let size: CGSize = UIScreen.main.bounds.size
     
     private var boardSize: CGSize {
@@ -23,15 +24,46 @@ struct GameView: View {
     }
     
     var body: some View {
-        ZStack {
+        let timerHeight = pieceSize.height / 8.0
+        let padding = pieceSize.height / 3.0
+
+        return ZStack {
             Theme.Col.gameBackground
             .edgesIgnoringSafeArea([.all])
 
-            BoardView(boardSize: boardSize)
+            VStack {
+                Spacer()
 
-            TimersContainerView(pieceSize: pieceSize)
-            
-            PiecesContainerView(pieceSize: pieceSize)
+                // Peer pieces
+                PiecesContainer(pieceSize: pieceSize, pieces: viewModel.peerPieces)
+                Spacer()
+
+                // Peer timer
+                Group {
+                    TimerView(viewModel: viewModel.peerTimerViewModel, isRightEdged: true)
+                        .frame(height: pieceSize.height / 8.0)
+                        .padding([.leading, .trailing], padding)
+                    Spacer()
+                }
+
+                // Board
+                Group {
+                    BoardView(boardSize: boardSize)
+                    Spacer()
+                }
+
+                // Host timer
+                Group {
+                    TimerView(viewModel: viewModel.hostTimerViewModel, isRightEdged: false)
+                        .frame(height: timerHeight)
+                        .padding([.leading, .trailing], padding)
+                    Spacer()
+                }
+
+                // Host pieces
+                PiecesContainer(pieceSize: pieceSize, pieces: viewModel.hostPieces)
+                Spacer()
+            }
         }
         // status bar height
         .padding(.top, -20)

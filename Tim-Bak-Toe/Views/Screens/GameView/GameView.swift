@@ -13,9 +13,6 @@ struct GameView: View {
     @Binding var currentScreen: Screen
     @EnvironmentObject var viewModel: GameViewModel
 
-    @State private var hostZIndex: Double = ZIndex.playerPiecePlaced
-    @State private var peerZIndex: Double = ZIndex.playerPiecePlaced
-
     private let size: CGSize = UIScreen.main.bounds.size
     
     private var boardSize: CGSize {
@@ -29,7 +26,6 @@ struct GameView: View {
     var body: some View {
         let timerHeight = pieceSize.height / 8.0
         let padding = pieceSize.height / 3.0
-        let spacingForPieces = pieceSize.height / 5.0
 
         return ZStack {
             Theme.Col.gameBackground
@@ -39,16 +35,8 @@ struct GameView: View {
                 Spacer()
 
                 // Peer pieces
-                Group {
-                    HStack(spacing: spacingForPieces) {
-                        ForEach(0..<viewModel.peerPieces.count) { index in
-                            PieceView(zIndexOfContainer: self.$peerZIndex, viewModel: self.viewModel.peerPieces[index], size: self.pieceSize)
-                                .setAccessibilityIdentifier(element: .peerPiece(index))
-                        }
-                    }
-                    .zIndex(peerZIndex)
-                    Spacer()
-                }
+                PiecesContainer(pieceSize: pieceSize, pieces: viewModel.peerPieces)
+                Spacer()
 
                 // Peer timer
                 Group {
@@ -73,16 +61,8 @@ struct GameView: View {
                 }
 
                 // Host pieces
-                Group {
-                    HStack(spacing: spacingForPieces) {
-                        ForEach(0..<viewModel.hostPieces.count) { index in
-                            PieceView(zIndexOfContainer: self.$hostZIndex, viewModel: self.viewModel.hostPieces[index], size: self.pieceSize)
-                                .setAccessibilityIdentifier(element: .hostPiece(index))
-                        }
-                    }
-                    .zIndex(hostZIndex)
-                    Spacer()
-                }
+                PiecesContainer(pieceSize: pieceSize, pieces: viewModel.hostPieces)
+                Spacer()
             }
         }
         // status bar height

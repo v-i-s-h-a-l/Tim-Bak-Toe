@@ -43,6 +43,7 @@
 		DCF07880248DB167009A856D /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787F248DB167009A856D /* tap.wav */; };
 		DCF07882248DB22F009A856D /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07881248DB22F009A856D /* PlaySound.swift */; };
 		DCF07884248E3EEB009A856D /* SocialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07883248E3EEB009A856D /* SocialButton.swift */; };
+		DCF078DE24906BD8009A856D /* PiecesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF078DD24906BD8009A856D /* PiecesContainer.swift */; };
 		DCF3D7352478F3E80071506A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7342478F3E80071506A /* Theme.swift */; };
 		DCF3D7372478F6A60071506A /* PreviewProviderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */; };
 		DCF3D75924799D130071506A /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3D75824799D130071506A /* CommonExtensions.swift */; };
@@ -100,6 +101,7 @@
 		DCF0787F248DB167009A856D /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		DCF07881248DB22F009A856D /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
 		DCF07883248E3EEB009A856D /* SocialButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialButton.swift; sourceTree = "<group>"; };
+		DCF078DD24906BD8009A856D /* PiecesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainer.swift; sourceTree = "<group>"; };
 		DCF3D7342478F3E80071506A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DCF3D7362478F6A60071506A /* PreviewProviderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProviderHelper.swift; sourceTree = "<group>"; };
 		DCF3D75824799D130071506A /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				DC08A196248B1B9A00B8CE9D /* PieceView */,
 				DC475116247B9B2D009FEE54 /* ScoreView.swift */,
 				DC109C94247B00F100EBC286 /* TimerView.swift */,
+				DCF078DD24906BD8009A856D /* PiecesContainer.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				DC109C97247B066700EBC286 /* Animation+timingCurve.swift in Sources */,
 				DC475117247B9B2D009FEE54 /* ScoreView.swift in Sources */,
 				DC128427247793E000B1317E /* PieceView.swift in Sources */,
+				DCF078DE24906BD8009A856D /* PiecesContainer.swift in Sources */,
 				DCAA2F70248887AE001B69F1 /* GreenButton.swift in Sources */,
 				DC47511B247BA639009FEE54 /* BoardView.swift in Sources */,
 				DC12841F24778FAE00B1317E /* GameView.swift in Sources */,

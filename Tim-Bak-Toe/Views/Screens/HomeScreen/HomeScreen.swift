@@ -23,6 +23,7 @@ struct HomeScreen: View {
             Theme.Col.gameBackground
                 .edgesIgnoringSafeArea(.all)
             BoardView(boardSize: boardSize).environmentObject(GameViewModel())
+
             VStack {
                 Group {
                     HStack {
@@ -63,6 +64,9 @@ struct HomeScreen: View {
                     .padding([.bottom])
             }
         }
+        // status bar height
+        .padding(.top, -20)
+
     }
 }
 

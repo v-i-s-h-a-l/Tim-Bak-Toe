@@ -33,7 +33,7 @@ class XO3UITests: XCTestCase {
 
         app.buttons["Play Now"].tap()
         let boardCell00 = ScreenElement.boardCell(0, 0).findIn(app: app)
-        _ = boardCell00.waitForExistence(timeout: 0.5)
+        _ = boardCell00.waitForExistence(timeout: 10)
 
         for index in 0..<3 {
             let hostPiece = ScreenElement.hostPiece(index).findIn(app: app)

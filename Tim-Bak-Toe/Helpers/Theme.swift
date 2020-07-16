@@ -11,31 +11,22 @@ import SwiftUI
 
 enum Theme {
     enum Col {
-        static let piece = Color(UIColor(named: "piece")!)
+        static let piece = Color("piece")
 
-        static let gameBackground = Color(UIColor(named: "background")!)
-        static let boardCell = Color(UIColor(named: "boardCell")!)
+        static let gameBackground = Color("background")
+        static let boardCell = Color("boardCell")
 
-        static let lightSource = Color(UIColor(named: "lightSource")!)
-        static let shadowCasted = Color(UIColor(named: "shadowCasted")!)
+        static let lightSource = Color("lightSource")
+        static let shadowCasted = Color("shadowCasted")
         
-        static let redStart = Color(UIColor(named: "redStart")!)
-        static let redEnd = Color(UIColor(named: "redEnd")!)
+        static let redStart = Color("redStart")
+        static let redEnd = Color("redEnd")
         
-        static let blueStart = Color(UIColor(named: "blueStart")!)
-        static let blueEnd = Color(UIColor(named: "blueEnd")!)
+        static let blueStart = Color("blueStart")
+        static let blueEnd = Color("blueEnd")
 
-        static let greenStart = Color(UIColor(named: "greenStart")!)
-        static let greenEnd = Color(UIColor(named: "greenEnd")!)
-
-        enum Shadow {
-            enum BoardCell {
-                static let none = Color.clear
-                static let occupied = Color.red
-                static let origin = Color.blue
-                static let welcome = Color.yellow
-            }            
-        }
+        static let greenStart = Color("greenStart")
+        static let greenEnd = Color("greenEnd")
     }
 }
 

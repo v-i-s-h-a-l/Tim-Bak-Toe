@@ -55,7 +55,7 @@ class PieceViewModel: ObservableObject, Identifiable {
             
             dragStartOffset = CGSize(width: drag.startLocation.x - (currentOffset.width + centerGlobal.x), height: drag.startLocation.y - (currentOffset.height + centerGlobal.y))
         }
-        _ = withAnimation(.easeOutQuart) {
+        withAnimation(.easeOutQuart) {
             dragAmount = CGSize(width: drag.translation.width, height: drag.translation.height)
             relativeOffset = dragAmount + currentOffset + dragStartOffset
         }
@@ -82,7 +82,7 @@ class PieceViewModel: ObservableObject, Identifiable {
         publisher
             .filter { teamId, _ in teamId == self.teamId }
             .sink { (_, draggedPieceId) in
-                _ = withAnimation { self.pieceState = self.id == draggedPieceId ? .dragged : .disabled } }
+                withAnimation { self.pieceState = self.id == draggedPieceId ? .dragged : .disabled } }
             .store(in: &cancellables)
     }
     
@@ -97,7 +97,7 @@ class PieceViewModel: ObservableObject, Identifiable {
             .filter { teamId, _ in teamId == self.teamId }
             // waits for drop success calculations (if any)
             // if successful drop is there then currentOffset gets updated accordingly
-            .delay(for: .milliseconds(20), scheduler: RunLoop.current)
+            .delay(for: .milliseconds(20), scheduler: RunLoop.main)
             .sink { _, _ in self.moveToUpdatedOffset() }
             .store(in: &cancellables)
         

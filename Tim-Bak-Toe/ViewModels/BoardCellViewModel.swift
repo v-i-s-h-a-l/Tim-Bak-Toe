@@ -32,7 +32,6 @@ class BoardCellViewModel: ObservableObject, Identifiable {
         self.frameGlobal = proxy.frame(in: .global)
     }
 
-
     func subscribeToDragEnded(_ publisher: PassthroughSubject<(UUID, CGPoint, UUID, UUID?), Never>) {
         // calculates only successful drops
         // rest will be handled in

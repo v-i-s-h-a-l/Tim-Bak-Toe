@@ -29,8 +29,8 @@ enum PieceViewState {
         }
     }
     
-    var pieceColor: LinearGradient {
-        LinearGradient(Theme.Col.piece, Theme.Col.piece)
+    var pieceColor: Color {
+        Theme.Col.piece
     }
     
     var pieceStrokeColor: LinearGradient {

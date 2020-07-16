@@ -66,7 +66,6 @@ struct GameView: View {
             }
         }
         // status bar height
-        .padding(.top, -20)
         .overlay(
             Group {
                 EmptyView()

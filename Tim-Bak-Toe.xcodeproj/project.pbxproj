@@ -37,10 +37,6 @@
 		DCAA2F70248887AE001B69F1 /* GreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F6F248887AE001B69F1 /* GreenButton.swift */; };
 		DCAA2F772488890E001B69F1 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA2F762488890E001B69F1 /* SettingsButton.swift */; };
 		DCC738BB24885DE800ADED0E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC738BA24885DE800ADED0E /* Animations.swift */; };
-		DCF07878248DAF02009A856D /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF07875248DAF02009A856D /* win.wav */; };
-		DCF0787A248DAF02009A856D /* place.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF07877248DAF02009A856D /* place.wav */; };
-		DCF0787E248DB051009A856D /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787D248DB051009A856D /* pop.wav */; };
-		DCF07880248DB167009A856D /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCF0787F248DB167009A856D /* tap.wav */; };
 		DCF07882248DB22F009A856D /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07881248DB22F009A856D /* PlaySound.swift */; };
 		DCF07884248E3EEB009A856D /* SocialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF07883248E3EEB009A856D /* SocialButton.swift */; };
 		DCF078DE24906BD8009A856D /* PiecesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF078DD24906BD8009A856D /* PiecesContainer.swift */; };
@@ -95,10 +91,6 @@
 		DCAA2F6F248887AE001B69F1 /* GreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenButton.swift; sourceTree = "<group>"; };
 		DCAA2F762488890E001B69F1 /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		DCC738BA24885DE800ADED0E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
-		DCF07875248DAF02009A856D /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win.wav; sourceTree = "<group>"; };
-		DCF07877248DAF02009A856D /* place.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = place.wav; sourceTree = "<group>"; };
-		DCF0787D248DB051009A856D /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
-		DCF0787F248DB167009A856D /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		DCF07881248DB22F009A856D /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
 		DCF07883248E3EEB009A856D /* SocialButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialButton.swift; sourceTree = "<group>"; };
 		DCF078DD24906BD8009A856D /* PiecesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecesContainer.swift; sourceTree = "<group>"; };
@@ -329,10 +321,6 @@
 		DCF07874248DAEE3009A856D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				DCF0787F248DB167009A856D /* tap.wav */,
-				DCF0787D248DB051009A856D /* pop.wav */,
-				DCF07877248DAF02009A856D /* place.wav */,
-				DCF07875248DAF02009A856D /* win.wav */,
 				DCF07881248DB22F009A856D /* PlaySound.swift */,
 			);
 			path = Sounds;
@@ -428,11 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1283F92477741000B1317E /* LaunchScreen.storyboard in Resources */,
-				DCF07878248DAF02009A856D /* win.wav in Resources */,
-				DCF0787A248DAF02009A856D /* place.wav in Resources */,
 				DC1283F62477741000B1317E /* Preview Assets.xcassets in Resources */,
-				DCF0787E248DB051009A856D /* pop.wav in Resources */,
-				DCF07880248DB167009A856D /* tap.wav in Resources */,
 				DC1283F32477741000B1317E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

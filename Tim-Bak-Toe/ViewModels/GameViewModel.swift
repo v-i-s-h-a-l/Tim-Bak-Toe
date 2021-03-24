@@ -18,7 +18,7 @@ class GameViewModel: ObservableObject {
     @Published var showWinnerView: Bool = false
 
     private var turnsWasted: Int = 0
-    private var maxTurnsAllowed = 6
+    private var maxTurnsAllowed = 4
 
     private var winnerId: UUID? {
         didSet {
@@ -104,12 +104,9 @@ class GameViewModel: ObservableObject {
         pieces.forEach { pieceModel in
             pieceModel.draggedEndedPublisher
                 .sink { teamId, location, pieceID, cellId in
-                    self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID)) }
-                .store(in: &cancellables)
-            
-            pieceModel.draggedEndedPublisher
-                .sink { teamId, location, pieceID, cellId in
-                    self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId)) }
+                    self.pieceDragEndToFellowPiecesPublisher.send((teamId, pieceID))
+                    self.pieceDragEndToCellsPublisher.send((teamId, location, pieceID, cellId))
+                }
                 .store(in: &cancellables)
         }
     }
@@ -153,23 +150,12 @@ class GameViewModel: ObservableObject {
         generatedCellViewModels.forEach { cellViewModel in
             cellViewModel.newOccupancyPublisher
                 .sink { (teamId, cellCenter, pieceId, cellId, previousCellId) in
-                    self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId)) }
-                .store(in: &cancellables)
-            
-            cellViewModel.newOccupancyPublisher
-                .sink { (teamId, _, _, _, _) in
-                    self.newCellOccupiedByPiecePublisherForShelf.send((teamId)) }
-                .store(in: &cancellables)
-            
-            cellViewModel.newOccupancyPublisher
-                .sink { (teamId, _, pieceId, _, previousCellId) in
+                    self.newCellOccupiedByPiecePublisher.send((teamId, cellCenter, pieceId, cellId))
+                    self.newCellOccupiedByPiecePublisherForShelf.send((teamId))
                     self.newCellOccupiedPublisherForOriginCell.send((pieceId, previousCellId))
-                    self.checkWinner(teamId: teamId) }
-                .store(in: &cancellables)
-
-            cellViewModel.newOccupancyPublisher
-                .sink { (_, _, _, _, previousCellId) in
-                    self.turnsWasted = 0 }
+                    self.checkWinner(teamId: teamId)
+                    self.turnsWasted = 0
+                }
                 .store(in: &cancellables)
         }
     }

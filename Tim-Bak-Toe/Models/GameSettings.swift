@@ -8,7 +8,7 @@
 
 import Combine
 import Foundation
-import UIKit
+import SwiftUI
 
 //enum GameDifficulty: Int, Codable {
 //    
@@ -44,8 +44,9 @@ final class GameSettings: ObservableObject {
     
     @Published var soundOn: Bool = true
     @Published var timerDuration: Double = 5.0
-    @Published var preferredColorScheme: Int = 0
-
+    @Published var preferredColorSchemeSetting: Int = 0
+    @Published var preferredColorScheme: ColorScheme?
+    
     public let timerStride = 1.0
 
     private var cancellables = Set<AnyCancellable>()
@@ -58,17 +59,14 @@ final class GameSettings: ObservableObject {
         // taking soundOff because by default user defaults will return false
         let savedSoundOn = !UserDefaults.standard.bool(forKey: "soundOff")
         let savedTimerDuration = UserDefaults.standard.double(forKey: "timerDuration")
-        let savedPreferredColorScheme = UserDefaults.standard.integer(forKey: "colorScheme")
+        let currentPreferredColorSchemeSetting = UserDefaults.standard.integer(forKey: "colorScheme")
 
         factorySettings.soundOn = savedSoundOn
         factorySettings.timerDuration = savedTimerDuration == 0.0 ? factorySettings.timerDuration : savedTimerDuration
 
-        let currentDevicePreference = UIViewController().traitCollection.userInterfaceStyle.rawValue
-
         self.soundOn = factorySettings.soundOn
         self.timerDuration = factorySettings.timerDuration
-        self.preferredColorScheme = savedPreferredColorScheme == 0 ? currentDevicePreference : savedPreferredColorScheme
-
+        
         guard type == .user else { return }
         
         self.$soundOn.sink { newValue in
@@ -80,10 +78,18 @@ final class GameSettings: ObservableObject {
             UserDefaults.standard.set(newValue, forKey: "timerDuration")
         }
         .store(in: &cancellables)
-
-        self.$preferredColorScheme.sink { newValue in
+        
+        self.$preferredColorSchemeSetting.sink { newValue in
             UserDefaults.standard.set(newValue, forKey: "colorScheme")
+            if newValue == 0 {
+                // system
+                self.preferredColorScheme = nil
+            } else {
+                self.preferredColorScheme = newValue == 1 ? .light : .dark
+            }
         }
         .store(in: &cancellables)
+        
+        preferredColorSchemeSetting = currentPreferredColorSchemeSetting
     }
 }

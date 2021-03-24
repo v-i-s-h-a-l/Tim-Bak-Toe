@@ -12,7 +12,8 @@ struct SettingsScreen: View {
     
     @Binding var currentScreen: Screen
     @EnvironmentObject var gameSettings: GameSettings
-    
+    @Environment(\.colorScheme) var colorScheme
+
     private let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: Points.isPad ? 32 : 20, weight: .heavy)
     let random = [PieceStyle.X, PieceStyle.O].randomElement()!
 
@@ -32,7 +33,7 @@ struct SettingsScreen: View {
                     Spacer()
                 }
 
-                Picker(selection: $gameSettings.preferredColorScheme, label: Text("Appearance")) {
+                Picker(selection: $gameSettings.preferredColorSchemeSetting, label: Text("Appearance")) {
                     Text("System").tag(0)
                     Text("Light").tag(1)
                     Text("Dark").tag(2)
@@ -72,7 +73,7 @@ struct SettingsScreen: View {
                 }
             }
         }
-        .colorScheme(gameSettings.preferredColorScheme == 1 ? .light : .dark)
+        .colorScheme(gameSettings.preferredColorScheme ?? colorScheme)
     }
 }
 

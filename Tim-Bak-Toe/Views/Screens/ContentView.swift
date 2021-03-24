@@ -14,6 +14,7 @@ enum Screen {
 
 struct ContentView: View {
 
+    @Environment(\.colorScheme) var colorScheme
     @State var currentScreen: Screen = .onboarding
 
     var body: some View {
@@ -32,7 +33,7 @@ struct ContentView: View {
                     .environmentObject(GameSettings.user)
             }
         }
-        .colorScheme(GameSettings.user.preferredColorScheme == 1 ? .light : .dark)
+        .colorScheme(GameSettings.user.preferredColorScheme ?? colorScheme)
         .statusBar(hidden: withAnimation { currentScreen == .game })
         .onAppear {
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")

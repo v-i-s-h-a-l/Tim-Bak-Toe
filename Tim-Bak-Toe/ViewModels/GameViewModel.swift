@@ -18,7 +18,7 @@ class GameViewModel: ObservableObject {
     @Published var showWinnerView: Bool = false
 
     private var turnsWasted: Int = 0
-    private var maxTurnsAllowed = 6
+    private var maxTurnsAllowed = 4
 
     private var winnerId: UUID? {
         didSet {

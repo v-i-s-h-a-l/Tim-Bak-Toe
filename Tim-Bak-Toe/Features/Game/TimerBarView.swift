@@ -11,21 +11,10 @@ struct TimerBarView: View {
         let cornerRadius = barSize.height / 2
 
         ZStack {
-            Rectangle()
-                .fill(Theme.Col.boardCell)
-                .clipShape(.rect(cornerRadius: cornerRadius))
+            Capsule()
+                .fill(.clear)
+                .glassEffect(.regular, in: .capsule)
                 .frame(width: barSize.width)
-                .overlay(
-                    Rectangle()
-                        .stroke(
-                            LinearGradient(
-                                Theme.Col.shadowCasted, Theme.Col.lightSource,
-                                startPoint: .top, endPoint: .bottom
-                            ),
-                            lineWidth: 2
-                        )
-                        .clipShape(.rect(cornerRadius: cornerRadius))
-                )
 
             HStack {
                 if isRightEdged { Spacer(minLength: 0) }

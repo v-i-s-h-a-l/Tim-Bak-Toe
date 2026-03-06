@@ -1,8 +1,11 @@
 import SwiftUI
+import UIKit
 
 extension View {
     func enableSwipeBack() -> some View {
-        background(SwipeBackHelper())
+        background {
+            SwipeBackHelper()
+        }
     }
 }
 

@@ -16,8 +16,6 @@ struct PieceView: View {
         let viewState = state?.viewState ?? .disabled
         let relativeOffset = state?.relativeOffset ?? .zero
         let scale = state?.scale ?? 1.0
-        let zIdx = state?.zIndex ?? LayoutConstants.ZIndex.playerPiecePlaced
-
         ZStack {
             viewState.bottomShadowLayer(pieceSize: size)
             viewState.upperFillLayer(pieceSize: size)
@@ -26,7 +24,6 @@ struct PieceView: View {
         .frame(width: size.width, height: size.height)
         .scaleEffect(hasAppeared ? scale : 0.01)
         .offset(relativeOffset)
-        .zIndex(zIdx)
         .allowsHitTesting(viewState.allowsHitTesting)
         .onGeometryChange(for: CGPoint.self) { proxy in
             proxy.frame(in: .global).center

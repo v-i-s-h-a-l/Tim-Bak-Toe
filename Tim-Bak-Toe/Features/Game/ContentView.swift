@@ -19,23 +19,41 @@ struct ContentView: View {
             switch currentScreen {
             case .onboarding:
                 OnboardingScreen {
-                    startGame(mode: .localMultiplayer)
+                    withAnimation(.spring(duration: 0.5, bounce: 0.2)) {
+                        startGame(mode: .localMultiplayer)
+                    }
                 }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
             case .home:
                 HomeScreen(
-                    onPlay: { mode in startGame(mode: mode) },
-                    onSettings: { currentScreen = .settings }
+                    onPlay: { mode in
+                        withAnimation(.spring(duration: 0.5, bounce: 0.2)) {
+                            startGame(mode: mode)
+                        }
+                    },
+                    onSettings: {
+                        withAnimation(.spring(duration: 0.4, bounce: 0.2)) {
+                            currentScreen = .settings
+                        }
+                    }
                 )
+                .transition(.move(edge: .leading).combined(with: .opacity))
             case .settings:
                 SettingsScreen(settingsViewModel: settingsViewModel) {
-                    currentScreen = .home
+                    withAnimation(.spring(duration: 0.4, bounce: 0.2)) {
+                        currentScreen = .home
+                    }
                 }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
             case .game:
                 if let vm = gameViewModel {
                     GameView(viewModel: vm, onHome: {
-                        gameViewModel = nil
-                        currentScreen = .home
+                        withAnimation(.spring(duration: 0.4, bounce: 0.2)) {
+                            gameViewModel = nil
+                            currentScreen = .home
+                        }
                     })
+                    .transition(.scale(scale: 0.9).combined(with: .opacity))
                 }
             }
         }

@@ -5,6 +5,8 @@ struct HomeScreen: View {
     let onSettings: () -> Void
 
     @State private var gameMode: GameMode = .localMultiplayer
+    @State private var logoAppeared = false
+    @State private var contentAppeared = false
 
     var body: some View {
         ZStack {
@@ -18,6 +20,8 @@ struct HomeScreen: View {
                             .renderingMode(.original)
                             .padding(.top, 40)
                             .padding(.bottom, 20)
+                            .scaleEffect(logoAppeared ? 1 : 0.3)
+                            .opacity(logoAppeared ? 1 : 0)
                         Spacer()
                     }
                     HStack {
@@ -28,6 +32,9 @@ struct HomeScreen: View {
                             .foregroundStyle(.primary)
                         Spacer()
                     }
+                    .offset(y: contentAppeared ? 0 : 20)
+                    .opacity(contentAppeared ? 1 : 0)
+
                     HStack {
                         Text("Grab a friend to play")
                             .font(LayoutConstants.isPad ? .title : .body)
@@ -36,6 +43,8 @@ struct HomeScreen: View {
                             .foregroundStyle(.secondary)
                         Spacer()
                     }
+                    .offset(y: contentAppeared ? 0 : 20)
+                    .opacity(contentAppeared ? 1 : 0)
                 }
                 .padding(.leading, LayoutConstants.isPad ? 160 : 40)
 
@@ -43,18 +52,35 @@ struct HomeScreen: View {
 
                 GameModePickerView(selectedMode: $gameMode)
                     .padding()
+                    .glassEffect(.regular, in: .rect(cornerRadius: 20))
+                    .padding(.horizontal, 24)
+                    .scaleEffect(contentAppeared ? 1 : 0.9)
+                    .opacity(contentAppeared ? 1 : 0)
 
                 Spacer()
 
-                GreenButton(title: "Play Now") {
-                    onPlay(gameMode)
-                }
-                .padding(.top)
+                GlassEffectContainer {
+                    VStack(spacing: 8) {
+                        GreenButton(title: "Play Now") {
+                            onPlay(gameMode)
+                        }
 
-                NeuomorphicButton(title: "Settings") {
-                    onSettings()
+                        NeuomorphicButton(title: "Settings") {
+                            onSettings()
+                        }
+                    }
                 }
+                .offset(y: contentAppeared ? 0 : 40)
+                .opacity(contentAppeared ? 1 : 0)
                 .padding(.bottom)
+            }
+        }
+        .onAppear {
+            withAnimation(.spring(duration: 0.7, bounce: 0.5)) {
+                logoAppeared = true
+            }
+            withAnimation(.spring(duration: 0.6, bounce: 0.3).delay(0.2)) {
+                contentAppeared = true
             }
         }
     }

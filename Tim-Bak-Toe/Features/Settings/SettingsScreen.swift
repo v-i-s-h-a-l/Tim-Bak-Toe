@@ -5,6 +5,7 @@ struct SettingsScreen: View {
     let onBack: () -> Void
 
     @Environment(\.colorScheme) var colorScheme
+    @State private var appeared = false
 
     var body: some View {
         ZStack {
@@ -14,51 +15,67 @@ struct SettingsScreen: View {
             VStack {
                 Group {
                     Spacer()
-                    VStack {
-                        SocialButton(contributor: .akb)
-                            .padding()
-                        SocialButton(contributor: .vishal)
+                    GlassEffectContainer {
+                        VStack(spacing: 8) {
+                            SocialButton(contributor: .akb)
+                            SocialButton(contributor: .vishal)
+                        }
                     }
                     Spacer()
                 }
+                .offset(y: appeared ? 0 : -20)
+                .opacity(appeared ? 1 : 0)
 
-                Picker(selection: $settingsViewModel.colorSchemeSetting, label: Text("Appearance")) {
-                    Text("System").tag(0)
-                    Text("Light").tag(1)
-                    Text("Dark").tag(2)
-                }
-                .pickerStyle(.segmented)
-                .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
-                .padding()
+                VStack(spacing: 20) {
+                    Picker(selection: $settingsViewModel.colorSchemeSetting, label: Text("Appearance")) {
+                        Text("System").tag(0)
+                        Text("Light").tag(1)
+                        Text("Dark").tag(2)
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
 
-                Group {
-                    Toggle(isOn: $settingsViewModel.soundOn) {
+                    HStack {
                         Image(systemName: settingsViewModel.soundOn ? "speaker.2.fill" : "speaker.slash.fill")
                             .font(LayoutConstants.isPad ? .title : .body)
                             .foregroundStyle(.primary)
-                            .padding(.trailing)
+                            .contentTransition(.symbolEffect(.replace))
+                        Spacer()
+                        Toggle("", isOn: $settingsViewModel.soundOn)
+                            .labelsHidden()
                     }
-                    .padding()
+                    .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
 
-                    Stepper(value: $settingsViewModel.timerDuration, in: 3.0...10.0) {
-                        VStack {
-                            Text("\(Int(settingsViewModel.timerDuration)) seconds")
-                                .font(LayoutConstants.isPad ? .title : .body)
-                        }
-                        .padding(.trailing)
+                    HStack {
+                        Text("\(Int(settingsViewModel.timerDuration)) seconds")
+                            .font(LayoutConstants.isPad ? .title : .body)
+                            .contentTransition(.numericText())
+                        Spacer()
+                        Stepper("", value: $settingsViewModel.timerDuration, in: 3.0...10.0)
+                            .labelsHidden()
                     }
-                    .padding()
+                    .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
                 }
-                .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
-                .padding()
+                .padding(24)
+                .glassEffect(.regular, in: .rect(cornerRadius: 20))
+                .padding(.horizontal, 24)
+                .scaleEffect(appeared ? 1 : 0.95)
+                .opacity(appeared ? 1 : 0)
 
                 Spacer()
 
                 NeuomorphicButton(title: "Back") {
                     onBack()
                 }
+                .offset(y: appeared ? 0 : 20)
+                .opacity(appeared ? 1 : 0)
             }
         }
         .preferredColorScheme(settingsViewModel.preferredColorScheme)
+        .onAppear {
+            withAnimation(.spring(duration: 0.5, bounce: 0.3)) {
+                appeared = true
+            }
+        }
     }
 }

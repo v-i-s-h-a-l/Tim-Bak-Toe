@@ -5,13 +5,31 @@ struct HardAI: AIStrategy {
         let moves = engine.validMoves(for: player)
         guard !moves.isEmpty else { return nil }
 
-        var bestScore = Int.min
-        var bestMove = moves[0]
+        // Force-place all pieces before considering relocations,
+        // unless a relocation wins immediately
+        let placements = moves.filter { $0.from == nil }
+        let candidates: [Move]
+        if placements.isEmpty {
+            candidates = moves
+        } else {
+            for move in moves {
+                var testEngine = engine
+                if testEngine.executeMove(move), case .won = testEngine.state {
+                    return move
+                }
+            }
+            candidates = placements
+        }
 
-        for move in moves {
+        let sorted = candidates.sorted { ($0.from == nil ? 0 : 1) < ($1.from == nil ? 0 : 1) }
+
+        var bestScore = Int.min
+        var bestMove = sorted[0]
+
+        for move in sorted {
             var testEngine = engine
             guard testEngine.executeMove(move) else { continue }
-            let score = minimax(engine: testEngine, depth: 8, isMaximizing: false, aiPlayer: player, alpha: Int.min, beta: Int.max)
+            let score = minimax(engine: testEngine, depth: 4, isMaximizing: false, aiPlayer: player, alpha: Int.min, beta: Int.max)
             if score > bestScore {
                 bestScore = score
                 bestMove = move
@@ -34,6 +52,7 @@ struct HardAI: AIStrategy {
 
         let currentPlayer = isMaximizing ? aiPlayer : aiPlayer.opponent
         let moves = engine.validMoves(for: currentPlayer)
+            .sorted { ($0.from == nil ? 0 : 1) < ($1.from == nil ? 0 : 1) }
 
         if moves.isEmpty {
             return 0
@@ -69,8 +88,14 @@ struct HardAI: AIStrategy {
 
     private func evaluate(engine: GameEngine, aiPlayer: Player) -> Int {
         var score = 0
-        let aiPositions = engine.board.positions(for: engine.pieces(for: aiPlayer).map(\.id))
-        let opponentPositions = engine.board.positions(for: engine.pieces(for: aiPlayer.opponent).map(\.id))
+        let aiPieces = engine.pieces(for: aiPlayer)
+        let opponentPieces = engine.pieces(for: aiPlayer.opponent)
+        let aiPositions = Set(engine.board.positions(for: aiPieces.map(\.id)))
+        let opponentPositions = Set(engine.board.positions(for: opponentPieces.map(\.id)))
+
+        // Bonus for having more pieces on the board
+        score += aiPositions.count * 3
+        score -= opponentPositions.count * 3
 
         for line in WinChecker.winningLines {
             let aiCount = line.filter { aiPositions.contains($0) }.count

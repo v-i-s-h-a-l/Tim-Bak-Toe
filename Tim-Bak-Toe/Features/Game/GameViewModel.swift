@@ -122,10 +122,6 @@ final class GameViewModel {
 
     // MARK: - Drag and Drop
 
-    func pieceAppeared(_ pieceId: UUID, proxy: GeometryProxy) {
-        pieceStates[pieceId]?.centerGlobal = proxy.frame(in: .global).center
-    }
-
     func cellAppeared(at position: BoardPosition, frame: CGRect) {
         cellFrames[position] = frame
     }

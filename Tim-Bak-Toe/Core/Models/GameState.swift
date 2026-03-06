@@ -19,4 +19,11 @@ enum GameState: Equatable, Sendable {
         default: return nil
         }
     }
+
+    var winner: Player? {
+        switch self {
+        case .won(let player): return player
+        default: return nil
+        }
+    }
 }

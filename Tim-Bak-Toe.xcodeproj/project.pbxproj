@@ -50,6 +50,7 @@
 		AA000041AAAA004100000041 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000041BBBB004100000041 /* CGExtensions.swift */; };
 		AA000042AAAA004200000042 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */; };
 		DC1283F32477741000B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F22477741000B1317E /* Assets.xcassets */; };
+		DC96D7EB2F5B861000847D50 /* EnableSwipeBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,7 @@
 		BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		DC1283E92477740900B1317E /* TimBakToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimBakToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1283F22477741000B1317E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableSwipeBack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,35 +112,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DC1283E02477740900B1317E = {
-			isa = PBXGroup;
-			children = (
-				DC1283EB2477740900B1317E /* Tim-Bak-Toe */,
-				DC1283EA2477740900B1317E /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		DC1283EA2477740900B1317E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DC1283E92477740900B1317E /* TimBakToe.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		DC1283EB2477740900B1317E /* Tim-Bak-Toe */ = {
-			isa = PBXGroup;
-			children = (
-				BB000001BBBB000100000001 /* TimBakToeApp.swift */,
-				DC1283F22477741000B1317E /* Assets.xcassets */,
-				CC000001CCCC000100000001 /* Core */,
-				CC000010CCCC001000000010 /* Features */,
-				CC000020CCCC002000000020 /* DesignSystem */,
-				CC000030CCCC003000000030 /* Utilities */,
-			);
-			path = "Tim-Bak-Toe";
-			sourceTree = "<group>";
-		};
 		CC000001CCCC000100000001 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,8 +265,38 @@
 				BB000040BBBB004000000040 /* Animation+TimingCurves.swift */,
 				BB000041BBBB004100000041 /* CGExtensions.swift */,
 				BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */,
+				DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DC1283E02477740900B1317E = {
+			isa = PBXGroup;
+			children = (
+				DC1283EB2477740900B1317E /* Tim-Bak-Toe */,
+				DC1283EA2477740900B1317E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DC1283EA2477740900B1317E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC1283E92477740900B1317E /* TimBakToe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC1283EB2477740900B1317E /* Tim-Bak-Toe */ = {
+			isa = PBXGroup;
+			children = (
+				BB000001BBBB000100000001 /* TimBakToeApp.swift */,
+				DC1283F22477741000B1317E /* Assets.xcassets */,
+				CC000001CCCC000100000001 /* Core */,
+				CC000010CCCC001000000010 /* Features */,
+				CC000020CCCC002000000020 /* DesignSystem */,
+				CC000030CCCC003000000030 /* Utilities */,
+			);
+			path = "Tim-Bak-Toe";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,6 +382,7 @@
 				AA000012AAAA001200000012 /* EasyAI.swift in Sources */,
 				AA000013AAAA001300000013 /* MediumAI.swift in Sources */,
 				AA000014AAAA001400000014 /* HardAI.swift in Sources */,
+				DC96D7EB2F5B861000847D50 /* EnableSwipeBack.swift in Sources */,
 				AA000015AAAA001500000015 /* TurnTimer.swift in Sources */,
 				AA000016AAAA001600000016 /* GameViewModel.swift in Sources */,
 				AA000017AAAA001700000017 /* PieceUIState.swift in Sources */,
@@ -541,7 +545,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,7 +575,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

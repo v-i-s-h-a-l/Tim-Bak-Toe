@@ -173,9 +173,8 @@ final class GameViewModel {
 
         if !placed {
             snapPieceBack(pieceId)
+            enablePiecesForCurrentTurn()
         }
-
-        enablePiecesForCurrentTurn()
     }
 
     private func executeVisualMove(pieceId: UUID, to position: BoardPosition, cellCenter: CGPoint) {
@@ -301,7 +300,7 @@ final class GameViewModel {
         aiTask = Task { @MainActor [weak self] in
             guard let self else { return }
 
-            try? await Task.sleep(for: .milliseconds(700))
+            try? await Task.sleep(for: .milliseconds(self.aiThinkingDelay()))
             guard !Task.isCancelled else { return }
 
             guard let move = await ai.selectMove(engine: self.engine, player: .o) else { return }
@@ -310,6 +309,22 @@ final class GameViewModel {
             guard let cellFrame = self.cellFrames[move.to] else { return }
             self.executeAIMove(move, cellCenter: cellFrame.center)
         }
+    }
+
+    private func aiThinkingDelay() -> Int {
+        let duration = UserDefaults.standard.object(forKey: "timerDuration") as? Double ?? 5.0
+        let durationMs = Int(duration * 1000)
+
+        let (fraction, jitter): (Double, Int) = switch gameMode {
+        case .vsAI(.hard): (0.20, 120)
+        case .vsAI(.medium): (0.5, 250)
+        case .vsAI(.easy): (0.66, 300)
+        default: (0.5, 200)
+        }
+
+        let base = Int(Double(durationMs) * fraction)
+        let randomJitter = Int.random(in: -jitter...jitter)
+        return max(400, base + randomJitter)
     }
 
     private func executeAIMove(_ move: Move, cellCenter: CGPoint) {

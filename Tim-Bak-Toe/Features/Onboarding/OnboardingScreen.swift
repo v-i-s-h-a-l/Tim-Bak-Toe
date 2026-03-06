@@ -3,6 +3,8 @@ import SwiftUI
 struct OnboardingScreen: View {
     let onPlay: () -> Void
 
+    @State private var appeared = false
+
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
@@ -16,12 +18,15 @@ struct OnboardingScreen: View {
                         Spacer()
                     }
                     .padding(40)
+                    .scaleEffect(appeared ? 1 : 0.3)
+                    .opacity(appeared ? 1 : 0)
 
                     Spacer()
 
                     Image(systemName: "person.2")
                         .font(.system(size: LayoutConstants.isPad ? 150 : 100, weight: LayoutConstants.isPad ? .semibold : .medium))
                         .foregroundStyle(.gray)
+                        .symbolEffect(.bounce, value: appeared)
 
                     Spacer()
 
@@ -30,6 +35,8 @@ struct OnboardingScreen: View {
                         .fontWeight(.bold)
                         .kerning(2)
                         .foregroundStyle(.primary)
+                        .offset(y: appeared ? 0 : 20)
+                        .opacity(appeared ? 1 : 0)
 
                     Spacer()
                 }
@@ -41,6 +48,12 @@ struct OnboardingScreen: View {
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 20)
+                        .glassEffect(.regular, in: .rect(cornerRadius: 20))
+                        .padding(.horizontal, 24)
+                        .offset(y: appeared ? 0 : 30)
+                        .opacity(appeared ? 1 : 0)
 
                     Spacer()
                     Spacer()
@@ -48,10 +61,17 @@ struct OnboardingScreen: View {
                     GreenButton(title: "Play Now") {
                         onPlay()
                     }
+                    .scaleEffect(appeared ? 1 : 0.8)
+                    .opacity(appeared ? 1 : 0)
 
                     Spacer()
                     Spacer()
                 }
+            }
+        }
+        .onAppear {
+            withAnimation(.spring(duration: 0.8, bounce: 0.4).delay(0.1)) {
+                appeared = true
             }
         }
     }

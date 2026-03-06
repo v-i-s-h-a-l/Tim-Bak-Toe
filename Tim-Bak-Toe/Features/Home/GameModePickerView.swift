@@ -22,8 +22,10 @@ struct GameModePickerView: View {
                 }
                 .pickerStyle(.segmented)
                 .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
+                .transition(.scale.combined(with: .opacity))
             }
         }
+        .animation(.spring(duration: 0.4, bounce: 0.3), value: isVsAI)
         .onChange(of: isVsAI) { _, newValue in
             selectedMode = newValue ? .vsAI(difficulty) : .localMultiplayer
         }

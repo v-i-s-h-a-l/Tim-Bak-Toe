@@ -4,6 +4,8 @@ struct GameView: View {
     @Bindable var viewModel: GameViewModel
     let onHome: () -> Void
 
+    @State private var boardAppeared = false
+
     var body: some View {
         GeometryReader { geometry in
             let boardSize = LayoutConstants.boardSize(for: geometry.size.width)
@@ -23,6 +25,7 @@ struct GameView: View {
                         pieces: viewModel.oPieceStates(),
                         viewModel: viewModel
                     )
+                    .transition(.move(edge: .top).combined(with: .opacity))
 
                     Spacer()
 
@@ -33,6 +36,8 @@ struct GameView: View {
                     Spacer()
 
                     BoardView(boardSize: boardSize, viewModel: viewModel)
+                        .scaleEffect(boardAppeared ? 1 : 0.8)
+                        .opacity(boardAppeared ? 1 : 0)
 
                     Spacer()
 
@@ -47,6 +52,7 @@ struct GameView: View {
                         pieces: viewModel.xPieceStates(),
                         viewModel: viewModel
                     )
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
 
                     Spacer()
                 }
@@ -54,6 +60,7 @@ struct GameView: View {
             .overlay {
                 if viewModel.showWinnerView {
                     WinnerOverlayView(
+                        winner: viewModel.engine.state.winner,
                         onRestart: { viewModel.restart() },
                         onHome: onHome
                     )
@@ -62,6 +69,9 @@ struct GameView: View {
         }
         .onAppear {
             viewModel.startGame(mode: viewModel.gameMode)
+            withAnimation(.spring(duration: 0.6, bounce: 0.3)) {
+                boardAppeared = true
+            }
         }
     }
 }

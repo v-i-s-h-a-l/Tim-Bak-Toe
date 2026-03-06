@@ -6,6 +6,8 @@ struct PieceView: View {
     let size: CGSize
     @Bindable var viewModel: GameViewModel
 
+    @State private var hasAppeared = false
+
     private var state: PieceUIState? {
         viewModel.pieceStates[pieceId]
     }
@@ -22,16 +24,17 @@ struct PieceView: View {
             style.overlay(forSize: size)
         }
         .frame(width: size.width, height: size.height)
-        .scaleEffect(scale)
+        .scaleEffect(hasAppeared ? scale : 0.01)
         .offset(relativeOffset)
         .zIndex(zIdx)
         .allowsHitTesting(viewState.allowsHitTesting)
-        .overlay(GeometryReader { proxy in
-            Color.clear
-                .onAppear {
-                    viewModel.pieceAppeared(pieceId, proxy: proxy)
-                }
-        })
+        .onGeometryChange(for: CGPoint.self) { proxy in
+            proxy.frame(in: .global).center
+        } action: { center in
+            if state?.occupiedCellId == nil && state?.viewState != .dragged {
+                viewModel.pieceStates[pieceId]?.centerGlobal = center
+            }
+        }
         .gesture(
             DragGesture(coordinateSpace: .global)
                 .onChanged { drag in
@@ -43,6 +46,12 @@ struct PieceView: View {
         )
         .onChange(of: viewState) { _, newState in
             handleStateChange(newState)
+        }
+        .onAppear {
+            let delay = Double.random(in: 0...0.2)
+            withAnimation(.spring(duration: 0.5, bounce: 0.5).delay(delay)) {
+                hasAppeared = true
+            }
         }
     }
 

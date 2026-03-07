@@ -45,7 +45,7 @@ final class GameViewModel {
 
     // MARK: - Game Lifecycle
 
-    func startGame(mode: GameMode) {
+    func prepareGame(mode: GameMode) {
         gameMode = mode
         switch mode {
         case .vsAI(let difficulty):
@@ -61,8 +61,12 @@ final class GameViewModel {
         }
 
         engine.startGame()
+    }
+
+    func beginAfterCountdown() {
         enablePiecesForCurrentTurn()
         startTimerForCurrentTurn()
+        triggerAIMoveIfNeeded()
     }
 
     func restart() {
@@ -80,8 +84,6 @@ final class GameViewModel {
 
         setupPieceStates()
         engine.startGame()
-        enablePiecesForCurrentTurn()
-        startTimerForCurrentTurn()
     }
 
     // MARK: - Piece Accessors

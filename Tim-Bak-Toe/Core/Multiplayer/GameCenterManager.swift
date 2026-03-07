@@ -105,14 +105,9 @@ final class GameCenterManager: NSObject {
     // MARK: - Helpers
 
     private func dismissMatchmaker(_ viewController: GKMatchmakerViewController) {
-        #if os(iOS)
         viewController.dismiss(animated: true)
-        #elseif os(macOS)
-        viewController.dismiss(viewController)
-        #endif
     }
 
-    #if os(iOS)
     private func presentViewController(_ viewController: UIViewController) {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let rootVC = windowScene.windows.first?.rootViewController else { return }
@@ -122,12 +117,6 @@ final class GameCenterManager: NSObject {
         }
         topVC.present(viewController, animated: true)
     }
-    #elseif os(macOS)
-    private func presentViewController(_ viewController: NSViewController) {
-        guard let window = NSApplication.shared.keyWindow else { return }
-        window.contentViewController?.presentAsSheet(viewController)
-    }
-    #endif
 }
 
 // MARK: - GKMatchmakerViewControllerDelegate

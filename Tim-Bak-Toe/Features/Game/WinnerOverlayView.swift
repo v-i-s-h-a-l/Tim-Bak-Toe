@@ -2,6 +2,9 @@ import SwiftUI
 
 struct WinnerOverlayView: View {
     let winner: Player?
+    let isOnline: Bool
+    let isDisconnected: Bool
+    let rematchRequested: Bool
     let onRestart: () -> Void
     let onHome: () -> Void
 
@@ -32,9 +35,29 @@ struct WinnerOverlayView: View {
                     .kerning(3)
                     .foregroundStyle(.primary)
 
+                if isDisconnected {
+                    Text("Opponent disconnected")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+
                 VStack(spacing: 12) {
-                    GreenButton(title: "Restart", action: onRestart)
-                    GreenButton(title: "Home", action: onHome)
+                    if isOnline {
+                        if isDisconnected {
+                            GreenButton(title: "Home", action: onHome)
+                        } else if rematchRequested {
+                            Text("Waiting for opponent...")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            GreenButton(title: "Home", action: onHome)
+                        } else {
+                            GreenButton(title: "Rematch", action: onRestart)
+                            GreenButton(title: "Home", action: onHome)
+                        }
+                    } else {
+                        GreenButton(title: "Restart", action: onRestart)
+                        GreenButton(title: "Home", action: onHome)
+                    }
                 }
             }
             .padding(32)
@@ -52,6 +75,7 @@ struct WinnerOverlayView: View {
     }
 
     private var winnerText: String {
+        if isDisconnected { return "You Win!" }
         if let winner {
             return "\(winner == .x ? "X" : "O") Wins!"
         }

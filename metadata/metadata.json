@@ -1,0 +1,24 @@
+{
+  "locale": "en-US",
+  "app": {
+    "bundleId": "indie.bulty.XO3",
+    "primaryCategory": "GAMES",
+    "primarySubcategoryOne": "GAMES_BOARD",
+    "primarySubcategoryTwo": "GAMES_STRATEGY",
+    "secondaryCategory": "ENTERTAINMENT",
+    "copyright": "2026 Vishal Singh"
+  },
+  "appInfoLocalization": {
+    "name": "Tim Bak Toe",
+    "subtitle": "Tic Tac Toe With a Twist",
+    "privacyPolicyUrl": "https://v-i-s-h-a-l.github.io/xo3-privacy-policy/"
+  },
+  "versionLocalization": {
+    "description": "Tim Bak Toe reinvents the classic Tic Tac Toe with exciting twists that make every move count.\n\nEach player gets only three pieces on the board at a time — place a fourth, and your oldest piece disappears. Add timed turns, and every second matters.\n\nPlay against a friend on the same device, challenge AI opponents at three difficulty levels (Easy, Medium, Hard), or compete online with Game Center.\n\nCustomise your experience with dark/light/system themes, sound controls, and adjustable timer durations. Beautifully designed with smooth animations and glass-effect UI.\n\nFeatures:\n- Timed turns with adjustable duration\n- 3-piece limit that keeps the game dynamic\n- Local multiplayer on the same device\n- Online multiplayer via Game Center\n- AI opponents: Easy, Medium, and Hard\n- Dark mode, light mode, or match system\n- Sound effects with toggle\n- iPad support",
+    "keywords": "tic tac toe,board game,multiplayer,game center,strategy,puzzle,classic,two player,brain,ai",
+    "promotionalText": "A fresh take on the classic — timed turns and only 3 pieces each!",
+    "whatsNew": "",
+    "marketingUrl": "https://v-i-s-h-a-l.github.io/Tim-Bak-Toe/",
+    "supportUrl": "https://v-i-s-h-a-l.github.io/Tim-Bak-Toe/support.html"
+  }
+}

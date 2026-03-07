@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim Bak Toe — Tic Tac Toe With a Twist</title>
+    <meta name="description" content="A fresh take on Tic Tac Toe with timed turns and a 3-piece limit. Play locally, vs AI, or online with Game Center.">
+    <meta property="og:title" content="Tim Bak Toe">
+    <meta property="og:description" content="Tic Tac Toe with timed turns and only 3 pieces each.">
+    <meta property="og:type" content="website">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: #000;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.25rem;
+        }
+        .hero .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+        }
+        .badge-link { display: inline-block; }
+        .badge-link img { height: 54px; }
+        .features {
+            background: #f5f5f7;
+            padding: 5rem 2rem;
+        }
+        .features-grid {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .feature-card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .feature-card p { color: #6e6e73; font-size: 0.95rem; }
+        footer {
+            background: #1d1d1f;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+        }
+        footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Tim Bak Toe</h1>
+        <p class="tagline">Tic Tac Toe with a twist.</p>
+    </section>
+
+    <section class="features">
+        <h2>Why you'll love it</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">3</div>
+                <h3>3-Piece Limit</h3>
+                <p>Each player can only have three pieces on the board. Place a fourth and your oldest one vanishes. Every move matters.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">&olarr;</div>
+                <h3>Timed Turns</h3>
+                <p>No more stalling. A countdown timer keeps the game fast-paced and exciting. Adjust the duration from 3 to 10 seconds.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">&oplus;</div>
+                <h3>Play Your Way</h3>
+                <p>Local multiplayer, online via Game Center, or challenge AI at Easy, Medium, or Hard difficulty.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">&starf;</div>
+                <h3>Beautiful Design</h3>
+                <p>Glass-effect UI, smooth animations, dark and light modes. Designed to feel at home on iOS.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">&dtri;</div>
+                <h3>Works Everywhere</h3>
+                <p>Optimised for iPhone and iPad with adaptive layouts that look great on any screen size.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">&female;</div>
+                <h3>Privacy First</h3>
+                <p>No ads, no tracking, no data collection. Just a game. Your preferences stay on your device.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Vishal Singh. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="https://v-i-s-h-a-l.github.io/xo3-privacy-policy/">Privacy Policy</a>
+            &nbsp;&middot;&nbsp;
+            <a href="support.html">Support</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://github.com/v-i-s-h-a-l/Tim-Bak-Toe">GitHub</a>
+        </p>
+    </footer>
+</body>
+</html>

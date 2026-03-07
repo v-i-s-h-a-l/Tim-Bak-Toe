@@ -1,6 +1,6 @@
 import Foundation
 
-struct BoardPosition: Hashable, Sendable, CustomStringConvertible {
+struct BoardPosition: Hashable, Codable, Sendable, CustomStringConvertible {
     let row: Int
     let column: Int
 

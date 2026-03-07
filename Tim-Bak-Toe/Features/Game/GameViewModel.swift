@@ -16,6 +16,11 @@ final class GameViewModel {
     private var aiTask: Task<Void, Never>?
     private var aiStrategy: (any AIStrategy)?
 
+    var multiplayerAdapter: MultiplayerAdapter?
+    var lastExecutedMoveFrom: BoardPosition?
+
+    var isOnline: Bool { gameMode == .onlineMultiplayer }
+
     var timerDuration: TimeInterval {
         get { xTimer.fillRatio > 0 ? 5.0 : 5.0 }
     }
@@ -51,9 +56,12 @@ final class GameViewModel {
             }
         case .localMultiplayer:
             aiStrategy = nil
+        case .onlineMultiplayer:
+            aiStrategy = nil
         }
 
         engine.startGame()
+        enablePiecesForCurrentTurn()
         startTimerForCurrentTurn()
     }
 
@@ -63,6 +71,7 @@ final class GameViewModel {
         xTimer.reset()
         oTimer.reset()
         engine.reset()
+        disconnectedRemotely = false
 
         withAnimation {
             showWinnerView = false
@@ -71,6 +80,7 @@ final class GameViewModel {
 
         setupPieceStates()
         engine.startGame()
+        enablePiecesForCurrentTurn()
         startTimerForCurrentTurn()
     }
 
@@ -104,12 +114,18 @@ final class GameViewModel {
     func handleTimerExpiry(for player: Player) {
         guard engine.state.currentTurn == player else { return }
 
+        // In online mode, only handle expiry for the local player
+        if isOnline, let adapter = multiplayerAdapter, player != adapter.localRole {
+            return
+        }
+
         // Force snap back any dragging piece
         for (id, state) in pieceStates where state.owner == player && state.viewState == .dragged {
             snapPieceBack(id)
         }
 
         engine.wasteTurn()
+        multiplayerAdapter?.localTimerExpired()
 
         if engine.state.isGameOver {
             handleGameOver()
@@ -180,12 +196,9 @@ final class GameViewModel {
     private func executeVisualMove(pieceId: UUID, to position: BoardPosition, cellCenter: CGPoint) {
         guard var state = pieceStates[pieceId] else { return }
 
-        // Remove from old cell if repositioning
-        if state.occupiedCellId != nil {
-            // Old cell freed
-        }
-
-        let move = Move(pieceId: pieceId, from: state.occupiedCellId, to: position)
+        let fromPosition = state.occupiedCellId
+        let move = Move(pieceId: pieceId, from: fromPosition, to: position)
+        lastExecutedMoveFrom = fromPosition
         let success = engine.executeMove(move)
         guard success else {
             snapPieceBack(pieceId)
@@ -206,6 +219,8 @@ final class GameViewModel {
             state.relativeOffset = state.currentOffset
         }
         pieceStates[pieceId] = state
+
+        multiplayerAdapter?.localMoveExecuted(pieceId: pieceId)
 
         if engine.state.isGameOver {
             handleGameOver()
@@ -238,8 +253,17 @@ final class GameViewModel {
 
     private func enablePiecesForCurrentTurn() {
         guard let turn = engine.state.currentTurn else { return }
+
+        // In online mode, only enable pieces when it's the local player's turn
+        let enabledPlayer: Player?
+        if isOnline, let adapter = multiplayerAdapter {
+            enabledPlayer = adapter.isLocalPlayerTurn() ? adapter.localRole : nil
+        } else {
+            enabledPlayer = turn
+        }
+
         for (id, var state) in pieceStates {
-            if state.owner == turn {
+            if let enabled = enabledPlayer, state.owner == enabled {
                 if state.viewState == .disabled || state.viewState == .dragged {
                     state.viewState = .placed
                     state.scale = PieceViewState.placed.scale
@@ -355,4 +379,80 @@ final class GameViewModel {
             startTimerForCurrentTurn()
         }
     }
+
+    // MARK: - Online Multiplayer
+
+    func applyRemoteMove(pieceId: UUID, from: BoardPosition?, to: BoardPosition) {
+        let move = Move(pieceId: pieceId, from: from, to: to)
+        guard engine.isValidMove(move) else { return }
+        guard let cellFrame = cellFrames[to] else { return }
+
+        guard var state = pieceStates[pieceId] else { return }
+
+        let success = engine.executeMove(move)
+        guard success else { return }
+
+        Sound.place.play()
+
+        state.occupiedCellId = to
+        state.currentOffset = cellFrame.center - state.centerGlobal
+        state.dragAmount = .zero
+        state.dragStartOffset = .zero
+        state.viewState = .placed
+        state.scale = PieceViewState.placed.scale
+        state.zIndex = LayoutConstants.ZIndex.playerPiecePlaced
+
+        withAnimation(.easeOutQuart(duration: 0.4)) {
+            state.relativeOffset = state.currentOffset
+        }
+        pieceStates[pieceId] = state
+
+        if engine.state.isGameOver {
+            handleGameOver()
+        } else {
+            enablePiecesForCurrentTurn()
+            startTimerForCurrentTurn()
+        }
+    }
+
+    func applyRemoteWasteTurn() {
+        guard engine.state.currentTurn != nil else { return }
+
+        engine.wasteTurn()
+
+        if engine.state.isGameOver {
+            handleGameOver()
+        } else {
+            enablePiecesForCurrentTurn()
+            startTimerForCurrentTurn()
+        }
+    }
+
+    func handleRemoteDisconnection() {
+        xTimer.stop()
+        oTimer.stop()
+
+        guard !engine.state.isGameOver else { return }
+
+        // Award win to the local player
+        if let adapter = multiplayerAdapter {
+            let localPlayer = adapter.localRole
+            // Force the game state to won
+            // We'll show the winner overlay directly
+            for (id, var state) in pieceStates {
+                if state.owner == localPlayer {
+                    state.viewState = .won
+                } else {
+                    state.viewState = .lost
+                }
+                pieceStates[id] = state
+            }
+            disconnectedRemotely = true
+            withAnimation {
+                showWinnerView = true
+            }
+        }
+    }
+
+    var disconnectedRemotely = false
 }

@@ -2,11 +2,7 @@ import SwiftUI
 
 enum LayoutConstants {
     static var isPad: Bool {
-        #if os(iOS)
         UIDevice.current.userInterfaceIdiom == .pad
-        #else
-        false
-        #endif
     }
 
     static var boardWidthMultiplier: CGFloat { isPad ? 0.65 : 0.85 }

@@ -60,14 +60,8 @@ struct ContentView: View {
                 .navigationBarBackButtonHidden()
                 .enableSwipeBack()
             }
-            #if os(iOS)
             .toolbar(.hidden, for: .navigationBar)
-            #endif
         }
-        #if os(macOS)
-        .frame(minWidth: 400, idealWidth: 500, maxWidth: 600,
-               minHeight: 600, idealHeight: 750, maxHeight: 900)
-        #endif
         .preferredColorScheme(settingsViewModel.preferredColorScheme)
         .onAppear {
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")

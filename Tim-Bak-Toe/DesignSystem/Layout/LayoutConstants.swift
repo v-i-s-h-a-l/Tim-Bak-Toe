@@ -2,7 +2,11 @@ import SwiftUI
 
 enum LayoutConstants {
     static var isPad: Bool {
+        #if os(iOS)
         UIDevice.current.userInterfaceIdiom == .pad
+        #else
+        false
+        #endif
     }
 
     static var boardWidthMultiplier: CGFloat { isPad ? 0.65 : 0.85 }
@@ -15,8 +19,9 @@ enum LayoutConstants {
         static let playerPieceDragged = 2.0
     }
 
-    static func boardSize(for geometryWidth: CGFloat) -> CGSize {
-        let side = geometryWidth * boardWidthMultiplier
+    static func boardSize(for geometrySize: CGSize) -> CGSize {
+        let reference = min(geometrySize.width, geometrySize.height)
+        let side = reference * boardWidthMultiplier
         return CGSize(width: side, height: side)
     }
 

@@ -8,6 +8,10 @@ struct HomeScreen: View {
     @State private var logoAppeared = false
     @State private var contentAppeared = false
 
+    private var playButtonDisabled: Bool {
+        gameMode == .onlineMultiplayer && !GameCenterManager.shared.isAuthenticated
+    }
+
     var body: some View {
         ZStack {
             Theme.Col.gameBackground
@@ -64,6 +68,8 @@ struct HomeScreen: View {
                         GreenButton(title: "Play Now") {
                             onPlay(gameMode)
                         }
+                        .opacity(playButtonDisabled ? 0.5 : 1)
+                        .allowsHitTesting(!playButtonDisabled)
 
                         NeuomorphicButton(title: "Settings") {
                             onSettings()

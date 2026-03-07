@@ -5,6 +5,7 @@ struct GameView: View {
     let onHome: () -> Void
 
     @State private var boardAppeared = false
+    @State private var rematchRequested = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -61,17 +62,55 @@ struct GameView: View {
                 if viewModel.showWinnerView {
                     WinnerOverlayView(
                         winner: viewModel.engine.state.winner,
-                        onRestart: { viewModel.restart() },
+                        isOnline: viewModel.isOnline,
+                        isDisconnected: viewModel.disconnectedRemotely,
+                        rematchRequested: rematchRequested,
+                        onRestart: {
+                            if viewModel.isOnline {
+                                rematchRequested = true
+                                viewModel.multiplayerAdapter?.requestRematch()
+                            } else {
+                                viewModel.restart()
+                            }
+                        },
                         onHome: onHome
                     )
                 }
             }
         }
         .onAppear {
+            setupMultiplayerCallbacks()
             viewModel.startGame(mode: viewModel.gameMode)
             withAnimation(.spring(duration: 0.6, bounce: 0.3)) {
                 boardAppeared = true
             }
+        }
+    }
+
+    private func setupMultiplayerCallbacks() {
+        guard let adapter = viewModel.multiplayerAdapter else { return }
+
+        adapter.onRematchRequested = {
+            // Remote player requested rematch — if we already requested, both agreed
+            if rematchRequested {
+                rematchRequested = false
+                viewModel.restart()
+            }
+            // Otherwise the remote request is stored in the adapter;
+            // when local taps Rematch, adapter.requestRematch() will trigger it
+        }
+
+        adapter.onRematchAccepted = {
+            rematchRequested = false
+            viewModel.restart()
+        }
+
+        adapter.onOpponentResigned = {
+            viewModel.handleRemoteDisconnection()
+        }
+
+        adapter.onOpponentDisconnected = {
+            viewModel.handleRemoteDisconnection()
         }
     }
 }

@@ -6,10 +6,11 @@ struct GameView: View {
 
     @State private var boardAppeared = false
     @State private var rematchRequested = false
+    @State private var showCountdown = true
 
     var body: some View {
         GeometryReader { geometry in
-            let boardSize = LayoutConstants.boardSize(for: geometry.size.width)
+            let boardSize = LayoutConstants.boardSize(for: geometry.size)
             let pieceSize = LayoutConstants.pieceSize(for: boardSize)
             let timerHeight = pieceSize.height / 8.0
             let padding = pieceSize.height / 3.0
@@ -59,6 +60,14 @@ struct GameView: View {
                 }
             }
             .overlay {
+                if showCountdown {
+                    CountdownOverlayView {
+                        showCountdown = false
+                        viewModel.beginAfterCountdown()
+                    }
+                }
+            }
+            .overlay {
                 if viewModel.showWinnerView {
                     WinnerOverlayView(
                         winner: viewModel.engine.state.winner,
@@ -70,6 +79,7 @@ struct GameView: View {
                                 rematchRequested = true
                                 viewModel.multiplayerAdapter?.requestRematch()
                             } else {
+                                showCountdown = true
                                 viewModel.restart()
                             }
                         },
@@ -80,7 +90,7 @@ struct GameView: View {
         }
         .onAppear {
             setupMultiplayerCallbacks()
-            viewModel.startGame(mode: viewModel.gameMode)
+            viewModel.prepareGame(mode: viewModel.gameMode)
             withAnimation(.spring(duration: 0.6, bounce: 0.3)) {
                 boardAppeared = true
             }
@@ -90,18 +100,20 @@ struct GameView: View {
     private func setupMultiplayerCallbacks() {
         guard let adapter = viewModel.multiplayerAdapter else { return }
 
-        adapter.onRematchRequested = {
+        adapter.onRematchRequested = { [self] in
             // Remote player requested rematch — if we already requested, both agreed
             if rematchRequested {
                 rematchRequested = false
+                showCountdown = true
                 viewModel.restart()
             }
             // Otherwise the remote request is stored in the adapter;
             // when local taps Rematch, adapter.requestRematch() will trigger it
         }
 
-        adapter.onRematchAccepted = {
+        adapter.onRematchAccepted = { [self] in
             rematchRequested = false
+            showCountdown = true
             viewModel.restart()
         }
 

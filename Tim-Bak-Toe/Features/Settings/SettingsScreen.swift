@@ -33,7 +33,9 @@ struct SettingsScreen: View {
                         Text("Dark").tag(2)
                     }
                     .pickerStyle(.segmented)
-                    .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
+                    .controlSize(LayoutConstants.isPad ? .large : .regular)
+
+                    .frame(maxWidth: LayoutConstants.isPad ? 500 : 250)
 
                     HStack {
                         Image(systemName: settingsViewModel.soundOn ? "speaker.2.fill" : "speaker.slash.fill")
@@ -44,7 +46,7 @@ struct SettingsScreen: View {
                         Toggle("", isOn: $settingsViewModel.soundOn)
                             .labelsHidden()
                     }
-                    .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
+                    .frame(maxWidth: LayoutConstants.isPad ? 500 : 250)
 
                     HStack {
                         Text("\(Int(settingsViewModel.timerDuration)) seconds")
@@ -54,7 +56,7 @@ struct SettingsScreen: View {
                         Stepper("", value: $settingsViewModel.timerDuration, in: 3.0...10.0)
                             .labelsHidden()
                     }
-                    .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
+                    .frame(maxWidth: LayoutConstants.isPad ? 500 : 250)
                 }
                 .padding(24)
                 .glassEffect(.regular, in: .rect(cornerRadius: 20))

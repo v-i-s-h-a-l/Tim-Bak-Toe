@@ -49,6 +49,7 @@
 		AA000040AAAA004000000040 /* Animation+TimingCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000040BBBB004000000040 /* Animation+TimingCurves.swift */; };
 		AA000041AAAA004100000041 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000041BBBB004100000041 /* CGExtensions.swift */; };
 		AA000042AAAA004200000042 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */; };
+		AA000043AAAA004300000043 /* CountdownOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000043BBBB004300000043 /* CountdownOverlayView.swift */; };
 		DC1283F32477741000B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F22477741000B1317E /* Assets.xcassets */; };
 		DC96D7EB2F5B861000847D50 /* EnableSwipeBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */; };
 		DC96D7F02F5BED4D00847D50 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7EC2F5BED4D00847D50 /* GameCenterManager.swift */; };
@@ -99,6 +100,7 @@
 		BB000040BBBB004000000040 /* Animation+TimingCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+TimingCurves.swift"; sourceTree = "<group>"; };
 		BB000041BBBB004100000041 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
+		BB000043BBBB004300000043 /* CountdownOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownOverlayView.swift; sourceTree = "<group>"; };
 		DC1283E92477740900B1317E /* TimBakToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimBakToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1283F22477741000B1317E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableSwipeBack.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				BB000022BBBB002200000022 /* PieceView.swift */,
 				BB000023BBBB002300000023 /* TimerBarView.swift */,
 				BB000024BBBB002400000024 /* WinnerOverlayView.swift */,
+				BB000043BBBB004300000043 /* CountdownOverlayView.swift */,
 				BB000025BBBB002500000025 /* ContentView.swift */,
 			);
 			path = Game;
@@ -415,6 +418,7 @@
 				DC96D7F12F5BED4D00847D50 /* MultiplayerAdapter.swift in Sources */,
 				DC96D7F22F5BED4D00847D50 /* MultiplayerMessage.swift in Sources */,
 				AA000024AAAA002400000024 /* WinnerOverlayView.swift in Sources */,
+				AA000043AAAA004300000043 /* CountdownOverlayView.swift in Sources */,
 				AA000025AAAA002500000025 /* ContentView.swift in Sources */,
 				AA000026AAAA002600000026 /* HomeScreen.swift in Sources */,
 				AA000027AAAA002700000027 /* GameModePickerView.swift in Sources */,
@@ -557,11 +561,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = TimBakToe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9S47B2GP36;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -575,12 +583,17 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
+				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.XO3-26";
 				PRODUCT_NAME = TimBakToe;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -588,11 +601,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = TimBakToe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9S47B2GP36;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -606,12 +623,17 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
+				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.XO3-26";
 				PRODUCT_NAME = TimBakToe;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};

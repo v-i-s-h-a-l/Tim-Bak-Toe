@@ -31,7 +31,9 @@ struct GameModePickerView: View {
                 }
             }
             .pickerStyle(.segmented)
-            .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
+            .controlSize(LayoutConstants.isPad ? .large : .regular)
+
+            .frame(maxWidth: LayoutConstants.isPad ? 500 : 250)
 
             if category == .ai {
                 Picker("Difficulty", selection: $difficulty) {
@@ -40,7 +42,9 @@ struct GameModePickerView: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                .frame(maxWidth: LayoutConstants.isPad ? 350 : 250)
+                .controlSize(LayoutConstants.isPad ? .large : .regular)
+    
+                .frame(maxWidth: LayoutConstants.isPad ? 500 : 250)
                 .transition(.scale.combined(with: .opacity))
             }
 

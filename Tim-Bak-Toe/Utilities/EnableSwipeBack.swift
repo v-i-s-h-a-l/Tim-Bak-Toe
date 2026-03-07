@@ -1,13 +1,19 @@
 import SwiftUI
-import UIKit
 
 extension View {
     func enableSwipeBack() -> some View {
+        #if os(iOS)
         background {
             SwipeBackHelper()
         }
+        #else
+        self
+        #endif
     }
 }
+
+#if os(iOS)
+import UIKit
 
 private struct SwipeBackHelper: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
@@ -24,3 +30,4 @@ private struct SwipeBackHelper: UIViewControllerRepresentable {
         }
     }
 }
+#endif

@@ -34,7 +34,6 @@ struct SettingsScreen: View {
                     }
                     .pickerStyle(.segmented)
                     .controlSize(LayoutConstants.isPad ? .large : .regular)
-
                     .frame(maxWidth: LayoutConstants.isPad ? 500 : 250)
 
                     HStack {

@@ -119,11 +119,3 @@ struct WinnerOverlayView: View {
         }
     }
 }
-
-struct ConfettiParticle: Identifiable {
-    let id: Int
-    let color: Color
-    let size: CGFloat
-    var offset: CGSize
-    var opacity: Double
-}

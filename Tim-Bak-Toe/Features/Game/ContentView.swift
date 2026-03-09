@@ -62,6 +62,7 @@ struct ContentView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
         }
+        .environment(\.themeProvider, settingsViewModel.appTheme.provider)
         .preferredColorScheme(settingsViewModel.preferredColorScheme)
         .onAppear {
             let isFirstLaunch = !UserDefaults.standard.bool(forKey: "AlreadyLaunched")

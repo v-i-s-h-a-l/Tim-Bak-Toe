@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F70B204DFAA67BED3662BB7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A1CB71DEBFB104FA68E983 /* Foundation.framework */; };
 		AA000001AAAA000100000001 /* TimBakToeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001BBBB000100000001 /* TimBakToeApp.swift */; };
 		AA000002AAAA000200000002 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002BBBB000200000002 /* Player.swift */; };
 		AA000003AAAA000300000003 /* BoardPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003BBBB000300000003 /* BoardPosition.swift */; };
@@ -50,14 +51,31 @@
 		AA000041AAAA004100000041 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000041BBBB004100000041 /* CGExtensions.swift */; };
 		AA000042AAAA004200000042 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */; };
 		AA000043AAAA004300000043 /* CountdownOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000043BBBB004300000043 /* CountdownOverlayView.swift */; };
+		B4BAFAAD9D45B7FC3AE7680A /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5466B81043274B9976571F /* ScreenshotTests.swift */; };
 		DC1283F32477741000B1317E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1283F22477741000B1317E /* Assets.xcassets */; };
 		DC96D7EB2F5B861000847D50 /* EnableSwipeBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */; };
 		DC96D7F02F5BED4D00847D50 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7EC2F5BED4D00847D50 /* GameCenterManager.swift */; };
 		DC96D7F12F5BED4D00847D50 /* MultiplayerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7ED2F5BED4D00847D50 /* MultiplayerAdapter.swift */; };
 		DC96D7F22F5BED4D00847D50 /* MultiplayerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC96D7EE2F5BED4D00847D50 /* MultiplayerMessage.swift */; };
+		AA000044AAAA004400000044 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000044BBBB004400000044 /* AppTheme.swift */; };
+		AA000045AAAA004500000045 /* ThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000045BBBB004500000045 /* ThemeProvider.swift */; };
+		AA000046AAAA004600000046 /* ThemeEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000046BBBB004600000046 /* ThemeEnvironment.swift */; };
+		AA000047AAAA004700000047 /* NeumorphicTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000047BBBB004700000047 /* NeumorphicTheme.swift */; };
+		AA000048AAAA004800000048 /* GlassTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000048BBBB004800000048 /* GlassTheme.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7051849FC5E7AA1F27566B0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC1283E12477740900B1317E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC1283E82477740900B1317E;
+			remoteInfo = TimBakToe;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		389C6F0A07CCB50C79F32EE6 /* ScreenshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB000001BBBB000100000001 /* TimBakToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimBakToeApp.swift; sourceTree = "<group>"; };
 		BB000002BBBB000200000002 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		BB000003BBBB000300000003 /* BoardPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPosition.swift; sourceTree = "<group>"; };
@@ -101,6 +119,12 @@
 		BB000041BBBB004100000041 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		BB000042BBBB004200000042 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		BB000043BBBB004300000043 /* CountdownOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownOverlayView.swift; sourceTree = "<group>"; };
+		BB000044BBBB004400000044 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		BB000045BBBB004500000045 /* ThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProvider.swift; sourceTree = "<group>"; };
+		BB000046BBBB004600000046 /* ThemeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEnvironment.swift; sourceTree = "<group>"; };
+		BB000047BBBB004700000047 /* NeumorphicTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicTheme.swift; sourceTree = "<group>"; };
+		BB000048BBBB004800000048 /* GlassTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassTheme.swift; sourceTree = "<group>"; };
+		BD5466B81043274B9976571F /* ScreenshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScreenshotTests.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		DC1283E92477740900B1317E /* TimBakToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimBakToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1283F22477741000B1317E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC96D7EA2F5B861000847D50 /* EnableSwipeBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableSwipeBack.swift; sourceTree = "<group>"; };
@@ -108,9 +132,18 @@
 		DC96D7ED2F5BED4D00847D50 /* MultiplayerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerAdapter.swift; sourceTree = "<group>"; };
 		DC96D7EE2F5BED4D00847D50 /* MultiplayerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerMessage.swift; sourceTree = "<group>"; };
 		DC96D7F32F5BED8D00847D50 /* TimBakToe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimBakToe.entitlements; sourceTree = "<group>"; };
+		E4A1CB71DEBFB104FA68E983 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9C0AEB636D575843CF633131 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F70B204DFAA67BED3662BB7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC1283E62477740900B1317E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -121,6 +154,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AD4E549BEE67814B885AC40 /* ScreenshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				BD5466B81043274B9976571F /* ScreenshotTests.swift */,
+			);
+			name = ScreenshotTests;
+			path = ScreenshotTests;
+			sourceTree = "<group>";
+		};
+		85FA42AF52853F1D36D4FFC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A31E6A7F7B31123A4031CC0C /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A31E6A7F7B31123A4031CC0C /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E4A1CB71DEBFB104FA68E983 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		CC000001CCCC000100000001 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,11 +294,24 @@
 				BB000031BBBB003100000031 /* Theme.swift */,
 				BB000032BBBB003200000032 /* PieceStyle.swift */,
 				BB000033BBBB003300000033 /* PieceViewState.swift */,
+				BB000044BBBB004400000044 /* AppTheme.swift */,
+				BB000045BBBB004500000045 /* ThemeProvider.swift */,
+				BB000046BBBB004600000046 /* ThemeEnvironment.swift */,
 				CC000021CCCC002100000021 /* Shapes */,
 				CC000022CCCC002200000022 /* Components */,
 				CC000023CCCC002300000023 /* Layout */,
+				CC000024CCCC002400000024 /* Themes */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		CC000024CCCC002400000024 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				BB000047BBBB004700000047 /* NeumorphicTheme.swift */,
+				BB000048BBBB004800000048 /* GlassTheme.swift */,
+			);
+			path = Themes;
 			sourceTree = "<group>";
 		};
 		CC000021CCCC002100000021 /* Shapes */ = {
@@ -287,6 +358,8 @@
 				DC96D7F32F5BED8D00847D50 /* TimBakToe.entitlements */,
 				DC1283EB2477740900B1317E /* Tim-Bak-Toe */,
 				DC1283EA2477740900B1317E /* Products */,
+				85FA42AF52853F1D36D4FFC9 /* Frameworks */,
+				0AD4E549BEE67814B885AC40 /* ScreenshotTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				DC1283E92477740900B1317E /* TimBakToe.app */,
+				389C6F0A07CCB50C79F32EE6 /* ScreenshotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -324,6 +398,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0E162309B903EDCEA568D08A /* ScreenshotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4FD9345EF3E852312A0F7B3C /* Build configuration list for PBXNativeTarget "ScreenshotTests" */;
+			buildPhases = (
+				98CBB2D4B394DA597BF9D962 /* Sources */,
+				9C0AEB636D575843CF633131 /* Frameworks */,
+				790730CA94C925B9C0728776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E25613068CE95CB484FA08A /* PBXTargetDependency */,
+			);
+			name = ScreenshotTests;
+			productName = ScreenshotTests;
+			productReference = 389C6F0A07CCB50C79F32EE6 /* ScreenshotTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		DC1283E82477740900B1317E /* TimBakToe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC1283FD2477741000B1317E /* Build configuration list for PBXNativeTarget "TimBakToe" */;
@@ -370,11 +462,19 @@
 			projectRoot = "";
 			targets = (
 				DC1283E82477740900B1317E /* TimBakToe */,
+				0E162309B903EDCEA568D08A /* ScreenshotTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		790730CA94C925B9C0728776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC1283E72477740900B1317E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +486,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		98CBB2D4B394DA597BF9D962 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4BAFAAD9D45B7FC3AE7680A /* ScreenshotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC1283E52477740900B1317E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,12 +545,63 @@
 				AA000040AAAA004000000040 /* Animation+TimingCurves.swift in Sources */,
 				AA000041AAAA004100000041 /* CGExtensions.swift in Sources */,
 				AA000042AAAA004200000042 /* AccessibilityIdentifiers.swift in Sources */,
+				AA000044AAAA004400000044 /* AppTheme.swift in Sources */,
+				AA000045AAAA004500000045 /* ThemeProvider.swift in Sources */,
+				AA000046AAAA004600000046 /* ThemeEnvironment.swift in Sources */,
+				AA000047AAAA004700000047 /* NeumorphicTheme.swift in Sources */,
+				AA000048AAAA004800000048 /* GlassTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7E25613068CE95CB484FA08A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TimBakToe;
+			target = DC1283E82477740900B1317E /* TimBakToe */;
+			targetProxy = 7051849FC5E7AA1F27566B0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		636E939745EB853394179522 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3.ScreenshotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = TimBakToe;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		BBEED3D745E9532A574C6D7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9P7CJ3Z2B8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3.ScreenshotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = TimBakToe;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
 		DC1283FB2477741000B1317E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -584,7 +743,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.XO3";
+				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
 				PRODUCT_NAME = TimBakToe;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
@@ -625,7 +784,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "indie.bulty.XO3";
+				PRODUCT_BUNDLE_IDENTIFIER = indie.bulty.XO3;
 				PRODUCT_NAME = TimBakToe;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
@@ -642,6 +801,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4FD9345EF3E852312A0F7B3C /* Build configuration list for PBXNativeTarget "ScreenshotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				636E939745EB853394179522 /* Release */,
+				BBEED3D745E9532A574C6D7D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DC1283E42477740900B1317E /* Build configuration list for PBXProject "Tim-Bak-Toe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
